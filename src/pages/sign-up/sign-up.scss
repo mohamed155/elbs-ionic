@@ -1,0 +1,45 @@
+page-sign-up {
+    .page-sign-up{
+        .photo{
+            position: relative;
+            width: 110px;
+            height: 110px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 10px;
+            margin-top: 10px;
+
+            .image{
+                width: 110px;
+                height: 110px;
+                border-radius: 50%;
+                overflow: hidden;
+
+                img{
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .upload{
+                position: absolute;
+                right:-20px;
+                bottom: 0;
+    
+                .icon{
+                    font-size: 20px;
+                    background-color:darken($icon-color-text, 10%);
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    text-align: center;
+                    line-height: 40px;
+                    color: $white;
+                }
+            }
+        }
+        p{
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    }
+}

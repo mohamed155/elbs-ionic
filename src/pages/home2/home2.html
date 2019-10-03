@@ -1,0 +1,39 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title text-center>
+      <img src="assets/logo_header.png" alt="logo">
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openSearch()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+      <button ion-button icon-only class="cart-button" (click)="openCart()">
+        <ion-icon name="cart">
+          <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
+        </ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content class="page-home2" (ionScroll)="onScroll($event)">
+  <!-- top banners -->
+  <banners></banners>
+  <sliding-tabs [type]="'image'"></sliding-tabs>
+
+  <ion-fab bottom right *ngIf="scrollTopButton">
+    <button ion-fab (click)="scrollToTop()">
+      <ion-icon name="arrow-round-up"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>
+<ion-footer *ngIf="config.footerShowHide==1">
+  <footer></footer>
+</ion-footer>

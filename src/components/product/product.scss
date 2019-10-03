@@ -1,0 +1,264 @@
+product{
+    .card{
+        background-color:$white;
+        width:calc(100% - 0px);
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        position: relative;
+        
+        .card-thumb{
+            position: relative;
+			padding-bottom: 60%;
+			padding-top: 10px;
+			height: 0;
+			overflow:hidden;
+            .image{
+                position: absolute;                
+                left: 50%;
+                top: 0;
+                height: 100%;
+                width: auto;
+                transform: translateX(-50%);
+            }
+            .card-tag-new{
+                background-image: url(../assets/badge_new.svg);
+                background-size: cover;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                height: 35px;
+                width: 35px;
+                display: block;
+                z-index: 1;
+                
+            }
+            .card-tag-off{
+                background-image: url(../assets/badge_off.svg);
+                background-size: cover;
+                background-repeat: no-repeat;
+                position: absolute;
+                text-align: center;
+                top: 0;
+                right: 10px;
+                width: 30px;
+                height: 50px;
+                font-size: 12px;
+                color: $white;
+                padding: 7px 1px;
+                z-index: 9;
+            }
+        }
+        
+        
+        .card-content{
+            padding-left: 5px;
+            padding-right: 5px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            
+            .card-title{
+                padding-top: 0;
+                padding-bottom: 0;
+                margin-top: 0;
+                margin-bottom: 5px;
+                overflow: hidden;
+                height: 34px;
+    
+                .line-clamp {
+                    font-size: 14px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;  
+                }
+            }
+            .card-attr{
+                .col:first-child{
+                    padding-left: 0;
+                }
+                .col{
+                    height: 40px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    padding-bottom: 0;
+    
+                    .card-price-normal{
+                        font-size: 15px;
+                        font-weight: 600;
+                        color: color($colors, primary);
+                    }
+                    .card-price-normal-through{
+                        font-size: 13px;
+                        font-weight: 600;
+                        color:darken(color($colors, light), 50%);
+                        text-decoration: line-through;
+                    }
+                    .icon{
+                        font-size: 22px;
+                        color: darken(color($colors, light), 30%);
+                    }
+                }
+                .col:last-child{
+                    padding-right: 0;
+                }
+            }
+        }
+        ion-buttons {
+            margin:0.6rem;
+        }
+        ion-buttons.bar-buttons-remove{
+            z-index: 101;
+            position: relative;
+        }
+        .card-add-cart{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9;
+
+            &:before{
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 110%;
+                height: 102%;
+                background-color: $black;
+                opacity: 0.60;
+            }
+            .icon{
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 50px;
+                color: color($colors, light);
+                z-index: 10;
+            }
+        }
+    }
+}
+
+.list{
+    product{
+        .item{
+            background-color: $white;
+            margin-bottom: 5px !important;
+            padding-left: 0;
+
+            .list-add-cart{
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                z-index: 99;
+                &:before{
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: $black;
+                    opacity: 0.60;
+                }
+                .icon{
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    font-size: 50px;
+                    color: color($colors, light);
+                    z-index: 999;
+                }
+
+            }
+            .list-tag-off{
+                background-image: url(../assets/badge_off.svg);
+                position: absolute;
+                top: 0;
+                right: 10px;
+                background-size: cover;
+                background-repeat: no-repeat;
+                width: 30px;
+                color: $white;
+                font-size: 10px;
+                height: 50px;
+                padding: 8px 5px;
+            }
+            ion-thumbnail{
+                margin-top: 0 !important;
+                margin-bottom: 0 !important;
+                
+                .list-tag-new{
+                    background-image: url(../assets/badge_new.svg);
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    height: 40px;
+                    width: 40px;
+                    display: block;
+                    z-index: 1;
+                    background-size: cover;
+                }
+                img{
+                    height: 110px;
+                    width: 110px;
+                }
+            }
+            .item-inner{
+                border-bottom-width: 0;
+                .label{
+                    margin-top: 0;
+                    margin-bottom: 0;
+                    h2{
+                        padding-right: 30px;
+                        overflow: hidden;
+                        height: 34px;
+                        font-size: 14px;
+    
+                        white-space: normal;
+                        .line-clamp{
+                            display: -webkit-box;
+                            -webkit-line-clamp: 2;
+                            -webkit-box-orient: vertical;
+                        }
+                    }
+                    .list-price-block{
+                        margin-bottom: 0;
+                        //height: 50px;
+    
+                        .list-price-normal{
+                            font-size: 15px;
+                            font-weight: 600;
+                            color: color($colors, primary);
+                        }
+                        .list-price-normal-through{
+                            font-size: 13px;
+                            font-weight: 600;
+                            color:darken(color($colors, light), 50%);
+                            text-decoration: line-through;
+                            margin-right: 5px;
+                        }
+                    }
+                    .row{
+                        .col{
+                            padding-left: 0;
+                            padding-top: 0;
+                            padding-bottom: 0;
+                            padding-right: 0;
+                        }
+                        .col:last-child{
+                            text-align: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

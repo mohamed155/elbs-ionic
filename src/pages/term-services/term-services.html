@@ -1,0 +1,19 @@
+
+<ion-header>
+  
+    <ion-navbar>
+      <ion-buttons left>
+        <button ion-button (click)="dismiss()">
+              <ion-icon name="md-close"></ion-icon>
+            </button>
+      </ion-buttons>
+      <ion-title translate> {{'Term and Services'| translate }}</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+
+
+<ion-content padding>
+  <div [innerHTML]="sharedData.termServices"></div>
+</ion-content>
+

@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{'Shipping Method'| translate }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row radio-group>
+    <ion-col *ngFor="let m of shippingMethod" col-12>
+        <ion-list  *ngIf="m.services.length!=0">
+            
+              <ion-list-header >
+                <h2>{{m.name}}</h2>
+              </ion-list-header>
+        
+              <ion-item *ngFor="let s of m.services" >
+                
+                <ion-label>{{s.name+' ---- '+s.rate+' '+s.currencyCode}}</ion-label>
+                <ion-radio [value]=[s] (ionSelect)="setMethod(s)"></ion-radio>
+              </ion-item>
+            
+          </ion-list>
+    </ion-col>
+  </ion-row>
+</ion-content>
+<ion-footer>
+  <button ion-button block color="secondary" (click)="openOrderPage()" [disabled]="selectedMethod">{{'Next'|translate}}</button>
+</ion-footer>

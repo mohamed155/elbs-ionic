@@ -1,0 +1,31 @@
+header {
+    .toolbar{
+        .bar-buttons{
+            .cart-button{
+                position: relative;
+                width: 42px;
+                top:1px;
+                right: 1px;
+                overflow: visible !important;
+                .icon{
+                    .badge{
+                        background: color($colors, secondary-light);
+                        position: absolute;
+                        top: -3px;
+                        right: -5px;
+                    }
+                }
+            }
+        }
+    }
+    // .toolbar-ios {
+    //     padding-top: calc(20px + 20px) !important;
+    //     padding-left: calc(constant(safe-area-inset-left) + 4px);
+    //     padding-right: calc(constant(safe-area-inset-right) + 4px);
+    //     padding-top: calc(constant(safe-area-inset-top) + 4px);
+    //     min-height: calc(44px + constant(safe-area-inset-top));
+    // }
+    // .toolbar-ios ion-title {
+    //     padding-top: calc(20px + 20px) !important;
+    // }
+}

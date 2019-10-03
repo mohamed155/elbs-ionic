@@ -1,0 +1,41 @@
+<ion-header>
+  
+    <ion-navbar>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+  
+      <ion-title>
+        {{'Wish List'| translate }}
+      </ion-title>
+  
+      <ion-buttons end>
+        <button ion-button icon-only (click)="openSearch()">
+          <ion-icon name="search"></ion-icon>
+        </button>
+        <button ion-button icon-only class="cart-button" (click)="openCart()">
+          <ion-icon name="cart">
+            <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
+          </ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  
+  </ion-header>
+
+
+<ion-content class="page-wish-list">
+  <ion-grid>
+    <ion-col col-6 *ngFor="let p of shared.wishList" [@animate]>
+        <product [data]="p" [type]="'wishList'"></product>
+    </ion-col>
+  
+    <ion-col col-12 *ngIf="shared.wishList.length == 0">
+      <h6 text-center>No Products Found!</h6>
+    </ion-col>
+  </ion-grid>
+
+  <ion-infinite-scroll #infinite (ionInfinite)="getProducts($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

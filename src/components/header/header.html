@@ -1,0 +1,21 @@
+  
+
+  <ion-buttons start *ngIf="leftButtons">
+    <button ion-button icon-only menuToggle >
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  </ion-buttons>
+  <ion-title>{{title| translate }}</ion-title>
+  <ion-buttons end *ngIf="rightButtons">
+    <button ion-button icon-only (click)="openSearch()" *ngIf="searchButton">
+      <ion-icon name="search"></ion-icon>
+    </button>
+    <button ion-button icon-only class="cart-button" (click)="openCart()" [@shakeCart]='cartShake'>
+      <ion-icon name="cart"><ion-badge color="secondary" >{{shared.cartquantity}}</ion-badge></ion-icon>
+    </button>
+  </ion-buttons>
+  <ion-buttons end *ngIf="closeButtonRight">
+    <button ion-button icon-only (click)="openHomePage()">
+      <ion-icon name="close"></ion-icon>
+    </button>
+  </ion-buttons>

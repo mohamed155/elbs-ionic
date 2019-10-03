@@ -1,0 +1,58 @@
+
+<ion-header>
+    <ion-navbar>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+  
+      <ion-title>
+        {{'About Us'| translate }}
+      </ion-title>
+  
+      <ion-buttons end>
+        <button ion-button icon-only (click)="openSearch()">
+          <ion-icon name="search"></ion-icon>
+        </button>
+        <button ion-button icon-only class="cart-button" (click)="openCart()">
+          <ion-icon name="cart">
+            <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
+          </ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content class="page-about-us" padding>
+  <ion-row>
+    <ion-col text-center col-12>
+      <img src="../assets/icon_logo.svg" width="40">
+      <h3>ABOUT VECTORSHOP</h3>
+    </ion-col>
+  </ion-row>
+  <div [innerHTML]="shared.aboutUs"></div>
+
+  <ion-list>
+    <!-- <button ion-item (click)="openSite()">
+      {{"Official Website"|translate}}
+      <ion-icon showWhen="android" name="arrow-forward" item-end></ion-icon>
+    </button> -->
+    <button ion-item (click)="showModal('privacyPolicy')">
+        {{'Privacy Policy'|translate}}
+        <ion-icon showWhen="android" name="arrow-forward" item-end></ion-icon>
+        
+    </button>
+    <button ion-item (click)="showModal('refundPolicy')">
+        {{'Refund Policy'|translate}}
+        <ion-icon showWhen="android" name="arrow-forward" item-end></ion-icon>
+        
+    </button>
+    <button ion-item (click)="showModal('termServices')">
+        {{'Term and Services'|translate}}
+        <ion-icon showWhen="android" name="arrow-forward" item-end></ion-icon>
+        
+    </button>
+  </ion-list>
+</ion-content>
+<!-- <ion-footer *ngIf="config.footerShowHide==1">
+  <footer ></footer>
+</ion-footer> -->

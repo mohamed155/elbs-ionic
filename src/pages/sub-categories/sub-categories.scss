@@ -1,0 +1,56 @@
+page-sub-categories {
+    .grid{
+        padding: 0;
+        
+        .col:nth-child(2n + 1){
+            padding-left: 0.5px;
+        }
+        .col{
+            padding-top: 0;
+            padding-left:0;
+            padding-right:0;
+            padding-bottom: 1px;
+            .card {
+                display: table;
+                background-size: cover;
+                background-position: center;
+                width: calc(100% - 1px);
+                border-radius: 0;
+                position: relative;
+                text-align: center;
+                margin-left: 0;
+                margin-right: 0;
+                margin-bottom: 0;
+                margin-top:0;
+                height: 150px;
+
+                .categories-title {
+                    display: table-cell;
+                    vertical-align: middle;
+                    z-index: 9;
+                    position: relative;
+                    h2{
+                        font-size: 1.2em;
+                        font-weight: bold;
+                        color: #fff;
+                        text-transform: uppercase;
+
+                        small{
+                            font-weight: normal;
+                        }
+                    }
+                }
+            }
+            .card::before{
+                content: "";
+                background-color: $black;
+                position: absolute;
+                left: 0;
+                top: 0;
+                height: 100%;
+                width: 100%;
+                opacity: 0.70;
+            }
+        }
+    }
+}

@@ -1,0 +1,32 @@
+<ion-header>
+    
+      <ion-navbar>
+        <ion-title>
+          {{'Sub Categories'| translate }}
+        </ion-title>
+    
+        <ion-buttons end>
+          <button ion-button icon-only (click)="openSearch()">
+            <ion-icon name="search"></ion-icon>
+          </button>
+          <button ion-button icon-only class="cart-button" (click)="openCart()">
+            <ion-icon name="cart">
+              <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
+            </ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-navbar>
+    
+    </ion-header>
+
+<ion-content class="card-background-page">
+
+  <div *ngFor="let c of shared.subCategories">
+    <ion-card *ngIf="c.parent_id==parent" (click)="openProducts(c.id,c.name)" class="animated flipInX"> 
+      <img src="{{config.url+c.image}}" />
+      <div class="card-title">{{c.name}}</div>
+      <div class="card-subtitle">{{c.total_products}} {{'Products'| translate }} </div>
+    </ion-card>
+  </div>
+  
+</ion-content>

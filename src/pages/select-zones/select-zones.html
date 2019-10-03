@@ -1,0 +1,25 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="md-close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{'Zone'|translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="page-select-zones">
+  <ion-searchbar (ionInput)="getItems($event)" placeholder="{{'Search'|translate}}" autofocus></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor="let item of items" (click)="selectZone(item)">
+      {{ item.zone_name }}
+    </ion-item>
+    <ion-item (click)="selectZone('other')">
+      {{'other'|translate}}
+    </ion-item>
+  </ion-list>
+</ion-content>

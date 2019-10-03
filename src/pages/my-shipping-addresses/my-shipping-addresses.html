@@ -1,0 +1,41 @@
+<ion-header>
+    <ion-navbar>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+  
+      <ion-title>
+        {{'Customer Address'| translate }}
+      </ion-title>
+  
+      <ion-buttons end>
+        <button ion-button icon-only (click)="openSearch()">
+          <ion-icon name="search"></ion-icon>
+        </button>
+        <button ion-button icon-only class="cart-button" (click)="openCart()">
+          <ion-icon name="cart">
+            <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
+          </ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+
+<ion-content class="page-my-shipping-addresses" padding>
+  <div *ngIf="allShippingAddress.length==0" text-center>
+    {{'Please add your new shipping address for the futher processing of the your order'|translate}}
+  </div>
+  <ion-list>
+    <ion-item *ngFor="let address of allShippingAddress">
+
+      <ion-icon name="create" item-start (click)="openEditShippingPage(address)"></ion-icon>
+      {{address.street+', '+ address.city+', '+address.state+' '+address.postcode+', '+address.country_name}}
+
+      <ion-icon name="radio-button-off" *ngIf="address.default_address!=address.address_id" (click)="defaultAddress(address.address_id)"
+        item-end></ion-icon>
+      <ion-icon name="radio-button-on" *ngIf="address.default_address==address.address_id" item-end></ion-icon>
+
+    </ion-item>
+  </ion-list>
+  <button ion-button block color="secondary" (click)="addShippingAddress()">{{'Add New Address'|translate}}</button>
+</ion-content>

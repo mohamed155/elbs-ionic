@@ -1,0 +1,40 @@
+page-shipping-method {
+    .row{
+        .col{
+            background-color: $white;
+            padding: 0;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+            .list{
+                margin-bottom: 0;
+                .item:first-child{
+                    background-color: darken(color($colors, light), 10%);
+                    border-top-width:0;
+                    border-bottom-width: 1px;
+                    margin-bottom: 0;
+                    color: color($colors, dark);
+
+                    .label{
+                        margin-bottom: 5px;
+                        h2{
+                            font-weight: bold;
+                        }
+                    }
+                }
+                .item{
+                    background-color: transparent;
+                    font-size: 14px;
+                }
+             }
+        }
+    }
+    
+    .footer{
+        .button{
+            height: 45px;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    }
+}
+

@@ -1,0 +1,41 @@
+page-news-list {
+    .page-news-list{
+        .list{
+            .item{
+                background-color: $white;
+                h2{
+                    color:color($colors, dark);
+                    small{
+                        .icon{
+                            color:color($colors, primary);
+                            margin-right: 5px;
+                        }
+                    }
+                }
+                .post-excerpt{
+                    font-size:14px;
+                    margin-bottom:0;
+                    margin-top:5px;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                    height:38px;
+                    white-space: normal;
+                    p:first-child{
+                        white-space: normal;
+                        line-height: 1.4;
+                        -webkit-line-clamp: 2;
+                        display: -webkit-box;
+                        box-sizing: border-box;
+                        -webkit-box-orient: vertical;
+                    }
+                    p{
+                        display: none;
+                    }
+                    strong{
+                        font-weight: normal;
+                    }
+                }
+            }
+        }
+    }
+}

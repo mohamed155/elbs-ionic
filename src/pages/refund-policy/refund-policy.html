@@ -1,0 +1,17 @@
+<ion-header>
+  
+    <ion-navbar>
+      <ion-buttons left>
+        <button ion-button (click)="dismiss()">
+          <ion-icon name="md-close"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>{{'Refund Policy'|translate}}</ion-title>
+    </ion-navbar>
+  
+  </ion-header>
+  
+  
+  <ion-content padding>
+    <div [innerHTML]="sharedData.refundPolicy"></div>
+  </ion-content>

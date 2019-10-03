@@ -1,0 +1,92 @@
+page-order-detail {
+    .page-order-detail{
+        ion-card {
+            ion-card-header{
+                background-color: darken(color($colors, light), 10%);
+                padding: 10px !important;
+                font-weight: bold;
+            }
+            ion-card-content{
+                background-color: $white;
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+                padding-bottom: 10px !important;
+
+                .item{
+                    background-color: transparent;
+                }
+            }
+       }
+        .order-product{
+            
+            .card-header{
+                padding: 10px;
+                h3{
+                    white-space: normal;
+                }
+            }
+
+            .card-content:last-child{
+                .item{
+                    border-bottom-width: 0;
+                }
+            }
+            .card-content{
+                padding-left: 10px;
+                padding-right: 10px;
+                padding-bottom: 10px;
+                
+
+                h3{
+                    width: 100%;
+                    // border-bottom-width: 1px;
+                    // border-bottom-color: #ddd;
+                    // border-bottom-style: solid;
+                    padding-bottom: 10px;
+                    margin-bottom: 0;
+                }
+                .item{
+                    background-color: transparent;
+                    padding-left: 0;
+                    border-top-width: 1px;
+                    border-bottom-width: 1px;
+                    border-style: solid;
+                    border-color: color($colors, light);
+
+                    .item-inner{
+                        padding-right: 0;
+
+                        .label{
+                            margin-right: 0;
+                            .col{
+                                font-size: 13px;
+                                .dgi{
+                                    display: inline-block;
+                                    position: relative;
+                                    top: 5px;
+                                    width: 35px;
+                                    text-align: center;
+                                }
+                                .button-small-md{
+                                    margin: 0;
+                                    padding-left: 6px;
+                                    padding-right: 6px;
+                                    height: 24px;
+                                }
+                            }
+                            .col:first-child{
+                                padding-left:0;
+                            }
+                            .col:last-child{
+                                text-align: right;
+                                padding-left:0;
+                                padding-right:0;
+                            }
+                        }
+                    }
+                }
+            }
+       }
+    }
+}

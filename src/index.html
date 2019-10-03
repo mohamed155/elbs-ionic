@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en" >
 <head>
   <meta charset="UTF-8">
   <title>Ionic App</title>
+  
   <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="format-detection" content="telephone=no">
   <meta name="msapplication-tap-highlight" content="no">
@@ -11,11 +12,9 @@
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#4e8ef7">
 
-  <!-- add to homescreen for ios -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  <!-- cordova.js required for cordova apps (remove if not needed) -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCMLN-ZbmFDw7Rf_OLsCDrYzI4n-jcaX0"></script>
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+  <!-- cordova.js required for cordova apps -->
   <script src="cordova.js"></script>
 
   <!-- un-comment this code to enable service worker
@@ -26,9 +25,13 @@
         .catch(err => console.error('Error', err));
     }
   </script>-->
-
+  <link href="assets/others/animate.css" rel="stylesheet">
+  <script src="assets/others/braintree.min.js"></script>
+  <script src="assets/others/braintreeClient.js"></script>
+  <script src="assets/others/braintreePaypal.js"></script>
+  <script src="assets/others/braintreeHostedFields.js"></script>
   <link href="build/main.css" rel="stylesheet">
-
+  
 </head>
 <body>
 

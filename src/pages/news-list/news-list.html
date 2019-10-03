@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{'News List'| translate }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="page-news-list">
+  <ion-grid class="page-empty" *ngIf="posts.length==0">
+    <ion-row align-items-center>
+      <ion-col  col-12>
+          <h3 text-center><ion-icon name="ionic"></ion-icon></h3>
+          <h4 text-center>{{'No Posts Avaialable'| translate}}</h4>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list>
+    <ion-item *ngFor="let post of posts" (click)="showPostDetail(post)">
+      <ion-thumbnail item-start>
+        <img src="{{config.url+post.news_image}}">
+      </ion-thumbnail>
+      <h2>{{post.news_name}}<br><small><ion-icon name="time"></ion-icon>{{post.news_date_added}}</small></h2>
+      <div class="post-excerpt" [innerHTML]="post.news_description"></div>
+    </ion-item>
+    <ion-infinite-scroll #infinite (ionInfinite)="getPosts()">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </ion-list>
+
+</ion-content>

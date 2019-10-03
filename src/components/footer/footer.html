@@ -1,0 +1,10 @@
+
+<ion-segment color="primary" [(ngModel)]="segments">
+    <ion-segment-button value="HomePage" (click)="openPage('HomePage')"><ion-icon name="home"></ion-icon></ion-segment-button>
+    <ion-segment-button value="CategoriesPage" (click)="openPage('CategoriesPage')"><ion-icon name="apps"></ion-icon> </ion-segment-button><!-- {{ 'Categories' | translate }} -->
+    <ion-segment-button value="ProductsPage" (click)="openPage('ProductsPage')"><ion-icon name="cash"></ion-icon> </ion-segment-button><!-- {{ 'Shop' | translate }} -->
+    <ion-segment-button value="NewsPage" (click)="openPage('NewsPage')"><ion-icon name="paper"></ion-icon> </ion-segment-button><!-- {{ 'News' | translate }} -->
+    <ion-segment-button value="SettingsPage" (click)="openPage('SettingsPage')"><ion-icon name="settings"></ion-icon> </ion-segment-button><!-- {{ 'Menu' | translate }} -->
+  </ion-segment>
+
+  

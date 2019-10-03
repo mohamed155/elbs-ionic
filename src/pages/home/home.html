@@ -1,18 +1,103 @@
 <ion-header>
+
   <ion-navbar>
-    <button ion-button menuToggle>
+    <button ion-button icon-only menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Home</ion-title>
+
+    <ion-title text-center>
+      <img src="assets/logo_header.png" alt="logo">
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="openSearch()">
+        <ion-icon name="search"></ion-icon>
+      </button>
+      <button ion-button icon-only class="cart-button" (click)="openCart()">
+        <ion-icon name="cart">
+          <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
+        </ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
+
 </ion-header>
 
-<ion-content padding>
-  <h3>Ionic Menu Starter</h3>
+<ion-content class="page-home" (ionScroll)="onScroll($event)">
+  <!-- top banners -->
+  <banners></banners>
 
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
+  <!-- top Segments  -->
+  <ion-segment [(ngModel)]="segments" color="primary">
+    <ion-segment-button value="topSeller">{{ 'Top Seller' | translate }}</ion-segment-button>
+    <ion-segment-button value="deals">{{ 'Deals' | translate }} </ion-segment-button>
+    <ion-segment-button value="mostLiked"> {{ 'Most Liked' | translate }}</ion-segment-button>
+  </ion-segment>
 
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <!-- top segments products -->
+  <div class="module" [ngSwitch]="segments">
+    <ion-slides slidesPerView=2.2 spaceBetween=10 *ngSwitchCase="'topSeller'" class="animate-product" dir="{{shared.dir}}">
+      <ion-slide *ngFor="let p of shared.tab1">
+        <product [data]="p" [type]="'normal'"></product>
+      </ion-slide>
+      <ion-slide class="swiper-slide-last">
+        <ion-card (click)="openProducts('top seller')">
+          <ion-card-content>
+            <ion-icon name="checkmark-circle"></ion-icon>
+            <h4>{{ 'View All' | translate }}</h4>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+
+    <ion-slides slidesPerView=2.2 spaceBetween=10 *ngSwitchCase="'deals'" dir="{{shared.dir}}" class="animate-product">
+      <ion-slide *ngFor="let p of shared.tab2">
+        <product [data]="p" [type]="'normal'"></product>
+      </ion-slide>
+      <ion-slide class="swiper-slide-last">
+        <ion-card (click)="openProducts('special')">
+          <ion-card-content>
+            <ion-icon name="checkmark-circle"></ion-icon>
+            <h4>{{ 'View All' | translate }}</h4>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+
+    <ion-slides slidesPerView=2.2 spaceBetween=10 *ngSwitchCase="'mostLiked'" dir="{{shared.dir}}" class="animate-product">
+      <ion-slide *ngFor="let p of shared.tab3">
+        <product [data]="p" [type]="'normal'"></product>
+      </ion-slide>
+      <ion-slide class="swiper-slide-last">
+        <ion-card (click)="openProducts('most liked')">
+          <ion-card-content>
+            <ion-icon name="checkmark-circle"></ion-icon>
+            <h4>{{ 'View All' | translate }}</h4>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+
+  </div>
+  <!-- Recent Viewed items products -->
+  <div class="module" *ngIf="shared.recentViewedProducts.length!=0" [@animate]>
+    <h5>{{'Recently Viewed'|translate}}</h5>
+    <ion-slides slidesPerView=2.2 spaceBetween=10 dir="{{shared.dir}}">
+      <ion-slide *ngFor="let p of shared.recentViewedProducts" [@animate]>
+        <product [data]="p" [type]="'recent'"></product>
+      </ion-slide>
+      <ion-slide class="swiper-slide-last"></ion-slide>
+    </ion-slides>
+  </div>
+
+  <sliding-tabs></sliding-tabs>
+  <ion-fab bottom right *ngIf="scrollTopButton">
+    <button ion-fab (click)="scrollToTop()">
+      <ion-icon name="arrow-round-up"></ion-icon>
+    </button>
+  </ion-fab>
+
 </ion-content>
+<ion-footer *ngIf="config.footerShowHide=='1'">
+  <footer></footer>
+</ion-footer>

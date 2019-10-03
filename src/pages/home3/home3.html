@@ -1,0 +1,96 @@
+<ion-header>
+    
+      <ion-navbar>
+        <button ion-button icon-only menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    
+        <ion-title text-center>
+          <img src="assets/logo_header.png" alt="logo">
+        </ion-title>
+    
+        <ion-buttons end>
+          <button ion-button icon-only (click)="openSearch()">
+            <ion-icon name="search"></ion-icon>
+          </button>
+          <button ion-button icon-only class="cart-button" (click)="openCart()">
+            <ion-icon name="cart">
+              <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
+            </ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-navbar>
+    
+    </ion-header>
+  
+  <ion-content class="page-home3">
+    <!-- top banners -->
+    <banners></banners>
+
+    <!-- Top Seller -->
+    <div class="module">
+      <h3>{{ 'Top Seller' | translate }}</h3>
+      <ion-slides slidesPerView=2.2 spaceBetween=10 class="animate-product" dir="{{shared.dir}}">
+        <ion-slide *ngFor="let p of shared.tab1" >
+          <product [data]="p" [type]="'normal'"></product>
+        </ion-slide>
+        <ion-slide class="swiper-slide-last">
+          <ion-card (click)="openProducts('top seller')">
+            <ion-card-content>
+              <ion-icon name="checkmark-circle"></ion-icon>
+              <h4>View All</h4>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+      </ion-slides>
+    </div>
+    <!-- Deals -->
+    <div class="module">
+      <h3>{{ 'Deals' | translate }}</h3>
+      <ion-slides slidesPerView=2.2 spaceBetween=10 class="animate-product" dir="{{shared.dir}}">
+        <ion-slide *ngFor="let p of shared.tab2" >
+          <product [data]="p" [type]="'normal'"></product>
+        </ion-slide>
+        <ion-slide class="swiper-slide-last" >
+          <ion-card (click)="openProducts('special')">
+            <ion-card-content>
+              <ion-icon name="checkmark-circle"></ion-icon>
+              <h4>View All</h4>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+      </ion-slides>
+    </div>
+    <!-- Most Liked -->
+    <div class="module">
+      <h3>{{ 'Most Liked' | translate }}</h3>
+      <ion-slides slidesPerView=2.2 spaceBetween=10 class="animate-product" dir="{{shared.dir}}">
+        <ion-slide *ngFor="let p of shared.tab3" >
+          <product [data]="p" [type]="'normal'"></product>
+        </ion-slide>
+        <ion-slide class="swiper-slide-last" >
+          <ion-card (click)="openProducts('most liked')">
+            <ion-card-content>
+              <ion-icon name="checkmark-circle"></ion-icon>
+              <h4>View All</h4>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+      </ion-slides>
+    </div>
+
+    <!-- Recent Viewed items products -->
+    <div class="module" *ngIf="shared.recentViewedProducts.length!=0" [@animate]>
+      <h5>{{'Recently Viewed'|translate}}</h5>
+      <ion-slides slidesPerView=2.2 spaceBetween=10 dir="{{shared.dir}}">
+        <ion-slide *ngFor="let p of shared.recentViewedProducts" [@animate]>
+          <product [data]="p" [type]="'recent'"></product>
+        </ion-slide>
+        <ion-slide class="swiper-slide-last"></ion-slide>
+      </ion-slides>
+    </div>
+
+  </ion-content>
+  <ion-footer *ngIf="config.footerShowHide==1">
+    <footer ></footer>
+  </ion-footer>

@@ -1,0 +1,61 @@
+<ion-header>
+  
+    <ion-navbar>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+  
+      <ion-title>
+        {{'Contact Us'| translate }}
+      </ion-title>
+  
+      <ion-buttons end>
+        <button ion-button icon-only (click)="openSearch()">
+          <ion-icon name="search"></ion-icon>
+        </button>
+        <button ion-button icon-only class="cart-button" (click)="openCart()">
+          <ion-icon name="cart">
+            <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
+          </ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  
+  </ion-header>
+<ion-content class="page-contact-us">
+  <div #map id="map"></div>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-12>
+          <ion-icon name="pin"></ion-icon>
+          {{config.address}}
+        </ion-col>
+        <ion-col col-12>
+            <ion-icon name="mail"></ion-icon>
+            {{config.email}}
+          </ion-col>
+          <ion-col col-12>
+            <ion-icon name="call"></ion-icon>
+            {{config.phoneNo}}
+          </ion-col>
+      </ion-row>
+
+      <form #contactForm="ngForm" (ngSubmit)="submit()">
+        <ion-list>
+          <ion-item>
+            <ion-input type="text" placeholder="{{'Name'|translate}}" name="name" [(ngModel)]="contact.name" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="email" placeholder="{{'Email'|translate}}" name="email" [(ngModel)]="contact.email" required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" placeholder="{{'Your Messsage'|translate}}" name="message" [(ngModel)]="contact.message" required></ion-input>
+          </ion-item>
+        </ion-list>
+        <button ion-button block color="secondary" type="submit" [disabled]="!contactForm.form.valid">{{'Send'|translate}}</button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,11 @@
+page-wish-list {
+    .page-wish-list{
+        .grid{
+            display: inline-block;
+    
+            [col-6]{
+                float: left;
+            }
+        }
+    }
+}

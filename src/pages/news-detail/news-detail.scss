@@ -1,0 +1,43 @@
+page-news-detail {
+    .page-news-detail{
+        .card{
+            background-color: $white;
+            width: calc(100% - 0px);
+            margin: 0;
+            border-radius: 0;
+            .card-content{
+                padding: 10px;
+                .card-title{
+                    font-size: 18px;
+                    padding-top: 0;
+
+                    small{
+                        font-size: 13px;
+
+                        .icon{
+                            color:color($colors, primary);
+                            margin-right: 5px;
+                        }
+                    }
+                }
+                .post-description{
+                    p{
+                        white-space: normal;
+                        strong{
+                            font-weight: normal;
+                        }
+                    }
+                    img{
+                        margin-top: 10px;
+                        margin-bottom: 8px;
+                        width: 100%;
+                        height: auto;
+                        strong{
+                            font-weight: normal;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

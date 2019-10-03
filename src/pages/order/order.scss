@@ -1,0 +1,163 @@
+page-order {
+    .page-order{
+        ion-card {
+            ion-card-header{
+                background-color: darken(color($colors, light), 10%);
+                padding: 10px !important;
+                font-weight: bold;
+            }
+            ion-card-content{
+                background-color: $white;
+                padding-top: 10px !important;
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+                padding-bottom: 10px !important;
+
+                .item{
+                    background-color: transparent;
+                }
+            }
+       }
+       .order-product{
+            
+            .card-header{
+                padding: 10px;
+                h3{
+                    white-space: normal;
+                }
+            }
+
+            .card-content:last-child{
+                .item{
+                    border-bottom-width: 0;
+                }
+            }
+            .card-content{
+                padding-left: 10px;
+                padding-right: 10px;
+                padding-bottom: 10px;
+                
+
+                h3{
+                    width: 100%;
+                    // border-bottom-width: 1px;
+                    // border-bottom-color: #ddd;
+                    // border-bottom-style: solid;
+                    padding-bottom: 10px;
+                    margin-bottom: 0;
+                    font-size: 1.5rem;
+                }
+                .item{
+                    background-color: transparent;
+                    padding-left: 0;
+                    border-top-width: 1px;
+                    border-bottom-width: 1px;
+                    border-style: solid;
+                    border-color: color($colors, light);
+
+                    .item-inner{
+                        padding-right: 0;
+
+                        .label{
+                            margin-right: 0;
+                            .col{
+                                font-size: 13px;
+                                .dgi{
+                                    display: inline-block;
+                                    position: relative;
+                                    top: 5px;
+                                    width: 35px;
+                                    text-align: center;
+                                }
+                                .button-small-md{
+                                    margin: 0;
+                                    padding-left: 6px;
+                                    padding-right: 6px;
+                                    height: 24px;
+                                }
+                            }
+                            .col:first-child{
+                                padding-left:0;
+                            }
+                            .col:last-child{
+                                text-align: right;
+                                padding-left:0;
+                                padding-right:0;
+                            }
+                        }
+                    }
+                }
+            }
+       }
+       
+       .braintree-paypal{
+            margin-top:15px;
+            margin-bottom:15px;
+            #braintree-paypal-button{
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+        .braintree-card{
+			background-color: $white;
+            padding:10px;
+            margin:10px;
+
+			.form{
+				.hosted-fields--label{
+					color:color($colors, dark);
+					font-size:14px;
+					margin-bottom: 5px;
+					display: block;
+				}
+				.hosted-field {
+					height:40px;
+					box-sizing: border-box;
+					width: 100%;
+					padding:6px 12px;
+					display: inline-block;
+					box-shadow: none;
+					font-weight: 600;
+					font-size: 14px;
+					border-radius:4px;
+					border: 1px solid darken(color($colors, light), 5%);
+					line-height: 20px;
+					background-color:darken(color($colors, light), 4%);
+					margin-bottom:10px;
+					transition: all 300ms ease-in-out;
+				}
+				.braintree-hosted-fields-focused {
+					border: 1px solid #64d18a;
+					background-position: left bottom;
+				}
+
+				.braintree-hosted-fields-invalid {
+					border: 1px solid #ed574a;
+				}
+				.button{
+					margin-top: 0;
+					margin-bottom: 0;
+				}
+			}
+		}
+		.stripe-card{
+			background-color: $white;
+            padding: 10px;
+            margin: 10px;
+
+			.item{
+				background-color:darken(color($colors, light), 4%);
+                margin-top:5px;
+                //height: 20px;
+			}
+		}
+        .hidden{
+            display: none;
+        }
+    }
+    .button-footer{
+        height: 45px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}

@@ -1,0 +1,52 @@
+page-products {
+    .toolbar-secondary{
+        padding: 0 !important;
+        min-height: inherit;
+        .slides{
+            background-color: $white;
+            .swiper-slide{
+                height: 40px;
+                width: auto;
+                padding-left: 10px;
+                padding-right: 10px;
+                font-size: 14px;
+                border-top-width: 0;
+                border-left-width: 0;
+                border-right-width: 0;
+                border-bottom-style: solid;
+                border-bottom-width: 2px;
+                border-bottom-color:transparent;
+            }
+            .selected{
+                
+                border-bottom-color: $black;
+                //background-color:color($colors, accent-color);
+            }
+        }
+    }
+    .grid{
+        display: inline-block;
+
+        [col-6]{
+            float: left;
+        }
+    }
+    
+    ion-footer{
+        ion-buttons{
+            .bar-button-menutoggle{
+                display: inline-block;
+            }
+        }
+    }
+    #menu2{
+        z-index: 100;
+        h3{
+            padding-left: 15px;
+            padding-right: 15px;
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+    }
+}

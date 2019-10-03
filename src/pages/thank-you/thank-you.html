@@ -1,0 +1,37 @@
+<ion-header>
+  
+    <ion-navbar>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+  
+      <ion-title>
+        {{'Thank You'| translate }}
+      </ion-title>
+  
+      <ion-buttons end>
+        <button ion-button icon-only (click)="openSearch()">
+          <ion-icon name="search"></ion-icon>
+        </button>
+        <button ion-button icon-only class="cart-button" (click)="openCart()">
+          <ion-icon name="cart">
+            <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
+          </ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  
+  </ion-header>
+
+
+<ion-content class="page-thank-you">
+  <ion-card>
+    <ion-card-content>
+        <ion-icon name="checkmark-circle"></ion-icon>
+        <h3>{{'Thank You'| translate }}</h3>
+        <h4>{{'Thank you for shopping with us.'| translate }}</h4>
+        <button ion-button block color="primary" (click)="openOrders()">{{'My Orders'| translate }}</button>
+        <button ion-button block clear color="primary" (click)="openHome()">{{'Continue Shopping'| translate }}</button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

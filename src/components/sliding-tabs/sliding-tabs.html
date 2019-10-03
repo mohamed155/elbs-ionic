@@ -1,0 +1,40 @@
+<div *ngIf="type=='image'" >
+
+  <ion-slides slidesPerView="auto" dir="{{shared.dir}}" id="slides">
+    <ion-slide class="swiper-slide-lg" [class.selected]="selected==''" *ngIf="shared.subCategories!=null" (click)="changeTab('')">
+      <ion-icon name="ionic"></ion-icon>
+      <h3>{{'All'|translate}}</h3>
+    </ion-slide>
+    <ion-slide class="swiper-slide-lg" [class.selected]="selected==c.id" *ngFor="let c of shared.subCategories" (click)="changeTab(c)">
+      <h2><img src="{{config.url+c.icon}}"></h2>
+      <h3>{{c.name}}</h3>
+    </ion-slide>
+  </ion-slides>
+
+</div>
+
+<div *ngIf="type!='image'" >
+  <ion-slides slidesPerView="auto" dir="{{shared.dir}}">
+    <ion-slide [class.selected]="selected==''" *ngIf="shared.subCategories!=null" (click)="changeTab('')">
+      {{'All'|translate}}
+    </ion-slide>
+    <ion-slide [class.selected]="selected==c.id" *ngFor="let c of shared.subCategories" (click)="changeTab(c)">
+      {{c.name}}
+    </ion-slide>
+  </ion-slides>
+
+</div>
+
+<ion-grid>
+  <ion-col *ngFor="let p of products" col-6>
+    <product [data]="p" [type]="'normal'"></product>
+  </ion-col>
+
+  <ion-col *ngIf="products.length==0" col-12 class="animated fadeIn">
+    <h6 text-center>{{'No Products Found!'|translate}}</h6>
+  </ion-col>
+</ion-grid>
+
+<ion-infinite-scroll #infinite (ionInfinite)="getProducts($event)">
+  <ion-infinite-scroll-content></ion-infinite-scroll-content>
+</ion-infinite-scroll>

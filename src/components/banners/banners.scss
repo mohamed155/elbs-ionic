@@ -1,0 +1,8 @@
+.slides{
+    height: auto;
+    .swiper-slide{
+    }
+    .swiper-pagination-bullet-active{
+        background:color($colors, secondary);
+    }
+}

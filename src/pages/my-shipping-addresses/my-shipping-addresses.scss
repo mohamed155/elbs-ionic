@@ -1,0 +1,15 @@
+page-my-shipping-addresses {
+    .page-my-shipping-addresses{
+        .list{
+            .item{
+                .icon{
+                    font-size: 18px;
+                    line-height: 30px;
+                }
+                .icon:first-child{
+                    color: color($colors, primary);
+                }
+            }
+        }
+    }
+}

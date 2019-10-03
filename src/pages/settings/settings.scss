@@ -1,0 +1,72 @@
+page-settings {
+    .page-settings{
+        .list{
+            margin-bottom:5px;
+            padding-bottom: 0 !important;
+            .item{
+                background-color: $white;
+            }
+            .button{
+                margin-top: 0;
+                margin-bottom: 15px;
+            }
+        }
+        .list-avatar:before {
+            content: "";
+            background-image: url(../assets/icons_stripe.svg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            opacity: 0.10;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            z-index:0;   
+        }
+        .list-avatar{
+            background-color:color($colors, primary);
+            position: relative;
+            .item{
+                background-color: transparent;
+                padding-left: 0;
+                .item-inner{
+                    padding-right: 0;
+                    .label{
+                        margin-right: 0;
+                        margin-bottom: 0;
+                    }
+                }
+                ion-avatar{
+                    min-width: 80px;
+                    min-height: 80px;
+                    margin-bottom: 15px;
+                    .icon{
+                        color:color($colors, light);
+                        font-size: 100px;
+                        margin-top: -5px;
+                    }
+                    img{
+                        margin-left: auto;
+                        margin-right: auto;
+                        height: 80px;
+                        width: 80px;
+                    }
+                }
+                h2{
+                    font-size: 18px;
+                    font-weight: bold;
+                    color: $white;
+                }
+                p{
+                    color: $white;
+                    white-space: normal;
+                    font-size: 14px;
+                    margin-top: 5px;
+                    margin-bottom: 15px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,70 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{'Login'|translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="page-login" padding>
+    <ion-row class="grid-t">
+      <ion-col>
+        <div class="logo">
+          <img class="image" src="assets/icons_stripe.svg"/>
+        </div>
+      </ion-col>
+    </ion-row>
+  <form #loginForm="ngForm" class="form" (ngSubmit)="login()">
+    <ion-row class="grid-b">
+      <ion-col col-12>
+        <ion-list >
+
+          <ion-item>
+            <ion-input type="email" placeholder="{{'Email'|translate}}" name="email" email [(ngModel)]="formData.customers_email_address" required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input type="password" placeholder="{{'Password'|translate}}" name="password" [(ngModel)]="formData.customers_password"
+              required></ion-input>
+          </ion-item>
+
+        </ion-list>
+      </ion-col>
+      <ion-col col-12>
+        <label *ngIf="errorMessage!=''">
+          <span>{{errorMessage}}</span>
+        </label>
+      </ion-col>
+      <ion-col col-12>
+        <button ion-button block color="secondary" type="submit" [disabled]="!loginForm.form.valid">{{ 'Login' | translate }}</button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+  <ion-row>
+    <ion-col col-12>
+      <button ion-button block clear color="dark" text-capitalize  (click)="openForgetPasswordPage()">{{ "I've forgotten my password?" | translate }}</button>
+    </ion-col>
+  </ion-row>
+  <ion-row class="grid-b">
+    <ion-col col-12 *ngIf="config.fbButton==1">
+      <button ion-button block color="facebook" (click)="facebookLogin()">{{ 'Login with' | translate }} <ion-icon name="logo-facebook"></ion-icon></button>
+    </ion-col>
+    <ion-col col-12 *ngIf="config.googleButton==1">
+      <button ion-button block color="google" (click)="googleLogin()">{{ 'Login with' | translate }} <ion-icon name="logo-google"></ion-icon></button>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col col-12>
+      <button ion-button block outline (click)="openSignUpPage()">{{ 'Register' | translate }}</button>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

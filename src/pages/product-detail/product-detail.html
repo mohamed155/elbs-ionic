@@ -1,0 +1,89 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{'Product Details'| translate }}
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="page-product-detail">
+
+  <ion-slides pager="true">
+    <ion-slide *ngIf="product!=null">
+      <img src="{{config.url+product.products_image}}">
+    </ion-slide>
+    <ion-slide *ngFor="let b of product.images">
+      <img src="{{config.url+b.image}}">
+    </ion-slide>
+  </ion-slides>
+
+  <ion-grid class="product-detail-title">
+    <ion-row>
+      <div class="product-new" *ngIf="checkProductNew()">{{'New'|translate}}</div>
+      <ion-col col-12>
+        <h3>{{product.products_name}}
+          <br>
+          <small>{{product.categories_name}}</small>
+        </h3>
+        <p>{{'Likes'|translate}}&nbsp;({{product.products_liked}})</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="product-detail-header">
+    <ion-row>
+      <div class="product-off" *ngIf="product.discount_price!=null">{{pDiscount()}}{{'OFF'|translate}}</div>
+      <ion-col col-8>
+        <span class="product-price-normal" *ngIf="product.discount_price==null">{{product_price |curency}}</span>
+        <span class="product-price-normal" *ngIf="product.discount_price!=null">{{discount_price |curency}}</span>
+        <span class="product-price-normal-through" *ngIf="product.discount_price!=null">{{product_price |curency}}</span>
+
+
+        <span class="product-outstock" *ngIf="product.products_quantity==0">{{'Out of Stock'|translate}}</span>
+        <span class="product-instock" *ngIf="product.products_quantity!=0">{{'In Stock'|translate}}</span>
+      </ion-col>
+      <ion-col col-4>
+        <ion-icon name="share" (click)="share()"></ion-icon>
+        <ion-icon [name]="product.isLiked=='0'? 'heart-outline' : 'heart'" (click)="clickWishList()"></ion-icon>
+      </ion-col>
+      <button ion-button block color="secondary" *ngIf="product.products_quantity!='0'" (click)="addToCartProduct()">{{'Add to Cart'|translate}}</button>
+      <button ion-button block color="danger" *ngIf="product.products_quantity=='0'">{{'OUT OF STOCK'|translate}}</button>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="product-detail-content" *ngIf="product.products_description!=null && product.products_description!=''">
+    <ion-row>
+      <ion-col col-12>
+        <h4>{{'Product Description'|translate}}</h4>
+        <div class="product-describtion" [innerHTML]="product.products_description"></div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="product-detail-content" *ngIf="product.attributes.length!=0">
+    <ion-row>
+      <ion-col col-12>
+        <h4>{{'Techincal details'|translate}}</h4>
+        <div class="product-describtion" [innerHTML]="product.products_description"></div>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+  <!-- <ion-list>
+    <ion-item *ngFor=" let att of product.attributes">
+      <ion-label>{{att.option.name}}</ion-label>
+      <ion-select [(ngModel)]="selectAttribute" (ngModelChange)="fillAttributes(selectAttribute,att.option.id)">
+        <ion-option [value]="val" *ngFor=" let val of att.values">{{val.value+' '+val.price_prefix+val.price+' '+config.currency}}
+        </ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list> -->
+
+  <ion-list radio-group *ngFor=" let att of product.attributes">
+    <h4>{{att.option.name}}</h4>
+    <ion-item *ngFor=" let val of att.values; let i = index">
+      <ion-label>{{val.value+' '+val.price_prefix+val.price+' '+config.currency}}</ion-label>
+      <ion-radio [value]="val" [checked]="i==0" (ionSelect)="fillAttributes(val,att.option.id)"></ion-radio>
+    </ion-item>
+  </ion-list>
+</ion-content>

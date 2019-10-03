@@ -1,0 +1,71 @@
+page-cart {
+    .page-cart{
+        
+        .card-product{
+            background-color: $white;
+            .card-header{
+                padding: 10px;
+                h3{
+                    white-space: normal;
+                }
+            }
+            .card-content{
+                padding-left: 10px;
+                padding-right: 10px;
+                padding-bottom: 10px;
+
+                .item{
+                    background-color: transparent;
+                    padding-left: 0;
+                    border-top-width: 1px;
+                    border-bottom-width: 1px;
+                    border-style: solid;
+                    border-color: color($colors, light);
+                    margin-bottom: 10px;
+
+                    .item-inner{
+                        padding-right: 0;
+
+                        .label{
+                            margin-right: 0;
+                            .col{
+                                font-size: 13px;
+                                .dgi{
+                                    display: inline-block;
+                                    position: relative;
+                                    top: 5px;
+                                    width: 35px;
+                                    text-align: center;
+                                }
+                                .button-small-md{
+                                    margin: 0;
+                                    padding-left: 6px;
+                                    padding-right: 6px;
+                                    height: 24px;
+                                }
+                            }
+                            .col:first-child{
+                                padding-left:0;
+                            }
+                            .col:last-child{
+                                text-align: right;
+                                padding-left:0;
+                                padding-right:0;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .chat-item.ng-enter {
+        -webkit-animation: fadeInLeft 1s;
+        animation: fadeInLeft 1s;
+    }
+
+    .footer{
+        .toolbar{
+            padding-left: 10px;
+        }
+    }
+}

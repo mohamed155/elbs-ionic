@@ -1,0 +1,132 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{'Shop'| translate }}
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only class="cart-button" (click)="openCart()">
+        <ion-icon name="cart">
+          <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
+        </ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+  <ion-toolbar class="toolbar-secondary">
+    <ion-slides slidesPerView="auto" dir="{{shared.dir}}">
+      <ion-slide [class.selected]="selectedTab==''" *ngIf="shared.subCategories!=null" (click)="changeTab('')">{{'All'|translate}}</ion-slide>
+
+      <ion-slide [class.selected]="selectedTab==c.id" *ngFor="let c of shared.subCategories" (click)="changeTab(c)">
+        {{c.name}}
+      </ion-slide>
+    </ion-slides>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="page-products" (ionScroll)="onScroll($event)">
+
+  <ion-grid *ngIf="productView=='grid'">
+    <ion-col *ngFor="let p of products" col-6>
+      <product [data]="p" [type]="'normal'"></product>
+    </ion-col>
+
+    <ion-col *ngIf="products.length==0" col-12 class="animated fadeIn">
+      <h6 text-center>{{'No Products Found!'|translate}}</h6>
+    </ion-col>
+  </ion-grid>
+
+  <ion-list class="list-view" *ngIf="productView=='list'">
+    <span *ngFor="let p of products">
+      <product [data]="p" [type]="'list'"></product>
+    </span>
+  </ion-list>
+
+
+  <ion-infinite-scroll #infinite (ionInfinite)="getProducts($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
+  <ion-fab bottom right *ngIf="scrollTopButton">
+    <button ion-fab (click)="scrollToTop()">
+      <ion-icon name="arrow-round-up"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-buttons left>
+      <button ion-button solid color="secondary" (click)="openSortBy()">
+        {{sortOrder| translate}}
+      </button>
+    </ion-buttons>
+
+    <ion-buttons right>
+      <button ion-button icon-only (click)="changeLayout()">
+        <ion-icon name="list" [name]="productView=='grid'? 'list' : 'apps'"></ion-icon>
+      </button>
+      <button ion-button icon-only (click)="removeFilters()" *ngIf="applyFilter==true">
+        <ion-icon name="refresh"></ion-icon>
+      </button>
+      <button ion-button icon-only *ngIf="shared.dir=='ltr'" menuToggle="right">
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+      <button ion-button icon-only *ngIf="shared.dir=='rtl'" menuToggle="left">
+        <ion-icon name="funnel"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
+
+<ion-menu [content]="content" side="{{side}}" id="menu2">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons left>
+        <button ion-button icon-only *ngIf="shared.dir=='ltr'" menuToggle="right">
+          <ion-icon name="close"></ion-icon>
+        </button>
+        <button ion-button icon-only *ngIf="shared.dir=='rtl'" menuToggle="left">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-buttons>
+      <ion-title>{{"Filters"|translate}}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="side-menu">
+    <h3 style="margin-bottom:0;">{{'Price Range'| translate}}</h3>
+    <ion-item dir="ltr">
+      <ion-range dualKnobs="true" pin="true" snaps="true" [(ngModel)]="price" [min]="0" [max]="maxAmount">
+        <ion-label range-left>{{price.lower}}</ion-label>
+        <ion-label range-right>{{price.upper}}</ion-label>
+      </ion-range>
+    </ion-item>
+
+    <div *ngIf="filters.length>0">
+      <ion-list *ngFor="let filter of filters">
+        <h3>{{filter.option.name}}</h3>
+        <ion-item *ngFor="let options of filter.values">
+          <ion-label>{{options.value}}</ion-label>
+          <ion-checkbox (ionChange)="fillFilterArray($event,filter.option.name,options.value)"></ion-checkbox>
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-content>
+  <ion-footer>
+    <ion-toolbar color="light">
+      <ion-buttons left>
+        <button ion-button outline color="secondary" menuClose="right" (click)="resetFilters()">
+          {{'Reset'| translate}}
+        </button>
+      </ion-buttons>
+      <ion-title></ion-title>
+      <ion-buttons right>
+        <button ion-button solid color="secondary" menuClose="right" (click)="applyFilters()">
+          {{'Apply'| translate}}
+        </button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-footer>
+</ion-menu>
+<ion-nav #content></ion-nav>

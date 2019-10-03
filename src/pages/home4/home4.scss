@@ -1,0 +1,106 @@
+page-home4{
+    .page-home4{
+        .categories-grid{
+            padding: 10px;
+            h3{
+                margin-top:0;
+                margin-bottom:10px;
+                font-size: 1.8rem;
+            }
+            .col{
+                padding:0.5px;
+                .card {
+                    width: calc(100% - 0px);
+                    border-radius: 0;
+                    position: relative;
+                    text-align: center;
+                    margin-left: 0;
+                    margin-right: 0;
+                    margin-bottom: 0;
+                    margin-top:0;
+            
+                    .categories-title {
+                        position: absolute;
+                        top: 36%;
+                        font-size: 1.0em;
+                        width: 100%;
+                        font-weight: bold;
+                        color: #fff;
+                    }
+                
+                    .categories-subtitle {
+                        font-size: 0.8em;
+                        position: absolute;
+                        top: 52%;
+                        width: 100%;
+                        color: #fff;
+                    }
+                }
+                .card::before{
+                    content: "";
+                    background-color: $black;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    height: 100%;
+                    width: 100%;
+                    opacity: 0.70;
+                }
+            }
+        }
+        .module{
+            h3{
+                margin-top: 10px;
+                margin-bottom: 0;
+                padding-left: 10px;
+                padding-right: 10px;
+                font-size: 1.8rem;
+            }
+            .slides{
+                .swiper-slide:first-child{
+                    margin-left: 10px;
+                }
+                .swiper-slide{
+                    .slide-zoom{
+                        margin-top: 10px;
+                        margin-bottom: 10px;
+                        text-align: initial;
+                        product{
+                            display: block;
+                        }
+                    }
+                }
+                .swiper-slide-last{
+                    padding-top: 15%;
+                    
+                    .slide-zoom{
+
+                        .card{
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            width: calc(100% - 0px);
+                            margin-right: 0 !important;
+                            margin-left: 0 !important;
+                            margin-top: 0 !important;
+                            margin-bottom: 0 !important;
+                            box-shadow: none;
+
+                            .icon{
+                                color: color($colors, accent-color);
+                                font-size:50px;
+                            }
+                        }
+                    }
+                }
+            }
+            h5{
+                margin-left: 10px;
+                margin-bottom: 0;
+            }
+        }
+    }
+    .animate-product {
+        animation: bounceInRight 0.75s;
+    }
+}

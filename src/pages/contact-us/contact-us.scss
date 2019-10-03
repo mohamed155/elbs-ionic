@@ -1,0 +1,50 @@
+page-contact-us {
+    .page-contact-us{
+        #map {
+          width: 100%;
+          height: 350px;
+        }
+
+        .card{
+          position: relative;
+          margin-top: -20px;
+          z-index: 9;
+
+          .card-content{
+            padding: 10px;
+            background-color: $white;
+
+            .col{
+              padding-left: 0;
+              padding-right: 0;
+              .icon{
+                width: 25px;
+                text-align: center;
+                color:color($colors, primary);
+              }
+            }
+
+            .list{
+              margin-top: 10px;
+              .item{
+                background-color:transparent;
+
+                .item-inner{
+                  border-bottom-width: 1px;
+                  border-bottom-style: solid;
+                  border-bottom-color:#dedede;
+                }
+              }
+              .item:last-child{
+                .item-inner{
+                  border-bottom-width: 0px !important;
+                }
+              }
+            }
+            .button{
+              margin-top: 15px;
+            }
+          }
+        }
+    }
+}

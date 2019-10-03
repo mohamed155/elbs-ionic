@@ -1,0 +1,104 @@
+
+<ion-header #myElement>
+
+  <ion-navbar>
+    <ion-title>
+      {{'My Cart'| translate }}
+    </ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only class="cart-button">
+        <ion-icon name="cart">
+          <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
+        </ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+<ion-content class="page-cart">
+
+  <ion-grid class="page-empty" *ngIf="shared.cartProducts.length==0" [@animate]>
+    <ion-row align-items-center>
+      <ion-col col-12>
+        <h3 text-center>
+          <ion-icon name="cart"></ion-icon>
+        </h3>
+        <h4 text-center>{{'Your cart is empty'|translate}}</h4>
+        <h5 text-center>{{'continue shopping'|translate}}</h5>
+        <p text-center>
+          <button ion-button color="secondary" (click)="openProductsPage()">{{'Explore'|translate}}</button>
+        </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <ion-card class="card-product animated flipInX" *ngFor="let product of shared.cartProducts" [@animate]>
+    <ion-card-header>
+      <h3>{{product.products_name}}
+        <br>
+        <small>{{product.categories_name}}</small>
+      </h3>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-thumbnail item-start>
+          <img src="{{config.url+product.image}}">
+        </ion-thumbnail>
+
+        <ion-row>
+          <ion-col col-6>{{'Price' |translate}}&nbsp;:&nbsp;</ion-col>
+          <ion-col col-6>{{product.price| curency}}</ion-col>
+        </ion-row>
+
+        <ion-row *ngFor="let att of product.attributes">
+          <ion-col col-6>{{att.products_options_values+'&nbsp;'+att.products_options}}&nbsp;:</ion-col>
+          <ion-col col-6>{{att.price_prefix +'&nbsp;'+ att.options_values_price+'&nbsp;'+config.currency}}</ion-col>
+        </ion-row>
+
+        <ion-row align-items-center>
+          <ion-col col-6>{{'Quantity' |translate}}&nbsp;:&nbsp;</ion-col>
+          <ion-col col-6>
+            <button ion-button small outline (click)="qunatityMinus(product);">
+              <ion-icon name="remove"></ion-icon>
+            </button>
+            <span class="dgi">{{product.customers_basket_quantity}}</span>
+            <button ion-button small outline (click)="qunatityPlus(product);">
+              <ion-icon name="add"></ion-icon>
+            </button>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-6>
+            <strong>{{'Sub Total' |translate}}&nbsp;:&nbsp;</strong>
+          </ion-col>
+          <ion-col col-6>
+            <strong>{{product.total | curency}}</strong>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      <button ion-button small color="secondary" (click)="getSingleProductDetail(product.products_id)">{{'View' | translate}}</button>
+      <button ion-button small clear color="danger" (click)="removeCart(product.cart_id);">{{'Remove' | translate}}</button>
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>
+
+<ion-footer *ngIf="shared.cartProducts.length!=0">
+  <ion-toolbar color="light">
+    <ion-buttons left>
+      <strong>
+        {{'Total'|translate}}&nbsp;:&nbsp;
+        <span>{{total| curency}}</span>
+      </strong>
+    </ion-buttons>
+    <ion-buttons right>
+      <button ion-button solid color="secondary" (click)="proceedToCheckOut()">
+        {{'Proceed'|translate}}
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

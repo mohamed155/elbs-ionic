@@ -1,0 +1,26 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{'Select Language'| translate }}</ion-title>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="page-language" padding>
+
+  <ion-list radio-group [(ngModel)]="selectedLanguage" (ionChange)="updateLanguage(selectedLanguage)">
+    <ion-item *ngFor="let l of languages">
+      <img src="{{config.url+l.image}}" item-start>
+      <ion-label>
+        {{l.name}}
+      </ion-label>
+      <ion-radio [value]="l"></ion-radio>
+    </ion-item>
+  </ion-list>
+</ion-content>

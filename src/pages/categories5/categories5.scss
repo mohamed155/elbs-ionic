@@ -1,0 +1,21 @@
+page-categories5 {
+    .page-categories5{
+        .list{
+            margin-bottom: 25px;
+
+            .item.list-header{
+                background-color:darken(color($colors, light), 10%);
+                margin-bottom: 0;
+                
+                .label {
+                    color:color($colors, dark);
+                    font-size: 1.4em;
+                    font-weight: bold;
+                }
+            }
+            .item {
+                background-color: $white;
+            }
+        }
+    }
+}

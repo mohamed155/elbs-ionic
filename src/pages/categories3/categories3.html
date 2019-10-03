@@ -1,0 +1,40 @@
+<ion-header>
+    
+      <ion-navbar>
+        <button ion-button icon-only menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+    
+        <ion-title>
+          {{'Categories'| translate }}
+        </ion-title>
+    
+        <ion-buttons end>
+          <button ion-button icon-only (click)="openSearch()">
+            <ion-icon name="search"></ion-icon>
+          </button>
+          <button ion-button icon-only class="cart-button" (click)="openCart()">
+            <ion-icon name="cart">
+              <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
+            </ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-navbar>
+    
+    </ion-header>
+  
+  
+  <ion-content class="page-categories3">
+      <ion-list>
+          <ion-item *ngFor="let c of shared.categories" (click)="openSubCategories(c.id)" class="animated flipInX">
+            <ion-avatar item-start>
+              <img src="{{config.url+c.image}}">
+            </ion-avatar>
+            <h2>{{c.name}}<br><small>{{c.total_products}} {{'Products'| translate }} </small></h2>
+          </ion-item>
+        </ion-list>
+      
+  </ion-content>
+  <ion-footer *ngIf="config.footerShowHide=='1'">
+    <footer ></footer>
+  </ion-footer>

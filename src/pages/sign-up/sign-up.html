@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{'Create an Account'|translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="page-sign-up" padding>
+  <ion-row>
+    <ion-col col-12>
+      <div class="photo">
+        <div class="image">
+          <img class="avatar" src="assets/avatar.png" *ngIf="image==null">
+          <img class="avatar" src="{{image}}" *ngIf="image!=null">
+        </div>
+        <div class="upload">
+          <ion-icon name="camera" (click)='openCamera()'></ion-icon>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+
+  <form #loginForm="ngForm" class="form" (ngSubmit)="signUp()">
+    <ion-row>
+      <ion-col>
+        <ion-list>
+          <ion-item>
+            <ion-input type="text" placeholder="{{'First Name'|translate}}" name="customers_firstname" [(ngModel)]="formData.customers_firstname"
+              required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="text" placeholder="{{'Last Name'|translate}}" name="customers_lastname" [(ngModel)]="formData.customers_lastname"
+              required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="email" email placeholder="{{'Email'|translate}}" name="customers_email_address" [(ngModel)]="formData.customers_email_address"
+              required></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-input type="password" placeholder="{{'Password'|translate}}" name="customers_password" [(ngModel)]="formData.customers_password"
+              required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input type="number" placeholder="{{'Mobile'|translate}}" name="customers_telephone" [(ngModel)]="formData.customers_telephone"
+              required></ion-input>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+      <ion-col col-12>
+        <label *ngIf="errorMessage!=''">
+          <span>{{errorMessage}}</span>
+        </label>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p>{{"Creating an account means you’re okay with our"|translate}}
+          <a (click)="openTermServicesPage()">{{'Term and Services'|translate}}</a>,
+          <a (click)="openPrivacyPolicyPage()">{{'Privacy Policy'|translate}}</a> {{'and'|translate}}
+          <a (click)="openRefundPolicyPage()">{{'Refund Policy'|translate}}</a>
+        </p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <button ion-button block color="secondary" type="submit" [disabled]="!loginForm.form.valid">{{'Register'|translate}}</button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

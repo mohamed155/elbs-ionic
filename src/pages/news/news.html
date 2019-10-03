@@ -1,0 +1,96 @@
+
+
+<ion-header>
+  
+    <ion-navbar>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+  
+      <ion-title>
+        {{'News'| translate }}
+      </ion-title>
+  
+      <ion-buttons end>
+        <button ion-button icon-only (click)="openSearch()">
+          <ion-icon name="search"></ion-icon>
+        </button>
+        <button ion-button icon-only class="cart-button" (click)="openCart()">
+          <ion-icon name="cart">
+            <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
+          </ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  
+  </ion-header>
+
+<ion-content class="page-news">
+  <ion-slides pager=true paginationType="bullets" autoplay="true" loop="true" dir="{{shared.dir}}" class="animated fadeIn">
+    <ion-slide *ngFor="let post of featuredPosts" (click)="showPostDetail(post)">
+      <img src="{{config.url+post.news_image}}">
+      <h4 class="slider-title">{{post.news_name}}</h4>
+    </ion-slide>
+  </ion-slides>
+
+  <!-- top Segments  -->
+  <ion-segment [(ngModel)]="segments" color="primary">
+    <ion-segment-button value="newest">{{'Newest' |translate}}</ion-segment-button>
+    <ion-segment-button value="categories">{{ 'Categories' | translate }} </ion-segment-button>
+  </ion-segment>
+  <!-- top segments products -->
+  <div class="segments-inner"  [ngSwitch]="segments">
+
+    <div class="segments-posts" *ngSwitchCase="'newest'">
+
+      <ion-grid class="page-empty" *ngIf="posts.length==0">
+        <ion-row align-items-center>
+          <ion-col  col-12>
+              <h3 text-center><ion-icon name="ionic"></ion-icon></h3>
+              <h4 text-center>{{'No Posts Available'| translate}}</h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-list>
+        <ion-item *ngFor="let post of posts" (click)="showPostDetail(post)" class="animated fadeIn">
+          <ion-thumbnail item-start>
+            <img src="{{config.url+post.news_image}}">
+          </ion-thumbnail>
+          <h2>{{post.news_name}}<br><small><ion-icon name="time"></ion-icon>{{post.news_date_added}}</small></h2>
+          <div class="post-excerpt" [innerHTML]="post.news_description"></div>
+        </ion-item>
+        <ion-infinite-scroll #infinite (ionInfinite)="getPosts()">
+          <ion-infinite-scroll-content></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+      </ion-list>
+    </div>
+
+
+    <div class="segments-categories" *ngSwitchCase="'categories'">
+      <ion-grid class="page-empty" *ngIf="categories.length==0">
+        <ion-row align-items-center>
+          <ion-col  col-12>
+              <h3 text-center><ion-icon name="ionic"></ion-icon></h3>
+              <h4 text-center>{{'No Categories Available'| translate}}</h4>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-grid class="grid-categories">
+        <ion-row>
+          <ion-col col-6 *ngFor="let cat of categories" (click)="openPostsPage(cat.name,cat.id)" class="animated fadeIn">
+            <ion-card class="card-background-page">
+              <img src="{{config.url+cat.image}}"/>
+              <div class="card-title">{{cat.name}}</div>
+              <div class="card-subtitle">{{cat.total_news}} {{'Posts'|translate}}</div>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+</ion-content>
+<ion-footer *ngIf="config.footerShowHide=='1'">
+  <footer ></footer>
+</ion-footer>

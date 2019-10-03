@@ -1,0 +1,87 @@
+page-product-detail {
+    
+    .product-new{
+        font-size: 13px;
+        color: $white;
+        background-color:color($colors, primary);
+        padding-left: 5px;
+        padding-right: 5px;
+        position: absolute;
+        top: -10px;
+        left: 10px;
+        z-index: 9;
+        height: 18px;
+        line-height: 22px;
+    }
+    .product-off{
+        @extend.product-new;
+        background-color:lighten(color($colors, facebook), 20%);
+    }
+    .page-product-detail{
+        background-color: $white;
+        .product-detail-title{
+            position: relative;
+            margin-top: -4px;
+            
+            h3{
+                font-size: 17px;
+                margin-top: 10px;
+
+                small{
+                    color: darken(color($colors, light), 50%);
+                }
+            }
+            
+        }
+
+        .product-detail-header{
+            background-color:darken(color($colors, light), 2%);
+            position: relative;
+            padding-top:15px;
+
+            .product-price-normal{
+                font-size: 20px;
+                font-weight: 600;
+                color: color($colors, primary);
+            }
+            .product-price-normal-through{
+                font-size: 16px;
+                font-weight: 600;
+                color:darken(color($colors, light), 50%);
+                text-decoration: line-through;
+                margin-left: 5px;
+            }
+            .product-instock{
+                margin-left: 15px;
+                color: color($colors, primary);
+            }
+            .product-outstock{
+                @extend.product-instock;
+                color: color($colors, danger);
+            }
+            [col-4]{
+                text-align: right;
+                .icon{
+                    color:darken(color($colors, light), 50%);
+                    font-size: 22px;
+                    margin-left: 10px;
+                }
+            }
+        }
+
+        .product-detail-content{
+            
+            h4{
+                margin-top: 0;
+                font-size: 17px;
+            }
+            p{
+                margin-bottom: 0;
+            }
+        }
+        .list{
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+    }
+}

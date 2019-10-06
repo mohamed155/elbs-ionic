@@ -23,6 +23,8 @@ import { Categories2Page } from '../../pages/categories2/categories2';
 import { Categories5Page } from '../../pages/categories5/categories5';
 import { Categories4Page } from '../../pages/categories4/categories4';
 import { Categories6Page } from '../../pages/categories6/categories6';
+import {WishListPage} from "../../pages/wish-list/wish-list";
+import {SearchPage} from "../../pages/search/search";
 
 
 
@@ -48,6 +50,8 @@ export class FooterComponent {
     else if (page == "ProductsPage") { this.navCtrl.push(ProductsPage); }
     else if (page == "NewsPage") { this.navCtrl.setRoot(NewsPage); }
     else if (page == "SettingsPage") { this.navCtrl.setRoot(SettingsPage); }
+    else if (page == "WishListPage") { this.navCtrl.setRoot(WishListPage); }
+    else if (page == "SearchPage") { this.navCtrl.setRoot(SearchPage); }
   }
   openHomePage() {
     if (this.config.homePage == 1) { this.navCtrl.setRoot(HomePage); }

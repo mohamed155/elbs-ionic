@@ -131,7 +131,7 @@ export class MyApp {
     });
     this.platform.setDir(localStorage.direction, true);
     shared.dir = localStorage.direction;
-    //setting default languge on start up 
+    //setting default languge on start up
     translate.setDefaultLang(this.config.langId);
     //if(this.config.siteSetting()){
     this.initializeApp();
@@ -151,6 +151,7 @@ export class MyApp {
             if (this.config.homePage == 3) { this.rootPage = Home3Page; }
             if (this.config.homePage == 4) { this.rootPage = Home4Page; }
             if (this.config.homePage == 5) { this.rootPage = Home5Page; }
+            // this.rootPage = Home3Page;
             setTimeout(() => { this.splashScreen.hide(); }, 700);
           }
           this.storage.set('firsttimeApp', 'firstTime');
@@ -298,7 +299,7 @@ export class MyApp {
       this.socialSharing.share(
         "Nice Application",
         this.config.appName,
-        "assets/logo_header.png",
+        "assets/logo-white.png",
         this.config.packgeName.toString()
       ).then(() => {
       }).catch(() => {
@@ -310,7 +311,7 @@ export class MyApp {
         this.socialSharing.share(
           "Nice Application",
           this.config.appName,
-          "assets/logo_header.png",
+          "assets/logo-white.png",
           "https://play.google.com/store/apps/details?id=" + val
         ).then(() => {
 

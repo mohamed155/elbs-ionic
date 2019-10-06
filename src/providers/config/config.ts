@@ -14,7 +14,7 @@ import { OneSignal } from "@ionic-native/onesignal";
 @Injectable()
 
 export class ConfigProvider {
-  public url: string = 'http://localhost/ionic-ecommerce';
+  public url: string = 'http://localhost/elbs/';
   public langId: string = localStorage.langId;
   public loader = 'dots';
   public newProductDuration = 100;
@@ -34,8 +34,8 @@ export class ConfigProvider {
   public notifTitle;
   public notifDuration;
   public footerShowHide;
-  public homePage = 1;
-  public categoryPage = 1;
+  public homePage = 3;
+  public categoryPage = 6;
   public siteUrl = '';
   public appName = '';
   public packgeName = "";

@@ -5,4 +5,18 @@
     .swiper-pagination-bullet-active{
         background:color($colors, secondary);
     }
+
+  .swiper-pagination {
+    bottom: 0;
+  }
+
+  .slide-wrapper {
+    padding: 10px;
+
+    img {
+      border: solid 2px color($colors, 'primary');
+      border-radius: 10px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.16);
+    }
+  }
 }

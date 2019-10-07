@@ -4,15 +4,15 @@
       <button ion-button icon-only menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-  
+
       <ion-title>
         {{'About Us'| translate }}
       </ion-title>
-  
+
       <ion-buttons end>
-        <button ion-button icon-only (click)="openSearch()">
-          <ion-icon name="search"></ion-icon>
-        </button>
+        <!--<button ion-button icon-only (click)="openSearch()">-->
+          <!--<ion-icon name="search"></ion-icon>-->
+        <!--</button>-->
         <button ion-button icon-only class="cart-button" (click)="openCart()">
           <ion-icon name="cart">
             <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
@@ -25,8 +25,8 @@
 <ion-content class="page-about-us" padding>
   <ion-row>
     <ion-col text-center col-12>
-      <img src="../assets/icon_logo.svg" width="40">
-      <h3>ABOUT VECTORSHOP</h3>
+      <img src="assets/logo.png" width="40">
+      <h3>ABOUT ELBS</h3>
     </ion-col>
   </ion-row>
   <div [innerHTML]="shared.aboutUs"></div>
@@ -39,17 +39,17 @@
     <button ion-item (click)="showModal('privacyPolicy')">
         {{'Privacy Policy'|translate}}
         <ion-icon showWhen="android" name="arrow-forward" item-end></ion-icon>
-        
+
     </button>
     <button ion-item (click)="showModal('refundPolicy')">
         {{'Refund Policy'|translate}}
         <ion-icon showWhen="android" name="arrow-forward" item-end></ion-icon>
-        
+
     </button>
     <button ion-item (click)="showModal('termServices')">
         {{'Term and Services'|translate}}
         <ion-icon showWhen="android" name="arrow-forward" item-end></ion-icon>
-        
+
     </button>
   </ion-list>
 </ion-content>

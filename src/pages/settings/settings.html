@@ -10,9 +10,9 @@
     </ion-title>
 
     <ion-buttons end>
-      <button ion-button icon-only (click)="openSearch()">
-        <ion-icon name="search"></ion-icon>
-      </button>
+      <!--<button ion-button icon-only (click)="openSearch()">-->
+        <!--<ion-icon name="search"></ion-icon>-->
+      <!--</button>-->
       <button ion-button icon-only class="cart-button" (click)="openCart()">
         <ion-icon name="cart">
           <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
@@ -58,7 +58,7 @@
     </ion-item>
 
     <!-- <ion-item>
-      <ion-label>{{"Show/Hide Add to cart button"|translate}}</ion-label> 
+      <ion-label>{{"Show/Hide Add to cart button"|translate}}</ion-label>
       <ion-toggle [(ngModel)]="setting.cartButton" (ionChange)="hideShowCartButton()"></ion-toggle>
     </ion-item>
     <ion-item>

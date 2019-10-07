@@ -3,7 +3,7 @@
 // Author: VectorCoder Team
 // Author URI: http://vectorcoder.com/
 import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, InfiniteScroll } from 'ionic-angular';
+import {NavController, NavParams, InfiniteScroll, LoadingController} from 'ionic-angular';
 import { Http } from '@angular/http';
 import { ConfigProvider } from '../../providers/config/config';
 import { SharedDataProvider } from '../../providers/shared-data/shared-data';
@@ -40,10 +40,13 @@ export class WishListPage {
     public http: Http,
     public config: ConfigProvider,
     public shared: SharedDataProvider,
+    public loadingCtrl: LoadingController,
     translate: TranslateService) {
 
   }
   getProducts() {
+    const loader = this.loadingCtrl.create();
+    loader.present();
     var data: { [k: string]: any } = {};
     if (this.shared.customerData.customers_id != null)
       data.customers_id = this.shared.customerData.customers_id;
@@ -55,11 +58,13 @@ export class WishListPage {
       if (data.success == 1) {
         this.page++;
         var prod = data.product_data;
-        for (let value of prod) {
-          this.shared.wishList.push(value);
-        }
+        this.shared.wishList = prod;
+        // for (let value of prod) {
+        //   this.shared.wishList.push(value);
+        // }
       }
       if (data.success == 0) { this.infinite.enable(false); }
+      loader.dismiss();
     });
   }
   ngOnInit() {

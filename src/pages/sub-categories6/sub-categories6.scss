@@ -1,19 +1,23 @@
 page-sub-categories6 {
     .page-sub-categories6{
-        .card:first-child{
-            margin-top: 0;
-          }
+        //.card:first-child{
+        //    margin-top: 0;
+        //  }
           .card {
-            width: calc(100% - 0px);
-            border-radius: 0;
+            //width: calc(100% - 0px);
             position: relative;
             text-align: center;
-            margin-left: 0;
-            margin-right: 0;
-            margin-bottom: 0;
-            margin-top: 1px;
-            max-height: 280px;
-      
+            //margin-left: 0;
+            //margin-right: 0;
+            //margin-bottom: 0;
+            //margin-top: 1px;
+            max-height: 180px;
+            margin: 10px;
+            overflow: hidden;
+            width: calc(100% - 20px);
+            border-radius: 20px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
+
             .categories-title {
                 position: absolute;
                 top: 36%;
@@ -23,7 +27,7 @@ page-sub-categories6 {
                 color: #fff;
                 text-transform: uppercase;
             }
-        
+
             .categories-subtitle {
                 font-size: 1.0em;
                 position: absolute;

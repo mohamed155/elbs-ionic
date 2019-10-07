@@ -55,7 +55,7 @@
   <div class="list-price-block">
     <h4 class="list-price-normal" *ngIf="p.discount_price==null">{{p.products_price|curency}}</h4>
     <h4 class="list-price-normal" *ngIf="p.discount_price!=null"><span class="list-price-normal-through" *ngIf="p.discount_price!=null">{{p.products_price|curency}}</span>{{p.discount_price|curency}}</h4>
-    
+
   </div>
   <ion-row align-items-center>
     <ion-col col-10>
@@ -67,5 +67,5 @@
     </ion-col>
   </ion-row>
 
-  
+
 </ion-item>

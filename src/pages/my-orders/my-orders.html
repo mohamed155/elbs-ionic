@@ -1,19 +1,19 @@
 
 <ion-header>
-  
+
     <ion-navbar>
       <button ion-button icon-only menuToggle>
         <ion-icon name="menu"></ion-icon>
       </button>
-  
+
       <ion-title>
         {{'Customer Orders'| translate }}
       </ion-title>
-  
+
       <ion-buttons end>
-        <button ion-button icon-only (click)="openSearch()">
-          <ion-icon name="search"></ion-icon>
-        </button>
+        <!--<button ion-button icon-only (click)="openSearch()">-->
+          <!--<ion-icon name="search"></ion-icon>-->
+        <!--</button>-->
         <button ion-button icon-only class="cart-button" (click)="openCart()">
           <ion-icon name="cart">
             <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
@@ -21,7 +21,7 @@
         </button>
       </ion-buttons>
     </ion-navbar>
-  
+
   </ion-header>
 
 <ion-content class="page-my-orders">
@@ -69,8 +69,8 @@
           {{'Status'|translate}}
         </ion-col>
         <ion-col text-right col-6>
-          <span [class.pending]="order.orders_status=='Pending'"  
-          [class.cancel]="order.orders_status=='Cancel'" 
+          <span [class.pending]="order.orders_status=='Pending'"
+          [class.cancel]="order.orders_status=='Cancel'"
           [class.inprocess]="order.orders_status=='In Process'" [class.complete]="order.orders_status=='Completed'"><strong>{{order.orders_status}}</strong></span>
         </ion-col>
       </ion-row>

@@ -1,18 +1,23 @@
 <ion-segment color="primary" [(ngModel)]="segments">
   <ion-segment-button value="HomePage" (click)="openPage('HomePage')">
     <ion-icon name="home"></ion-icon>
+    <h6>{{ 'Home' | translate }}</h6>
   </ion-segment-button>
   <ion-segment-button value="CategoriesPage" (click)="openPage('CategoriesPage')">
     <ion-icon name="apps"></ion-icon>
+    <h6>{{ 'Categories' | translate }}</h6>
   </ion-segment-button><!-- {{ 'Categories' | translate }} -->
   <ion-segment-button value="ProductsPage" (click)="openPage('ProductsPage')">
     <ion-icon name="cash"></ion-icon>
+    <h6>{{'Shop' | translate }}</h6>
   </ion-segment-button><!-- {{ 'Shop' | translate }} -->
   <ion-segment-button value="SearchPage" (click)="openPage('SearchPage')">
     <ion-icon name="ios-search"></ion-icon>
+    <h6>{{'Search'| translate }}</h6>
   </ion-segment-button><!-- {{ 'News' | translate }} -->
   <ion-segment-button value="WishListPage" (click)="openPage('WishListPage')">
     <ion-icon name="md-heart"></ion-icon>
+    <h6>{{ 'My Wish List' | translate }}</h6>
   </ion-segment-button><!-- {{ 'Menu' | translate }} -->
 </ion-segment>
 

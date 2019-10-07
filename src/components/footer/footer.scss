@@ -1,3 +1,12 @@
 footer {
+  .segment-button {
+    display: flex !important;
+    flex-direction: column !important;
+    height: unset !important;
 
+    h6 {
+      margin-top: 0;
+      font-size: 12px;
+    }
+  }
 }

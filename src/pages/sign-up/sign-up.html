@@ -51,6 +51,37 @@
             <ion-input type="number" placeholder="{{'Mobile'|translate}}" name="customers_telephone" [(ngModel)]="formData.customers_telephone"
               required></ion-input>
           </ion-item>
+          <ion-item>
+            <ion-label>{{'Login as vendor' | translate}}</ion-label>
+            <ion-checkbox name="type" [(ngModel)]="formData.type"></ion-checkbox>
+          </ion-item>
+          <ion-item text-center *ngIf="formData.type">
+            <ion-label>{{'Shop info' | translate}}</ion-label>
+          </ion-item>
+          <ion-item *ngIf="formData.type">
+            <ion-input type="text" placeholder="{{'Vendor name'|translate}}" name="vendor_name" [(ngModel)]="formData.vendor_name"
+                       required></ion-input>
+          </ion-item>
+          <ion-item *ngIf="formData.type">
+            <ion-input type="text" placeholder="{{'Vendor address'|translate}}" name="vendor_address" [(ngModel)]="formData.vendor_address"
+                       required></ion-input>
+          </ion-item>
+          <ion-item *ngIf="formData.type">
+            <ion-input type="number" placeholder="{{'Vendor phone'|translate}}" name="vendor_phone" [(ngModel)]="formData.vendor_phone"
+                       ></ion-input>
+          </ion-item>
+          <ion-item *ngIf="formData.type">
+            <ion-input type="text" placeholder="{{'Vendor facebook'|translate}}" name="vendor_phone" [(ngModel)]="formData.vendor_facebook"
+                       ></ion-input>
+          </ion-item>
+          <ion-item *ngIf="formData.type">
+            <ion-input type="text" placeholder="{{'Vendor instagram'|translate}}" name="vendor_phone" [(ngModel)]="formData.vendor_instagram"
+                       ></ion-input>
+          </ion-item>
+          <ion-item *ngIf="formData.type">
+            <ion-label>{{'Online shop' | translate}}</ion-label>
+            <ion-checkbox name="vandor_online" [(ngModel)]="formData.vendor_online"></ion-checkbox>
+          </ion-item>
         </ion-list>
       </ion-col>
       <ion-col col-12>

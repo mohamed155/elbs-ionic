@@ -22,9 +22,17 @@ export class SignUpPage {
     customers_email_address: '',
     customers_password: '',
     customers_telephone: '',
-    customers_picture: ''
+    customers_picture: '',
+    type: false,
+    vendor_name: '',
+    vendor_address: '',
+    vendor_phone: '',
+    vendor_facebook: '',
+    vendor_instagram: '',
+    vendor_online: false,
   };
   image;
+  vendor_logo;
   errorMessage = '';
   constructor(
     public http: Http,

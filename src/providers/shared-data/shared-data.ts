@@ -23,20 +23,21 @@ export class SharedDataProvider {
   public tab1: any;
   public tab2: any;
   public tab3: any;
-  public categories = new Array();
-  public subCategories = new Array();
+  public categories = [];
+  public subCategories = [];
   public customerData: { [k: string]: any } = {};
-  public recentViewedProducts = new Array();
-  public cartProducts = new Array();
+  public recentViewedProducts = [];
+  public cartProducts = [];
   public privacyPolicy;
   public termServices;
   public refundPolicy;
   public aboutUs;
   public cartquantity;
-  public wishList = new Array();
+  public wishList = [];
   public tempdata: { [k: string]: any } = {};
   public dir = "ltr";
   public selectedFooterPage = "HomePage";
+  public vendors = [];
 
   public orderDetails = {
     tax_zone_id: "",
@@ -126,7 +127,6 @@ export class SharedDataProvider {
       setTimeout(() => {
         this.appVersion.getPackageName().then((val) => { this.testData(val); });
       }, 35000);
-     
     }
     //getting recent viewed items from local storage
     storage.get('cartProducts').then((val) => {
@@ -134,6 +134,12 @@ export class SharedDataProvider {
       this.cartTotalItems();
       // console.log(val);
     });
+
+    //getting all vendors
+    this.http.post(config.url + 'vendors',{}).map(res => res.json()).subscribe(data => {
+      this.vendors = data;
+    });
+
 
     //getting allpages from the server
     this.http.post(config.url + 'getAllPages', { language_id: this.config.langId }).map(res => res.json()).subscribe(data => {

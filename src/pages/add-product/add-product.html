@@ -1,0 +1,57 @@
+<ion-header>
+  <!--<button ion-button icon-only menuToggle>-->
+    <!--<ion-icon name="menu"></ion-icon>-->
+  <!--</button>-->
+  <ion-navbar>
+    <ion-title>{{'Add new product'| translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+  <ion-row>
+    <ion-col col-12>
+      <div class="photo">
+        <div class="image">
+          <img class="avatar" src="assets/avatar.png" *ngIf="image==null" (click)='openCamera()'>
+          <img class="avatar" src="{{products_image}}" *ngIf="image!=null" (click)='openCamera()'>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-row>
+      <ion-col>
+        <div *ngFor="let lang of languages">
+          <ion-item>
+            <ion-input type="text" placeholder="{{'Product name' | translate}} ({{lang.name}})" name="products_name_{{lang.languages_id}}" ngModel required></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-textarea type="text" placeholder="{{'Product description' | translate}}  ({{lang.name}})" name="products_description_{{lang.languages_id}}" ngModel required></ion-textarea>
+          </ion-item>
+        </div>
+        <ion-item>
+          <ion-label>{{'Category'| translate}}</ion-label>
+          <ion-select name="category_id" [(ngModel)]="category_id" required (ionChange)="onChangeCategory()">
+            <ion-option *ngFor="let category of shared.categories" [value]="category.id">
+              {{ category.name }}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{'Sub Category'| translate}}</ion-label>
+          <ion-select name="sub_category_id" ngModel required [disabled]="disableSubCategories">
+            <ion-option *ngFor="let category of subcategories" [value]="category.id">
+              {{ category.name }}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{'Price'| translate}}</ion-label>
+          <ion-input name="products_price" placeholder="{{'Price'| translate}}" ngModel required></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

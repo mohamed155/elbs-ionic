@@ -104,6 +104,7 @@ import { AdMobFree} from '@ionic-native/admob-free';
 import { FCM } from '@ionic-native/fcm';
 import { AppVersion } from '@ionic-native/app-version';
 import { OneSignal } from '@ionic-native/onesignal';
+import {AddProductPage} from "../pages/add-product/add-product";
 
 
 @NgModule({
@@ -131,7 +132,6 @@ import { OneSignal } from '@ionic-native/onesignal';
     SubCategories5Page,
     SubCategories6Page,
     ProductsPage,
-
     LanguagePage,
     ContactUsPage,
     AboutUsPage,
@@ -165,7 +165,8 @@ import { OneSignal } from '@ionic-native/onesignal';
     NewsPage,
     NewsDetailPage,
     NewsListPage,
-    SettingsPage
+    SettingsPage,
+    AddProductPage
   ],
   imports: [
     IonicModule.forRoot(MyApp,{
@@ -241,7 +242,8 @@ import { OneSignal } from '@ionic-native/onesignal';
     NewsPage,
     NewsDetailPage,
     NewsListPage,
-    SettingsPage
+    SettingsPage,
+    AddProductPage
   ],
   providers: [
     ConfigProvider,

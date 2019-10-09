@@ -38,6 +38,7 @@ export class SharedDataProvider {
   public dir = "ltr";
   public selectedFooterPage = "HomePage";
   public vendors = [];
+  public tags = [];
 
   public orderDetails = {
     tax_zone_id: "",

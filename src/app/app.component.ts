@@ -45,6 +45,7 @@ import { AppVersion } from '@ionic-native/app-version';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Http } from '@angular/http';
+import {AddProductPage} from "../pages/add-product/add-product";
 
 @Component({
   animations: [
@@ -232,7 +233,7 @@ export class MyApp {
     else if (page == 'topSeller') this.nav.push(ProductsPage, { sortOrder: 'top seller' });
     else if (page == 'deals') this.nav.push(ProductsPage, { sortOrder: 'special' });
     else if (page == 'mostLiked') this.nav.push(ProductsPage, { sortOrder: 'most liked' });
-
+    else if (page == 'addNewProduct') this.nav.push(AddProductPage);
   }
   openHomePage() {
     if (this.config.homePage == 1) { this.nav.setRoot(HomePage); }

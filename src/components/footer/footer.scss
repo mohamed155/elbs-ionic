@@ -1,4 +1,8 @@
 footer {
+  .segment {
+    border-top: solid 2px color($colors, 'primary');
+  }
+
   .segment-button {
     display: flex !important;
     flex-direction: column !important;

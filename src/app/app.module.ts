@@ -4,6 +4,8 @@
 // Author URI: http://vectorcoder.com/
 // Version: 1.0
 
+import {VendorsPage} from "../pages/vendors/vendors";
+
 if (localStorage.langId == undefined) {
   localStorage.langId = '1';
 }
@@ -105,6 +107,7 @@ import { FCM } from '@ionic-native/fcm';
 import { AppVersion } from '@ionic-native/app-version';
 import { OneSignal } from '@ionic-native/onesignal';
 import {AddProductPage} from "../pages/add-product/add-product";
+import {VendorPage} from "../pages/vendor/vendor";
 
 
 @NgModule({
@@ -166,7 +169,9 @@ import {AddProductPage} from "../pages/add-product/add-product";
     NewsDetailPage,
     NewsListPage,
     SettingsPage,
-    AddProductPage
+    AddProductPage,
+    VendorsPage,
+    VendorPage
   ],
   imports: [
     IonicModule.forRoot(MyApp,{
@@ -243,7 +248,9 @@ import {AddProductPage} from "../pages/add-product/add-product";
     NewsDetailPage,
     NewsListPage,
     SettingsPage,
-    AddProductPage
+    AddProductPage,
+    VendorsPage,
+    VendorPage
   ],
   providers: [
     ConfigProvider,

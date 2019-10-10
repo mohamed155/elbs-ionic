@@ -25,6 +25,7 @@ import { Categories4Page } from '../../pages/categories4/categories4';
 import { Categories6Page } from '../../pages/categories6/categories6';
 import {WishListPage} from "../../pages/wish-list/wish-list";
 import {SearchPage} from "../../pages/search/search";
+import {VendorsPage} from "../../pages/vendors/vendors";
 
 
 
@@ -47,7 +48,7 @@ export class FooterComponent {
 
     if (page == "HomePage") { this.openHomePage(); }
     else if (page == "CategoriesPage") { this.openCategoryPage(); }
-    else if (page == "ProductsPage") { this.navCtrl.push(ProductsPage); }
+    else if (page == "VendorsPage") { this.navCtrl.setRoot(VendorsPage); }
     else if (page == "NewsPage") { this.navCtrl.setRoot(NewsPage); }
     else if (page == "SettingsPage") { this.navCtrl.setRoot(SettingsPage); }
     else if (page == "WishListPage") { this.navCtrl.setRoot(WishListPage); }

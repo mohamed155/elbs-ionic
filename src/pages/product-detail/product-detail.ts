@@ -33,7 +33,7 @@ export class ProductDetailPage {
     private socialSharing: SocialSharing) {
 
     this.product = navParams.get('data');
-   // console.log(this.product);
+   console.log(this.product);
     this.discount_price = this.product.discount_price;
     this.product_price = this.product.products_price;
 
@@ -65,7 +65,7 @@ export class ProductDetailPage {
     this.navCtrl.pop();
   }
 
-  //============================================================================================  
+  //============================================================================================
   //function adding attibute into array
   fillAttributes = function (val, optionID) {
 
@@ -81,11 +81,11 @@ export class ProductDetailPage {
       }
     });
     // console.log($scope.attributes);
-    //calculating total price 
+    //calculating total price
     this.calculatingTotalPrice();
   };
-  //============================================================================================  
-  //calculating total price  
+  //============================================================================================
+  //calculating total price
   calculatingTotalPrice = function () {
     var price = parseFloat(this.product.products_price.toString());
     if (this.product.discount_price != null || this.product.discount_price != undefined)

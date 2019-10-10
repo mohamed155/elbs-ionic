@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button icon-only menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{'Vendors'| translate}}</ion-title>
+    <ion-buttons end>
+      <!--<button ion-button icon-only (click)="openSearch()">-->
+      <!--<ion-icon name="search"></ion-icon>-->
+      <!--</button>-->
+      <button ion-button icon-only class="cart-button" (click)="openCart()">
+        <ion-icon name="cart">
+          <ion-badge color="secondary">{{shared.cartquantity}}</ion-badge>
+        </ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding-vertical>
+  <ion-list>
+    <button ion-item *ngFor="let vendor of shared.vendors" (click)="openVendor(vendor)">
+      <ion-avatar item-start>
+        <img src="{{config.url}}{{vendor.logo}}" [alt]="vendor.logo">
+      </ion-avatar>
+      <h2>{{vendor.name}}</h2>
+      <p>{{vendor.products_count}} Products</p>
+    </button>
+  </ion-list>
+</ion-content>
+
+<ion-footer *ngIf="config.footerShowHide=='1'">
+  <footer></footer>
+</ion-footer>

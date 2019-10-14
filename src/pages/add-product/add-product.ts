@@ -7,7 +7,6 @@ import {NgForm} from "@angular/forms";
 import {Camera, CameraOptions} from "@ionic-native/camera";
 import {TranslateService} from "@ngx-translate/core";
 import {Home3Page} from "../home3/home3";
-import {validateAndRewriteCoreSymbol} from "@angular/compiler-cli/src/ngtsc/imports";
 
 @Component({
   selector: 'page-add-product',
@@ -44,10 +43,6 @@ export class AddProductPage {
       loader.dismiss();
       this.languages = data.languages;
     });
-    this.translate.get('Addition failure').subscribe(value => this.productAddFailedTitle = value);
-    this.translate.get('Failed to add this product')
-      .subscribe(value => this.productAddFailedTitle = value);
-    this.translate.get('Ok').subscribe(value => this.okTxt = value);
   }
 
   onChangeCategory() {
@@ -95,6 +90,10 @@ export class AddProductPage {
             this.navCtrl.setRoot(Home3Page);
           });
         } else {
+          this.translate.get('Addition failure').subscribe(value => this.productAddFailedTitle = value);
+          this.translate.get('Failed to add this product')
+            .subscribe(value => this.productAddFailedTitle = value);
+          this.translate.get('Ok').subscribe(value => this.okTxt = value);
           this.alertCtrl.create({
             title: this.productAddFailedTitle,
             message: this.productAddFailedMsg,

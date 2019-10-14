@@ -89,8 +89,8 @@ export class LoginPage {
       })
       .catch(err => this.alert.show(JSON.stringify(err)));
   }
-  //============================================================================================  
-  //creating new account using function facebook or google details 
+  //============================================================================================
+  //creating new account using function facebook or google details
   createAccount(info, type) {
     // alert(info);
     this.loading.show();

@@ -27,7 +27,7 @@ export class ProductComponent {
     public events: Events
   ) {
     events.subscribe('wishListUpdate', (id, value) => {
-      if (this.p.products_id == id) this.p.isLiked = value
+      if (this.p.products_id == id) this.p.isLiked = value;
     });
 
   }

@@ -22,6 +22,7 @@ import {Http} from "@angular/http";
 export class VendorPage {
 
   vendor: any;
+  liked = false;
   products: any = [];
   @ViewChild(Content) content: Content;
   @ViewChild(Slides) slides: Slides;
@@ -55,6 +56,7 @@ export class VendorPage {
               public loadingCtrl: LoadingController
   ) {
     this.vendor = this.navParams.get('vendor');
+    if (!this.vendor.likes) this.vendor.likes = 0;
     const loader = this.loadingCtrl.create();
     loader.present();
     this.http.post(config.url + 'vendors/' + this.vendor.id, {language_id: config.langId}).map(res => res.json()).subscribe(data => {
@@ -202,15 +204,18 @@ export class VendorPage {
       this.maxAmount = this.price.upper = data.maxPrice;
     });
   };
+
   applyFilters() {
     this.applyFilter = true;
     this.infinite.enable(true);
     this.page = 0;
     // this.getProducts(null);
   }
+
   resetFilters() {
     this.getFilters(this.selectedTab);
   }
+
   removeFilters() {
     this.applyFilter = false;
     this.infinite.enable(true);
@@ -218,6 +223,34 @@ export class VendorPage {
     // this.getProducts(null);
     this.getFilters(this.selectedTab);
 
+  }
+
+  likeVendor() {
+    const loader = this.loadingCtrl.create();
+    loader.present();
+    this.http.post(this.config.url + 'vendors/like_vendor',
+      {
+        liked_vendor_id: this.vendor.id,
+        liked_customers_id: this.shared.customerData.customers_id
+      }).map(res => res.json()).subscribe(data => {
+        data && (this.liked = true);
+        this.vendor.likes += 1;
+        loader.dismiss();
+      });
+  }
+
+  unlikeVendor() {
+    const loader = this.loadingCtrl.create();
+    loader.present();
+    this.http.post(this.config.url + 'vendors/unlike_vendor',
+      {
+        liked_vendor_id: this.vendor.id,
+        liked_customers_id: this.shared.customerData.customers_id
+      }).map(res => res.json()).subscribe(data => {
+      data && (this.liked = false);
+      this.vendor.likes -= 1;
+      loader.dismiss();
+    });
   }
 
 }

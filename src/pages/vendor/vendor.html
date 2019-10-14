@@ -37,7 +37,8 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <button ion-button round small block outline>Follow</button>
+      <button ion-button round small block outline *ngIf="!liked" (click)="likeVendor()">{{'Follow'| translate}}</button>
+      <button ion-button round small block *ngIf="liked" (click)="unlikeVendor()">{{'Unfollow'| translate}}</button>
     </ion-row>
   </ion-item>
   <ion-grid *ngIf="productView=='grid'">

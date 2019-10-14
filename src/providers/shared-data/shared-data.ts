@@ -39,6 +39,8 @@ export class SharedDataProvider {
   public selectedFooterPage = "HomePage";
   public vendors = [];
   public tags = [];
+  public governorates = [];
+  public taxClasses = [];
 
   public orderDetails = {
     tax_zone_id: "",
@@ -141,6 +143,15 @@ export class SharedDataProvider {
       this.vendors = data;
     });
 
+    //getting all governates
+    this.http.get(config.url + 'get_all_governorates').map(res => res.json()).subscribe(data => {
+      this.governorates = data.governorates;
+    });
+
+    //getting all tax classes
+    this.http.get(config.url + 'getTaxClasses').map(res => res.json()).subscribe(data => {
+      this.taxClasses = data;
+    });
 
     //getting allpages from the server
     this.http.post(config.url + 'getAllPages', { language_id: this.config.langId }).map(res => res.json()).subscribe(data => {

@@ -62,6 +62,16 @@ export class ConfigProvider {
   public notificationType = "";
   public onesignalAppId = "";
   public onesignalSenderId = "";
+  public firebaseConfig = {
+    apiKey: "AIzaSyAdw2NL4Cr25GhNimsydu2CjGp3UPlV-x0",
+    authDomain: "elbs-ionic.firebaseapp.com",
+    databaseURL: "https://elbs-ionic.firebaseio.com",
+    projectId: "elbs-ionic",
+    storageBucket: "elbs-ionic.appspot.com",
+    messagingSenderId: "528184003714",
+    appId: "1:528184003714:web:7952fc89dcefd82234389b",
+    measurementId: "G-LFX8S0PKYP"
+  };
 
   constructor(
     public http: Http,

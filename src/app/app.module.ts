@@ -108,6 +108,7 @@ import { AppVersion } from '@ionic-native/app-version';
 import { OneSignal } from '@ionic-native/onesignal';
 import {AddProductPage} from "../pages/add-product/add-product";
 import {VendorPage} from "../pages/vendor/vendor";
+import {IonTagsInputModule} from "ionic-tags-input";
 
 
 @NgModule({
@@ -190,6 +191,7 @@ import {VendorPage} from "../pages/vendor/vendor";
         deps: [Http]
       }
     }),
+    IonTagsInputModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

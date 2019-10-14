@@ -19,8 +19,7 @@
       {{'Shipping Address'|translate}}
     </ion-card-header>
     <ion-card-content>
-      {{orderDetail.delivery_street_address+', '+orderDetail.delivery_city+', '+orderDetail.delivery_state+' '+orderDetail.delivery_postcode+',
-      '+orderDetail.delivery_country}}
+      {{orderDetail.delivery_street_address+', '+orderDetail.delivery_city+', '+orderDetail.delivery_state+' '+orderDetail.delivery_postcode+','+orderDetail.delivery_country}}
     </ion-card-content>
   </ion-card>
   <ion-card>
@@ -28,8 +27,7 @@
       {{'Billing Address'|translate}}
     </ion-card-header>
     <ion-card-content>
-      {{orderDetail.billing_street_address+', '+orderDetail.billing_city+', '+orderDetail.billing_state+' '+orderDetail.billing_postcode+',
-      '+orderDetail.billing_country}}
+      {{orderDetail.billing_street_address+', '+orderDetail.billing_city+', '+orderDetail.billing_state+' '+orderDetail.billing_postcode+',' +orderDetail.billing_country}}
     </ion-card-content>
   </ion-card>
   <ion-card>

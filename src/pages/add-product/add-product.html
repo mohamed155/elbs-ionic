@@ -1,6 +1,6 @@
 <ion-header>
   <!--<button ion-button icon-only menuToggle>-->
-    <!--<ion-icon name="menu"></ion-icon>-->
+  <!--<ion-icon name="menu"></ion-icon>-->
   <!--</button>-->
   <ion-navbar>
     <ion-title>{{'Add new product'| translate}}</ion-title>
@@ -8,7 +8,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content padding [dir]="shared.dir">
   <ion-row>
     <ion-col col-12>
       <div class="photo">
@@ -25,10 +25,12 @@
       <ion-col>
         <div *ngFor="let lang of languages">
           <ion-item>
-            <ion-input type="text" placeholder="{{'Product name' | translate}} ({{lang.name}})" name="products_name_{{lang.languages_id}}" ngModel required></ion-input>
+            <ion-input type="text" placeholder="{{'Product name' | translate}} ({{lang.name}})"
+                       name="products_name_{{lang.languages_id}}" ngModel required></ion-input>
           </ion-item>
           <ion-item>
-            <ion-textarea type="text" placeholder="{{'Product description' | translate}}  ({{lang.name}})" name="products_description_{{lang.languages_id}}" ngModel required></ion-textarea>
+            <ion-textarea type="text" placeholder="{{'Product description' | translate}}  ({{lang.name}})"
+                          name="products_description_{{lang.languages_id}}" ngModel required></ion-textarea>
           </ion-item>
         </div>
         <ion-item>
@@ -48,8 +50,60 @@
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-input name="products_price" placeholder="{{'Price'| translate}}" ngModel required></ion-input>
+          <ion-input name="products_model" placeholder="{{'model'| translate}}" ngModel></ion-input>
         </ion-item>
+        <ion-tags-input [(ngModel)]="tags" [ngModelOptions]="{standalone: true}"></ion-tags-input>
+        <ion-item>
+          <ion-input type="number" name="products_price" placeholder="{{'Price'| translate}}" ngModel
+                     required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="number" name="specials_new_products_price" placeholder="{{'Discount price'| translate}}"
+                     ngModel></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{'Tax Class'| translate}}</ion-label>
+          <ion-select name="tax_class_id">
+            <ion-option *ngFor="let taxClass of shared.taxClasses" [value]="taxClass.tax_class_id" >
+              {{taxClass.tax_class_title}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input type="number" name="products_weight" placeholder="{{'Weight'| translate}}" ngModel></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-label>{{'Weight unit'| translate}}</ion-label>
+              <ion-select name="products_weight_unit" ngModel>
+                <ion-option value="kg">{{'kg'| translate}}</ion-option>
+                <ion-option value="g">{{'g'| translate}}</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-input type="number" name="products_quantity" placeholder="{{'Quantity'| translate}}" ngModel
+                     required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="number" name="low_limit" placeholder="{{'Quantity low limit'| translate}}" ngModel
+                     required></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{'Status'| translate}}</ion-label>
+          <ion-select name="products_status" ngModel required>
+            <ion-option value="1">{{'Active'| translate}}</ion-option>
+            <ion-option value="0">{{'Inactive'| translate}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-input name="products_url" placeholder="{{'URL'| translate}}" ngModel></ion-input>
+        </ion-item>
+        <button ion-button type="submit" [disabled]="!f.valid" block>{{'Submit'| translate}}</button>
       </ion-col>
     </ion-row>
   </form>

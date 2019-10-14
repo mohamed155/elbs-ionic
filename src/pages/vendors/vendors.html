@@ -26,6 +26,9 @@
       <h2>{{vendor.name}}</h2>
       <p>{{vendor.products_count}} Products</p>
     </button>
+    <ion-item *ngIf="shared.vendors.length == 0" class="animated fadeIn">
+      <h6 text-center>{{'No vendors Found!'|translate}}</h6>
+    </ion-item>
   </ion-list>
 </ion-content>
 

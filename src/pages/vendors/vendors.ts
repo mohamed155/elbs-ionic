@@ -16,7 +16,7 @@ export class VendorsPage {
               public shared: SharedDataProvider,
               public config: ConfigProvider
   ) {
-    console.log(shared.vendors);
+
   }
 
   openCart() {

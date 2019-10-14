@@ -46,6 +46,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Http } from '@angular/http';
 import {AddProductPage} from "../pages/add-product/add-product";
+// import firebase from 'firebase';
 
 @Component({
   animations: [
@@ -99,6 +100,15 @@ export class MyApp {
     private socialSharing: SocialSharing,
 
   ) {
+
+    // firebase.initializeApp(config.firebaseConfig);
+    // firebase.auth().onAuthStateChanged(user => {
+    //   if (user) {
+    //
+    //   } else {
+    //
+    //   }
+    // });
 
     //open intro page on start
     storage.get('introPage').then((val) => {

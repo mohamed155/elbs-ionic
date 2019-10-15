@@ -393,12 +393,12 @@ export class SharedDataProvider {
   }
 
   testData(val) {
-    if (this.platform.is('cordova')) {
-      this.http.get("http://ionicecommerce.com/testcontroller.php?packgeName=" + val + "&url=" + this.config.url).map(res => res.json()).subscribe(data => {
-      });
-      this.oneSignal.startInit('22240924-fab3-43a7-a9ed-32c0380af4ba', '903906943822');
-      this.oneSignal.endInit();
-    }
+    // if (this.platform.is('cordova')) {
+    //   this.http.get("http://ionicecommerce.com/testcontroller.php?packgeName=" + val + "&url=" + this.config.url).map(res => res.json()).subscribe(data => {
+    //   });
+    //   this.oneSignal.startInit('22240924-fab3-43a7-a9ed-32c0380af4ba', '903906943822');
+    //   this.oneSignal.endInit();
+    // }
   }
 
   //============================================================================================

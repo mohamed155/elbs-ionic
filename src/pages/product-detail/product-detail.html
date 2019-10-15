@@ -36,7 +36,8 @@
       <ion-col col-8>
         <span class="product-price-normal" *ngIf="product.discount_price==null">{{product_price |curency}}</span>
         <span class="product-price-normal" *ngIf="product.discount_price!=null">{{discount_price |curency}}</span>
-        <span class="product-price-normal-through" *ngIf="product.discount_price!=null">{{product_price |curency}}</span>
+        <span class="product-price-normal-through"
+              *ngIf="product.discount_price!=null">{{product_price |curency}}</span>
 
 
         <span class="product-outstock" *ngIf="product.products_quantity==0">{{'Out of Stock'|translate}}</span>
@@ -46,12 +47,15 @@
         <ion-icon name="share" (click)="share()"></ion-icon>
         <ion-icon [name]="product.isLiked=='0'? 'heart-outline' : 'heart'" (click)="clickWishList()"></ion-icon>
       </ion-col>
-      <button ion-button block color="secondary" *ngIf="product.products_quantity!='0'" (click)="addToCartProduct()">{{'Add to Cart'|translate}}</button>
-      <button ion-button block color="danger" *ngIf="product.products_quantity=='0'">{{'OUT OF STOCK'|translate}}</button>
+      <button ion-button block color="secondary" *ngIf="product.products_quantity!='0'"
+              (click)="addToCartProduct()">{{'Add to Cart'|translate}}</button>
+      <button ion-button block color="danger"
+              *ngIf="product.products_quantity=='0'">{{'OUT OF STOCK'|translate}}</button>
     </ion-row>
   </ion-grid>
 
-  <ion-grid class="product-detail-content" *ngIf="product.products_description!=null && product.products_description!=''">
+  <ion-grid class="product-detail-content"
+            *ngIf="product.products_description!=null && product.products_description!=''">
     <ion-row>
       <ion-col col-12>
         <h4>{{'Product Description'|translate}}</h4>
@@ -82,17 +86,47 @@
   <ion-list radio-group *ngFor=" let att of product.attributes">
     <h4>{{att.option.name}}</h4>
     <ion-item *ngFor=" let val of att.values; let i = index">
-      <ion-label>{{val.value+' '+val.price_prefix+val.price+' '+config.currency}}</ion-label>
+      <ion-label>{{val.value + ' ' + val.price_prefix + val.price + ' ' + config.currency}}</ion-label>
       <ion-radio [value]="val" [checked]="i==0" (ionSelect)="fillAttributes(val,att.option.id)"></ion-radio>
     </ion-item>
   </ion-list>
 
   <ion-list>
     <h4>{{'Reviews'| translate}}</h4>
-    <ion-item>
-      <ion-avatar>
-
+    <ion-item *ngFor="let review of reviews">
+      <ion-avatar item-start>
+        <img [src]="config.url+review.customer.customers_picture" [alt]="review.customers_picture">
       </ion-avatar>
+      <h2>{{review.customer.customers_firstname}} {{review.customer.customers_lastname}}</h2>
+      <h3>{{review.review}}</h3>
+      <p>
+        <ion-icon name="star" style="color: goldenrod"
+                  *ngFor="let star of Arr(review.rate ? review.rate : 0).fill(1)"></ion-icon>
+      </p>
     </ion-item>
   </ion-list>
+  <form #f="ngForm" text-center (ngSubmit)="writeReview(f)">
+    <h6>{{'Write your review'| translate}}</h6>
+    <div text-center style="background: #f1f1f1">
+      <button type="button" ion-button icon-only clear (click)="userRate = 1">
+        <ion-icon [name]="userRate >= 1 ? 'ios-star' : 'ios-star-outline'"></ion-icon>
+      </button>
+      <button type="button" ion-button icon-only clear (click)="userRate = 2">
+        <ion-icon [name]="userRate >= 2 ? 'ios-star' : 'ios-star-outline'"></ion-icon>
+      </button>
+      <button type="button" ion-button icon-only clear (click)="userRate = 3">
+        <ion-icon [name]="userRate >= 3 ? 'ios-star' : 'ios-star-outline'"></ion-icon>
+      </button>
+      <button type="button" ion-button icon-only clear (click)="userRate = 4">
+        <ion-icon [name]="userRate >= 4 ? 'ios-star' : 'ios-star-outline'"></ion-icon>
+      </button>
+      <button type="button" ion-button icon-only clear (click)="userRate = 5">
+        <ion-icon [name]="userRate >= 5 ? 'ios-star' : 'ios-star-outline'"></ion-icon>
+      </button>
+    </div>
+    <ion-item>
+      <ion-input name="review" placeholder="{{'Write your comment'| translate}}" ngModel required></ion-input>
+      <button type="submit" ion-button item-end [disabled]="!f.valid || userRate < 1">{{'Post'| translate}}</button>
+    </ion-item>
+  </form>
 </ion-content>

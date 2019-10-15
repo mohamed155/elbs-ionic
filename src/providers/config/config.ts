@@ -14,7 +14,7 @@ import { OneSignal } from "@ionic-native/onesignal";
 @Injectable()
 
 export class ConfigProvider {
-  public url: string = 'http://localhost/elbs/';
+  public url: string = 'http://elbs.dawyny.com/';
   public langId: string = localStorage.langId;
   public loader = 'dots';
   public newProductDuration = 100;

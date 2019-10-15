@@ -45,12 +45,10 @@
     "@ngx-translate/http-loader": "^0.1.0",
     "card.io.cordova.mobilesdk": "^2.1.0",
     "com.paypal.cordova.mobilesdk": "^3.5.0",
-    "cordova-admob-sdk": "^0.13.1",
-    "cordova-plugin-admob-free": "^0.13.0",
+    "cordova-android": "8.1.0",
     "cordova-plugin-app-version": "^0.1.9",
     "cordova-plugin-camera": "^3.0.0",
     "cordova-plugin-device": "^1.1.4",
-    "cordova-plugin-firebase": "^2.0.5",
     "cordova-plugin-inappbrowser": "^1.7.2",
     "cordova-plugin-ionic-webview": "^4.1.2",
     "cordova-plugin-network-information": "^1.3.4",
@@ -60,7 +58,6 @@
     "cordova-plugin-whitelist": "^1.3.1",
     "cordova-plugin-x-socialsharing": "^5.2.1",
     "cordova-plugin-x-toast": "^2.6.0",
-    "cordova-promise-polyfill": "0.0.2",
     "css-animator": "^2.1.1",
     "es6-promise-plugin": "^4.1.0",
     "firebase": "^7.2.0",
@@ -69,7 +66,6 @@
     "ionic-tags-input": "^0.1.2",
     "ionicons": "3.0.0",
     "ng-lazyload-image": "^3.3.5",
-    "onesignal-cordova-plugin": "^2.2.4",
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
     "web-animations-js": "^2.3.1",
@@ -95,12 +91,11 @@
       "cordova-plugin-x-socialsharing": {},
       "cordova-plugin-x-toast": {},
       "cordova-plugin-app-version": {},
-      "cordova-plugin-admob-free": {},
-      "cordova-plugin-statusbar": {},
-      "onesignal-cordova-plugin": {},
-      "cordova-plugin-firebase": {}
+      "cordova-plugin-statusbar": {}
     },
-    "platforms": []
+    "platforms": [
+      "android"
+    ]
   },
   "main": "index.js",
   "license": "MIT"

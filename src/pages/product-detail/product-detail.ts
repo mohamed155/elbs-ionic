@@ -3,12 +3,14 @@
 // Author: VectorCoder Team
 // Author URI: http://vectorcoder.com/
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import {NavController, NavParams, ModalController, LoadingController} from 'ionic-angular';
 import { ConfigProvider } from '../../providers/config/config';
 import { SharedDataProvider } from '../../providers/shared-data/shared-data';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { LoginPage } from '../login/login';
 import { LoadingProvider } from '../../providers/loading/loading';
+import {Http} from "@angular/http";
+import {NgForm} from "@angular/forms";
 
 
 
@@ -17,12 +19,18 @@ import { LoadingProvider } from '../../providers/loading/loading';
   templateUrl: 'product-detail.html',
 })
 export class ProductDetailPage {
+  Arr = Array;
+
   public product;
 
   attributes = [];
   selectAttribute = true;
   discount_price;
   product_price;
+  reviews = [];
+
+  userRate = 0;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -30,6 +38,8 @@ export class ProductDetailPage {
     public shared: SharedDataProvider,
     public modalCtrl: ModalController,
     public loading: LoadingProvider,
+    public http: Http,
+    public loaderCtrl: LoadingController,
     private socialSharing: SocialSharing) {
 
     this.product = navParams.get('data');
@@ -56,6 +66,15 @@ export class ProductDetailPage {
       });
       //console.log(this.attributes);
     }
+
+    const loader = this.loaderCtrl.create();
+    loader.present();
+    this.http.get(config.url + `products/getRate?product_id=${this.product.products_id}`)
+      .map(res => res.json())
+      .subscribe(data => {
+        loader.dismiss();
+        this.reviews = data.rates;
+      })
 
   }
   addToCartProduct() {
@@ -150,6 +169,30 @@ export class ProductDetailPage {
   }
   removeWishList() {
     this.shared.removeWishList(this.product);
+  }
+
+  writeReview(form: NgForm) {
+    const loader = this.loaderCtrl.create();
+    loader.present();
+    this.http.post(this.config.url + 'rates', {
+      review: form.value.review,
+      customer_id: this.shared.customerData.customers_id,
+      rate: this.userRate,
+      type: 1,
+      item_id: this.product.products_id
+    }).map(res => res.json())
+      .subscribe(data => {
+        this.http.get(this.config.url + `products/getRate?product_id=${this.product.products_id}`)
+          .map(res => res.json())
+          .subscribe(data => {
+            loader.dismiss();
+            this.reviews = data.rates;
+          })
+      });
+  }
+
+  toInt(value: string) {
+    return parseInt(value);
   }
 
 

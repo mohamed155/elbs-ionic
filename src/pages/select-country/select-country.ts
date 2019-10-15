@@ -32,9 +32,9 @@ export class SelectCountryPage {
 
     loading.show();
     var data = { type: 'null' };
-    http.post(this.config.url + 'getCountries', data).map(res => res.json()).subscribe(data => {
+    http.get(this.config.url + 'get_all_governorates').map(res => res.json()).subscribe(data => {
       loading.hide();
-      this.items = this.countries = data.data
+      this.items = this.countries = data.governorates;
       setTimeout(() => { this.searchBar.setFocus(); }, 250);
     });
   }
@@ -53,7 +53,7 @@ export class SelectCountryPage {
     // if the value is an empty string don't filter the items
     if (val && val.trim() != '') {
       this.items = this.items.filter((item) => {
-        return (item.countries_name.toLowerCase().indexOf(val.toLowerCase()) > -1);
+        return (item.name.toLowerCase().indexOf(val.toLowerCase()) > -1);
       })
     }
   }
@@ -63,22 +63,22 @@ export class SelectCountryPage {
   }
   selectCountry(c) {
     if (this.navParams.get('page') == 'shipping') {
-      this.shared.orderDetails.delivery_country = c.countries_name;
-      this.shared.orderDetails.delivery_country_code = c.countries_id;
-      this.shared.orderDetails.delivery_country_id = c.countries_id;
+      this.shared.orderDetails.delivery_country = c.name;
+      this.shared.orderDetails.delivery_country_code = c.id;
+      this.shared.orderDetails.delivery_country_id = c.id;
       this.shared.orderDetails.delivery_zone = null;
       this.shared.orderDetails.delivery_state = null;
     }
     else if (this.navParams.get('page') == 'editShipping') {
-      this.shared.tempdata.entry_country_id = c.countries_id;
-      this.shared.tempdata.entry_country_name = c.countries_name;
-      this.shared.tempdata.entry_country_code = c.countries_id;
+      this.shared.tempdata.entry_country_id = c.id;
+      this.shared.tempdata.entry_country_name = c.name;
+      this.shared.tempdata.entry_country_code = c.id;
       this.shared.tempdata.entry_zone = null;
     }
     else {
-      this.shared.orderDetails.billing_country = c.countries_name;
-      this.shared.orderDetails.billing_country_code = c.countries_id;
-      this.shared.orderDetails.billing_country_id = c.countries_id;
+      this.shared.orderDetails.billing_country = c.name;
+      this.shared.orderDetails.billing_country_code = c.id;
+      this.shared.orderDetails.billing_country_id = c.id;
       this.shared.orderDetails.billing_zone = null;
       this.shared.orderDetails.billing_state = null;
     }

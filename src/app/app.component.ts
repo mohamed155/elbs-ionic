@@ -111,12 +111,12 @@ export class MyApp {
     // });
 
     //open intro page on start
-    storage.get('introPage').then((val) => {
-      if (val == undefined) {
-        this.nav.push(IntroPage);
-        storage.set('introPage', 'firstTime');
-      }
-    });
+    // storage.get('introPage').then((val) => {
+    //   if (val == undefined) {
+    //     this.nav.push(IntroPage);
+    //     storage.set('introPage', 'firstTime');
+    //   }
+    // });
 
     let connectedToInternet = true;
     network.onDisconnect().subscribe(() => {

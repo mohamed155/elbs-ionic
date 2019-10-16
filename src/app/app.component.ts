@@ -46,6 +46,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { Http } from '@angular/http';
 import {AddProductPage} from "../pages/add-product/add-product";
+import * as firebase from "firebase";
 // import firebase from 'firebase';
 
 @Component({
@@ -101,14 +102,14 @@ export class MyApp {
 
   ) {
 
-    // firebase.initializeApp(config.firebaseConfig);
-    // firebase.auth().onAuthStateChanged(user => {
-    //   if (user) {
-    //
-    //   } else {
-    //
-    //   }
-    // });
+    firebase.initializeApp(config.firebaseConfig);
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+
+      } else {
+
+      }
+    });
 
     //open intro page on start
     // storage.get('introPage').then((val) => {

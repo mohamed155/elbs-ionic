@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'Cancel Order Request'| translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-list>
+      <ion-item>
+        <ion-label>{{'Choose order'| translate}}</ion-label>
+        <ion-select name="order_id" ngModel required>
+          <ion-option *ngFor="let order of orders" [value]="order.orders_id">
+            Order #{{order.orders_id}}
+          </ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>{{'Message'| translate}}</ion-label>
+        <ion-textarea name="message" ngModel required></ion-textarea>
+      </ion-item>
+      <button type="submit" ion-button [disabled]="!f.valid" block>{{'Send'| translate}}</button>
+    </ion-list>
+  </form>
+</ion-content>

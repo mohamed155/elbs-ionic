@@ -228,7 +228,7 @@ export class VendorPage {
   likeVendor() {
     const loader = this.loadingCtrl.create();
     loader.present();
-    this.http.post(this.config.url + 'vendors/like_vendor',
+    this.http.post(this.config.url + 'vendors/like_vendor/test',
       {
         liked_vendor_id: this.vendor.id,
         liked_customers_id: this.shared.customerData.customers_id
@@ -242,7 +242,7 @@ export class VendorPage {
   unlikeVendor() {
     const loader = this.loadingCtrl.create();
     loader.present();
-    this.http.post(this.config.url + 'vendors/unlike_vendor',
+    this.http.post(this.config.url + 'vendors/unlike_vendor/test',
       {
         liked_vendor_id: this.vendor.id,
         liked_customers_id: this.shared.customerData.customers_id

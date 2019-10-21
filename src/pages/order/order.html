@@ -22,22 +22,22 @@
       {{orderDetail.delivery_street_address+', '+orderDetail.delivery_city+', '+orderDetail.delivery_state+' '+orderDetail.delivery_postcode+','+orderDetail.delivery_country}}
     </ion-card-content>
   </ion-card>
-  <ion-card>
-    <ion-card-header>
-      {{'Billing Address'|translate}}
-    </ion-card-header>
-    <ion-card-content>
-      {{orderDetail.billing_street_address+', '+orderDetail.billing_city+', '+orderDetail.billing_state+' '+orderDetail.billing_postcode+',' +orderDetail.billing_country}}
-    </ion-card-content>
-  </ion-card>
-  <ion-card>
-    <ion-card-header>
-      {{'Shipping Method'|translate}}
-    </ion-card-header>
-    <ion-card-content>
-      {{orderDetail.shipping_method}}
-    </ion-card-content>
-  </ion-card>
+  <!--<ion-card>-->
+    <!--<ion-card-header>-->
+      <!--{{'Billing Address'|translate}}-->
+    <!--</ion-card-header>-->
+    <!--<ion-card-content>-->
+      <!--{{orderDetail.billing_street_address+', '+orderDetail.billing_city+', '+orderDetail.billing_state+' '+orderDetail.billing_postcode+',' +orderDetail.billing_country}}-->
+    <!--</ion-card-content>-->
+  <!--</ion-card>-->
+  <!--<ion-card>-->
+    <!--<ion-card-header>-->
+      <!--{{'Shipping Method'|translate}}-->
+    <!--</ion-card-header>-->
+    <!--<ion-card-content>-->
+      <!--{{orderDetail.shipping_method}}-->
+    <!--</ion-card-content>-->
+  <!--</ion-card>-->
 
   <ion-card class="order-product">
     <ion-card-header>
@@ -90,14 +90,14 @@
           {{productsTotal| curency}}
         </ion-col>
       </ion-row>
-      <ion-row>
-        <ion-col col-6>
-          {{'Tax'|translate}}
-        </ion-col>
-        <ion-col col-6 text-right>
-          {{orderDetail.total_tax| curency}}
-        </ion-col>
-      </ion-row>
+      <!--<ion-row>-->
+        <!--<ion-col col-6>-->
+          <!--{{'Tax'|translate}}-->
+        <!--</ion-col>-->
+        <!--<ion-col col-6 text-right>-->
+          <!--{{orderDetail.total_tax| curency}}-->
+        <!--</ion-col>-->
+      <!--</ion-row>-->
       <ion-row>
         <ion-col col-6>
           {{'Shipping Cost'|translate}}

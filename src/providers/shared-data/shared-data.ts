@@ -66,7 +66,7 @@ export class SharedDataProvider {
     billing_street_address: "",
     billing_country_code: "",
     total_tax: '',
-    shipping_cost: '',
+    shipping_cost: 0,
     shipping_method: '',
     payment_method: '',
     comments: ''
@@ -101,12 +101,12 @@ export class SharedDataProvider {
       this.tab1 = data.product_data
     });
     //getting tab 2
-    data.type = 'special';
+    data.type = 'most liked';
     this.http.post(this.config.url + 'getAllProducts', data).map(res => res.json()).subscribe(data => {
       this.tab2 = data.product_data
     });
     //getting tab 3
-    data.type = 'most liked';
+    data.type = 'special';
     this.http.post(this.config.url + 'getAllProducts', data).map(res => res.json()).subscribe(data => {
       this.tab3 = data.product_data
     });
@@ -167,6 +167,21 @@ export class SharedDataProvider {
     });
     //---------------- end -----------------
   }
+
+  getGovernorateShipping(goverorate_id, c) {
+    this.http.post(this.config.url + 'vendors/get_shipping_fees', {
+      destination_one_id: c.id,
+      destination_two_id: goverorate_id
+    }).map(res => res.json())
+      .subscribe(data => {
+        if (data.fees !== null) {
+          this.orderDetails.shipping_cost += parseInt(data.fees);
+          console.log(`Gov ${data}`,this.orderDetails.shipping_cost);
+        }
+      });
+  }
+
+
   //adding into recent array products
   addToRecent(p) {
     let found = false;
@@ -232,6 +247,7 @@ export class SharedDataProvider {
       model: product.products_model,
       categories_id: product.categories_id,
       categories_name: product.categories_name,
+      governorate_id: product.governorate_id,
       // quantity: product.products_quantity,
       weight: product.products_weight,
       on_sale: on_sale,

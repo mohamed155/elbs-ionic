@@ -63,7 +63,7 @@ export class OrderPage {
     // shared.orderDetails.payment_method = 'cash_on_delivery';
   }
 
-  //============================================================================================  
+  //============================================================================================
   //placing order
   addOrder = function (nonce) {
     this.loading.autoHide(5000);
@@ -145,7 +145,7 @@ export class OrderPage {
       });
   }
 
-  //============================================================================================  
+  //============================================================================================
   //CAlculate Discount total
   calculateDiscount = function () {
     var subTotal = 0;
@@ -158,7 +158,7 @@ export class OrderPage {
     this.discount = (subTotal - total);
   };
 
-  //============================================================================================  
+  //============================================================================================
   //CAlculate all total
   calculateTotal = function () {
     let a = 0;
@@ -168,16 +168,16 @@ export class OrderPage {
       a = a + subtotal;
     }
 
-    let b = parseFloat(this.orderDetail.total_tax.toString());
+    // let b = parseFloat(this.orderDetail.total_tax.toString());
     let c = parseFloat(this.orderDetail.shipping_cost.toString());
-    this.totalAmountWithDisocunt = parseFloat((parseFloat(a.toString()) + b + c).toString());
+    this.totalAmountWithDisocunt = parseFloat((parseFloat(a.toString()) + c).toString());
     // console.log(" all total " + $scope.totalAmountWithDisocunt);
     // console.log("shipping_tax " + $scope.orderDetail.shipping_tax);
     // console.log(" shipping_cost " + $scope.orderDetail.shipping_cost);
     this.calculateDiscount();
   };
 
-  //============================================================================================  
+  //============================================================================================
   //delete Coupon
   deleteCoupon = function (code) {
 
@@ -204,7 +204,7 @@ export class OrderPage {
   };
   //========================================================================================
 
-  //============================================================================================   
+  //============================================================================================
   //getting getMostLikedProducts from the server
   getCoupon = function (code) {
     if (code == '' || code == null) {
@@ -230,7 +230,7 @@ export class OrderPage {
 
   };
 
-  //============================================================================================  
+  //============================================================================================
   //applying coupon on the cart
   applyCouponCart = function (coupon) {
     //checking the coupon is valid or not
@@ -376,7 +376,7 @@ export class OrderPage {
     });
     actionSheet.present();
   }
-  //============================================================================================  
+  //============================================================================================
   //getting token from server
   getToken = function () {
     this.loading.autoHide(2000);
@@ -508,7 +508,7 @@ export class OrderPage {
 
     });
     promise.then(
-      (data) => { //console.log(nonce); 
+      (data) => { //console.log(nonce);
         this.addOrder(nonce);
       },
       (err) => { console.log(err); }

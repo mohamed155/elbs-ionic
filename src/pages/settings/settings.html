@@ -40,6 +40,8 @@
       </ion-avatar>
       <h2>{{shared.customerData.customers_firstname +"&nbsp;"+shared.customerData.customers_lastname}}</h2>
       <p>{{shared.customerData.customers_email_address}}</p>
+      <p *ngIf="shared.customerData.points !== null">{{'Points'| translate}}: {{shared.customerData.points.amount}}</p>
+      <p *ngIf="shared.customerData.walletsCount !== null">{{'Wallet'| translate}}: {{shared.customerData.walletsCount.amount | curency}}</p>
       <button ion-button color="light" (click)="openPage('myAccount')">
         {{'Edit Profile' | translate }}
       </button>

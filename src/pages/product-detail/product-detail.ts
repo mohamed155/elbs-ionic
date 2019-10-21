@@ -73,8 +73,8 @@ export class ProductDetailPage {
       .map(res => res.json())
       .subscribe(data => {
         loader.dismiss();
-        this.reviews = data.rates;
-      })
+        this.reviews = data.rates == 'no rates found' ? [] : data.rates;
+      });
 
   }
   addToCartProduct() {

@@ -20,6 +20,7 @@ export class SelectCountryPage {
   searchQuery: string = '';
   items;
   countries = new Array;
+  shippingCost = 0;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -57,11 +58,12 @@ export class SelectCountryPage {
       })
     }
   }
+
   //close modal
   dismiss() {
     this.viewCtrl.dismiss();
   }
-  selectCountry(c) {
+  async selectCountry(c) {
     if (this.navParams.get('page') == 'shipping') {
       this.shared.orderDetails.delivery_country = c.name;
       this.shared.orderDetails.delivery_country_code = c.id;

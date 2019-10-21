@@ -93,19 +93,22 @@
 
   <ion-list>
     <h4>{{'Reviews'| translate}}</h4>
-    <ion-item *ngFor="let review of reviews">
-      <ion-avatar item-start>
-        <img [src]="config.url+review.customer.customers_picture" [alt]="review.customers_picture">
-      </ion-avatar>
-      <h2>{{review.customer.customers_firstname}} {{review.customer.customers_lastname}}</h2>
-      <h3>{{review.review}}</h3>
-      <p>
-        <ion-icon name="star" style="color: goldenrod"
-                  *ngFor="let star of Arr(review.rate ? review.rate : 0).fill(1)"></ion-icon>
-      </p>
-    </ion-item>
+    <div *ngIf="reviews.length != 0">
+      <ion-item *ngFor="let review of reviews">
+        <ion-avatar item-start>
+          <img [src]="config.url+review.customer.customers_picture" [alt]="review.customers_picture">
+        </ion-avatar>
+        <h2>{{review.customer.customers_firstname}} {{review.customer.customers_lastname}}</h2>
+        <h3>{{review.review}}</h3>
+        <p>
+          <ion-icon name="star" style="color: goldenrod"
+                    *ngFor="let star of Arr(review.rate ? review.rate : 0).fill(1)"></ion-icon>
+        </p>
+      </ion-item>
+    </div>
+    <h6 *ngIf="reviews.length == 0">{{'No rates found'}}</h6>
   </ion-list>
-  <form #f="ngForm" text-center (ngSubmit)="writeReview(f)">
+  <form #f="ngForm" text-center (ngSubmit)="writeReview(f)" *ngIf="shared.customerData.customers_id">
     <h6>{{'Write your review'| translate}}</h6>
     <div text-center style="background: #f1f1f1">
       <button type="button" ion-button icon-only clear (click)="userRate = 1">

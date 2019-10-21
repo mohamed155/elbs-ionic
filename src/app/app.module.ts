@@ -109,6 +109,9 @@ import { OneSignal } from '@ionic-native/onesignal';
 import {AddProductPage} from "../pages/add-product/add-product";
 import {VendorPage} from "../pages/vendor/vendor";
 import {IonTagsInputModule} from "ionic-tags-input";
+import {Firebase} from "@ionic-native/firebase";
+import {FirebaseAuthentication} from "@ionic-native/firebase-authentication";
+import {CancelOrderPage} from "../pages/cancel-order/cancel-order";
 
 
 @NgModule({
@@ -172,7 +175,8 @@ import {IonTagsInputModule} from "ionic-tags-input";
     SettingsPage,
     AddProductPage,
     VendorsPage,
-    VendorPage
+    VendorPage,
+    CancelOrderPage
   ],
   imports: [
     IonicModule.forRoot(MyApp,{
@@ -252,7 +256,8 @@ import {IonTagsInputModule} from "ionic-tags-input";
     SettingsPage,
     AddProductPage,
     VendorsPage,
-    VendorPage
+    VendorPage,
+    CancelOrderPage
   ],
   providers: [
     ConfigProvider,
@@ -281,7 +286,9 @@ import {IonTagsInputModule} from "ionic-tags-input";
     AdMobFree,
     FCM,
     AppVersion,
-    OneSignal
+    OneSignal,
+    Firebase,
+    FirebaseAuthentication
   ]
 })
 export class AppModule { }

@@ -29,7 +29,7 @@
     <ion-item *ngFor="let address of allShippingAddress">
 
       <ion-icon name="create" item-start (click)="openEditShippingPage(address)"></ion-icon>
-      {{address.street+', '+ address.city+', '+address.state+' '+address.postcode+', '+address.country_name}}
+      {{address.street+','+address.country_name}}
 
       <ion-icon name="radio-button-off" *ngIf="address.default_address!=address.address_id" (click)="defaultAddress(address.address_id)"
         item-end></ion-icon>

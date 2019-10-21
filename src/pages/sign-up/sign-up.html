@@ -58,6 +58,22 @@
           <ion-item text-center *ngIf="formData.type">
             <ion-label>{{'Shop info' | translate}}</ion-label>
           </ion-item>
+
+          <ion-row *ngIf="formData.type">
+            <ion-col col-12>
+              <ion-label>{{'Vendor logo'| translate}}</ion-label>
+              <div class="photo">
+                <div class="image">
+                  <img class="avatar" src="assets/avatar.png" *ngIf="vendor_logo==null">
+                  <img class="avatar" src="{{vendor_logo}}" *ngIf="vendor_logo!=null">
+                </div>
+                <div class="upload">
+                  <ion-icon name="camera" (click)='openCameraVendor()'></ion-icon>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+
           <ion-item *ngIf="formData.type">
             <ion-input type="text" placeholder="{{'Vendor name'|translate}}" name="vendor_name" [(ngModel)]="formData.vendor_name"
                        required></ion-input>

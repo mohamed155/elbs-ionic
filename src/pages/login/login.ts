@@ -69,7 +69,7 @@ export class LoginPage {
       }
       else {
         console.log("USer Not login ");
-        this.fb.login(['public_profile', 'user_friends', 'email'])
+        this.fb.login(['public_profile', 'email'])
           .then((res: FacebookLoginResponse) => {
             // this.alert.show('Logged into Facebook!' + JSON.stringify(res));
             console.log("successfully login ");
@@ -87,7 +87,10 @@ export class LoginPage {
       //  alert(JSON.stringify(res))
         this.createAccount(res, 'google');
       })
-      .catch(err => this.alert.show(JSON.stringify(err)));
+      .catch(err => {
+        this.alert.show(JSON.stringify(err));
+        console.log("google error");
+      });
   }
   //============================================================================================
   //creating new account using function facebook or google details
@@ -99,14 +102,17 @@ export class LoginPage {
     if (type == 'fb') {
       url = 'facebookRegistration';
       data.access_token = info;
+      console.log(info);
     }
     else {
       url = 'googleRegistration';
       data = info;
+      console.log(info);
     }
     this.http.post(this.config.url + url, data).map(res => res.json()).subscribe(data => {
       this.loading.hide();
      // alert("data get");
+      console.log(data);
       if (data.success == 1) {
         this.shared.login(data.data[0]);
         //alert('login');
@@ -127,7 +133,7 @@ export class LoginPage {
     }, error => {
       this.loading.hide();
       this.alert.show("error " + JSON.stringify(error));
-      // console.log("error " + JSON.stringify(error));
+      console.log("error " + JSON.stringify(error));
     });
   };
   //close modal

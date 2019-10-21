@@ -6,7 +6,7 @@
     </button>
 
     <ion-title text-center>
-      <img src="assets/logo-white.png" alt="logo">
+      <img [src]="config.url + 'resources/assets/images/logo/Logo-white.png'" alt="logo">
     </ion-title>
 
     <ion-buttons end>
@@ -29,7 +29,7 @@
 
   <!-- Top Seller -->
   <div class="module">
-    <h3>{{ 'Top Seller' | translate }}</h3>
+    <h3>{{ 'Popular products' | translate }}</h3>
     <ion-slides slidesPerView=2.2 spaceBetween=10 class="animate-product" dir="{{shared.dir}}">
       <ion-slide *ngFor="let p of shared.tab1">
         <product [data]="p" [type]="'normal'"></product>
@@ -38,7 +38,7 @@
         <ion-card (click)="openProducts('top seller')">
           <ion-card-content>
             <ion-icon name="checkmark-circle"></ion-icon>
-            <h4>View All</h4>
+            <h4>{{'View All'|translate}}</h4>
           </ion-card-content>
         </ion-card>
       </ion-slide>
@@ -46,7 +46,7 @@
   </div>
   <!-- Deals -->
   <div class="module">
-    <h3>{{ 'Deals' | translate }}</h3>
+    <h3>{{ 'New arrivals' | translate }}</h3>
     <ion-slides slidesPerView=2.2 spaceBetween=10 class="animate-product" dir="{{shared.dir}}">
       <ion-slide *ngFor="let p of shared.tab2">
         <product [data]="p" [type]="'normal'"></product>
@@ -55,7 +55,7 @@
         <ion-card (click)="openProducts('special')">
           <ion-card-content>
             <ion-icon name="checkmark-circle"></ion-icon>
-            <h4>View All</h4>
+            <h4>{{'View All'|translate}}</h4>
           </ion-card-content>
         </ion-card>
       </ion-slide>
@@ -63,7 +63,7 @@
   </div>
   <!-- Most Liked -->
   <div class="module">
-    <h3>{{ 'Most Liked' | translate }}</h3>
+    <h3>{{ 'Offers' | translate }}</h3>
     <ion-slides slidesPerView=2.2 spaceBetween=10 class="animate-product" dir="{{shared.dir}}">
       <ion-slide *ngFor="let p of shared.tab3">
         <product [data]="p" [type]="'normal'"></product>
@@ -72,7 +72,7 @@
         <ion-card (click)="openProducts('most liked')">
           <ion-card-content>
             <ion-icon name="checkmark-circle"></ion-icon>
-            <h4>View All</h4>
+            <h4>{{'View All'|translate}}</h4>
           </ion-card-content>
         </ion-card>
       </ion-slide>

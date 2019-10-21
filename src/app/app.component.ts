@@ -3,63 +3,66 @@
 // Author: VectorCoder Team
 // Author URI: http://vectorcoder.com/
 
-import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, ModalController, Events } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-import { Storage } from '@ionic/storage';
-import { TranslateService } from '@ngx-translate/core';
+import {Component, ViewChild} from '@angular/core';
+import {Nav, Platform, ModalController, Events} from 'ionic-angular';
+import {StatusBar} from '@ionic-native/status-bar';
+import {SplashScreen} from '@ionic-native/splash-screen';
+import {Storage} from '@ionic/storage';
+import {TranslateService} from '@ngx-translate/core';
 
-import { HomePage } from '../pages/home/home';
-import { LanguagePage } from '../pages/language/language';
-import { IntroPage } from '../pages/intro/intro';
-import { ContactUsPage } from '../pages/contact-us/contact-us';
-import { AboutUsPage } from '../pages/about-us/about-us';
-import { SignUpPage } from '../pages/sign-up/sign-up';
-import { LoginPage } from '../pages/login/login';
-import { ConfigProvider } from '../providers/config/config';
-import { SharedDataProvider } from '../providers/shared-data/shared-data';
-import { CategoriesPage } from '../pages/categories/categories';
-import { WishListPage } from '../pages/wish-list/wish-list';
-import { MyAccountPage } from '../pages/my-account/my-account';
-import { MyOrdersPage } from '../pages/my-orders/my-orders';
-import { MyShippingAddressesPage } from '../pages/my-shipping-addresses/my-shipping-addresses';
-import { NewsPage } from '../pages/news/news';
-import { ProductsPage } from '../pages/products/products';
-import { SettingsPage } from '../pages/settings/settings';
-import { Network } from '@ionic-native/network';
-import { AlertProvider } from '../providers/alert/alert';
-import { LoadingProvider } from '../providers/loading/loading';
-import { Home2Page } from '../pages/home2/home2';
-import { Home3Page } from '../pages/home3/home3';
-import { Home4Page } from '../pages/home4/home4';
-import { Home5Page } from '../pages/home5/home5';
-import { Categories2Page } from '../pages/categories2/categories2';
-import { Categories4Page } from '../pages/categories4/categories4';
-import { Categories5Page } from '../pages/categories5/categories5';
-import { Categories3Page } from '../pages/categories3/categories3';
-import { Categories6Page } from '../pages/categories6/categories6';
-import { trigger, transition, animate, style } from '@angular/animations';
-import { AdMobFree, AdMobFreeBannerConfig, AdMobFreeInterstitialConfig } from '@ionic-native/admob-free';
-import { AppVersion } from '@ionic-native/app-version';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { SocialSharing } from '@ionic-native/social-sharing';
-import { Http } from '@angular/http';
+import {HomePage} from '../pages/home/home';
+import {LanguagePage} from '../pages/language/language';
+import {IntroPage} from '../pages/intro/intro';
+import {ContactUsPage} from '../pages/contact-us/contact-us';
+import {AboutUsPage} from '../pages/about-us/about-us';
+import {SignUpPage} from '../pages/sign-up/sign-up';
+import {LoginPage} from '../pages/login/login';
+import {ConfigProvider} from '../providers/config/config';
+import {SharedDataProvider} from '../providers/shared-data/shared-data';
+import {CategoriesPage} from '../pages/categories/categories';
+import {WishListPage} from '../pages/wish-list/wish-list';
+import {MyAccountPage} from '../pages/my-account/my-account';
+import {MyOrdersPage} from '../pages/my-orders/my-orders';
+import {MyShippingAddressesPage} from '../pages/my-shipping-addresses/my-shipping-addresses';
+import {NewsPage} from '../pages/news/news';
+import {ProductsPage} from '../pages/products/products';
+import {SettingsPage} from '../pages/settings/settings';
+import {Network} from '@ionic-native/network';
+import {AlertProvider} from '../providers/alert/alert';
+import {LoadingProvider} from '../providers/loading/loading';
+import {Home2Page} from '../pages/home2/home2';
+import {Home3Page} from '../pages/home3/home3';
+import {Home4Page} from '../pages/home4/home4';
+import {Home5Page} from '../pages/home5/home5';
+import {Categories2Page} from '../pages/categories2/categories2';
+import {Categories4Page} from '../pages/categories4/categories4';
+import {Categories5Page} from '../pages/categories5/categories5';
+import {Categories3Page} from '../pages/categories3/categories3';
+import {Categories6Page} from '../pages/categories6/categories6';
+import {trigger, transition, animate, style} from '@angular/animations';
+import {AdMobFree, AdMobFreeBannerConfig, AdMobFreeInterstitialConfig} from '@ionic-native/admob-free';
+import {AppVersion} from '@ionic-native/app-version';
+import {InAppBrowser} from '@ionic-native/in-app-browser';
+import {SocialSharing} from '@ionic-native/social-sharing';
+import {Http} from '@angular/http';
 import {AddProductPage} from "../pages/add-product/add-product";
-import * as firebase from "firebase";
-// import firebase from 'firebase';
+import {Firebase} from "@ionic-native/firebase";
+import {FirebaseAuthentication} from "@ionic-native/firebase-authentication";
+import {el} from "@angular/platform-browser/testing/src/browser_util";
+import {CancelOrderPage} from "../pages/cancel-order/cancel-order";
+
 
 @Component({
   animations: [
     trigger(
       'animate', [
         transition(':enter', [
-          style({ opacity: 0 }),
-          animate('500ms', style({ opacity: 1 }))
+          style({opacity: 0}),
+          animate('500ms', style({opacity: 1}))
         ]),
         transition(':leave', [
-          style({ opacity: 1 }),
-          animate('500ms', style({ opacity: 0 }))
+          style({opacity: 1}),
+          animate('500ms', style({opacity: 0}))
         ])
       ]
     )
@@ -99,17 +102,19 @@ export class MyApp {
     private appVersion: AppVersion,
     public iab: InAppBrowser,
     private socialSharing: SocialSharing,
-
+    public firebase: Firebase,
+    public firebaseAuth: FirebaseAuthentication
   ) {
-
-    firebase.initializeApp(config.firebaseConfig);
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-
-      } else {
-
-      }
-    });
+    // if (this.platform.is('cordova')) {
+    //   this.firebase.setConfigSettings(config.firebaseConfig);
+    //   this.firebaseAuth.onAuthStateChanged().subscribe(user => {
+    //     if (user) {
+    //       console.log('loged');
+    //     } else {
+    //       console.log('logout');
+    //     }
+    //   });
+    // }
 
     //open intro page on start
     // storage.get('introPage').then((val) => {
@@ -156,18 +161,30 @@ export class MyApp {
   initializeApp() {
     this.platform.ready().then(() => {
       this.config.siteSetting().then((value) => {
-        this.storage.get('firsttimeApp').then((val) => {
-          if (val == 'firstTime') {
-            if (this.config.homePage == 1) { this.rootPage = HomePage; }
-            if (this.config.homePage == 2) { this.rootPage = Home2Page; }
-            if (this.config.homePage == 3) { this.rootPage = Home3Page; }
-            if (this.config.homePage == 4) { this.rootPage = Home4Page; }
-            if (this.config.homePage == 5) { this.rootPage = Home5Page; }
-            // this.rootPage = Home3Page;
-            setTimeout(() => { this.splashScreen.hide(); }, 700);
-          }
-          this.storage.set('firsttimeApp', 'firstTime');
-        });
+        // this.storage.get('firsttimeApp').then((val) => {
+        //   if (val == 'firstTime') {
+        if (this.config.homePage == 1) {
+          this.rootPage = HomePage;
+        }
+        if (this.config.homePage == 2) {
+          this.rootPage = Home2Page;
+        }
+        if (this.config.homePage == 3) {
+          this.rootPage = Home3Page;
+        }
+        if (this.config.homePage == 4) {
+          this.rootPage = Home4Page;
+        }
+        if (this.config.homePage == 5) {
+          this.rootPage = Home5Page;
+        }
+        // this.rootPage = Home3Page;
+        setTimeout(() => {
+          this.splashScreen.hide();
+        }, 700);
+        //   }
+        //   this.storage.set('firsttimeApp', 'firstTime');
+        // });
         if (this.plt.is('ios')) {
           if (this.config.admobIos == 1) this.initializeAdmob(this.config.admobBanneridIos, this.config.admobIntidIos);
           this.config.admob = this.config.admobIos;
@@ -216,6 +233,7 @@ export class MyApp {
     // }) .catch(e => alert(e));
     this.admobFree.interstitial.prepare();
   }
+
   openPage(page) {
     if (page == 'home') this.openHomePage();
     else if (page == 'home1') this.nav.setRoot(HomePage);
@@ -240,26 +258,51 @@ export class MyApp {
     else if (page == 'news') this.nav.setRoot(NewsPage);
     else if (page == 'intro') this.nav.setRoot(IntroPage);
     else if (page == 'settings') this.nav.setRoot(SettingsPage);
-    else if (page == 'newest') this.nav.push(ProductsPage, { sortOrder: 'newest' });
-    else if (page == 'topSeller') this.nav.push(ProductsPage, { sortOrder: 'top seller' });
-    else if (page == 'deals') this.nav.push(ProductsPage, { sortOrder: 'special' });
-    else if (page == 'mostLiked') this.nav.push(ProductsPage, { sortOrder: 'most liked' });
+    else if (page == 'newest') this.nav.push(ProductsPage, {sortOrder: 'newest'});
+    else if (page == 'topSeller') this.nav.push(ProductsPage, {sortOrder: 'top seller'});
+    else if (page == 'deals') this.nav.push(ProductsPage, {sortOrder: 'special'});
+    else if (page == 'mostLiked') this.nav.push(ProductsPage, {sortOrder: 'most liked'});
     else if (page == 'addNewProduct') this.nav.push(AddProductPage);
+    else if (page == 'cancelOrder') this.nav.push(CancelOrderPage);
   }
+
   openHomePage() {
-    if (this.config.homePage == 1) { this.nav.setRoot(HomePage); }
-    if (this.config.homePage == 2) { this.nav.setRoot(Home2Page); }
-    if (this.config.homePage == 3) { this.nav.setRoot(Home3Page); }
-    if (this.config.homePage == 4) { this.nav.setRoot(Home4Page); }
-    if (this.config.homePage == 5) { this.nav.setRoot(Home5Page); }
+    if (this.config.homePage == 1) {
+      this.nav.setRoot(HomePage);
+    }
+    if (this.config.homePage == 2) {
+      this.nav.setRoot(Home2Page);
+    }
+    if (this.config.homePage == 3) {
+      this.nav.setRoot(Home3Page);
+    }
+    if (this.config.homePage == 4) {
+      this.nav.setRoot(Home4Page);
+    }
+    if (this.config.homePage == 5) {
+      this.nav.setRoot(Home5Page);
+    }
   }
+
   openCategoryPage() {
-    if (this.config.categoryPage == 1) { this.nav.setRoot(CategoriesPage); }
-    if (this.config.categoryPage == 2) { this.nav.setRoot(Categories2Page); }
-    if (this.config.categoryPage == 3) { this.nav.setRoot(Categories3Page); }
-    if (this.config.categoryPage == 4) { this.nav.setRoot(Categories4Page); }
-    if (this.config.categoryPage == 5) { this.nav.setRoot(Categories5Page); }
-    if (this.config.categoryPage == 6) { this.nav.setRoot(Categories6Page); }
+    if (this.config.categoryPage == 1) {
+      this.nav.setRoot(CategoriesPage);
+    }
+    if (this.config.categoryPage == 2) {
+      this.nav.setRoot(Categories2Page);
+    }
+    if (this.config.categoryPage == 3) {
+      this.nav.setRoot(Categories3Page);
+    }
+    if (this.config.categoryPage == 4) {
+      this.nav.setRoot(Categories4Page);
+    }
+    if (this.config.categoryPage == 5) {
+      this.nav.setRoot(Categories5Page);
+    }
+    if (this.config.categoryPage == 6) {
+      this.nav.setRoot(Categories6Page);
+    }
   }
 
   openLanguagePage() {
@@ -271,29 +314,51 @@ export class MyApp {
     let modal = this.modalCtrl.create(LoginPage);
     modal.present();
   }
+
   openSignUpPage() {
     let modal = this.modalCtrl.create(SignUpPage);
     modal.present();
   }
+
   logOut() {
     this.shared.logOut();
   }
+
   showHideHomeList() {
-    if (this.homeList == false) { this.homeList = true; this.homeListIcon = 'remove'; }
-    else { this.homeList = false; this.homeListIcon = 'add'; }
+    if (this.homeList == false) {
+      this.homeList = true;
+      this.homeListIcon = 'remove';
+    } else {
+      this.homeList = false;
+      this.homeListIcon = 'add';
+    }
   }
+
   showHideCategoriesList() {
-    if (this.categoriesList == false) { this.categoriesList = true; this.categoriesListIcon = 'remove'; }
-    else { this.categoriesList = false; this.categoriesListIcon = 'add'; }
+    if (this.categoriesList == false) {
+      this.categoriesList = true;
+      this.categoriesListIcon = 'remove';
+    } else {
+      this.categoriesList = false;
+      this.categoriesListIcon = 'add';
+    }
   }
+
   showHideShopList() {
-    if (this.shopList == false) { this.shopList = true; this.shopListIcon = 'remove'; }
-    else { this.shopList = false; this.shopListIcon = 'add'; }
+    if (this.shopList == false) {
+      this.shopList = true;
+      this.shopListIcon = 'remove';
+    } else {
+      this.shopList = false;
+      this.shopListIcon = 'add';
+    }
   }
+
   ionViewWillEnter() {
 
     console.log("ionViewCanEnter");
   }
+
   rateUs() {
     this.loading.autoHide(2000);
     if (this.plt.is('ios')) {

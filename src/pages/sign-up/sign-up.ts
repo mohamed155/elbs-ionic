@@ -24,6 +24,7 @@ export class SignUpPage {
     customers_telephone: '',
     customers_picture: '',
     type: false,
+    vendor_logo: '',
     vendor_name: '',
     vendor_address: '',
     vendor_phone: '',
@@ -68,10 +69,34 @@ export class SignUpPage {
       }, (err) => { });
     });
   }
+  openCameraVendor() {
+    const options: CameraOptions = {
+      quality: 80,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      allowEdit: true,
+      targetWidth: 100,
+      targetHeight: 100,
+      saveToPhotoAlbum: false,
+      correctOrientation: true
+    }
+    this.platform.ready().then(() => {
+
+      this.camera.getPicture(options).then((imageData) => {
+        // imageData is either a base64 encoded string or a file URI
+        // If it's base64:
+        this.vendor_logo = 'data:image/jpeg;base64,' + imageData;
+        // console.log(base64Image);
+
+      }, (err) => { });
+    });
+  }
   signUp() {
     this.loading.show();
     this.errorMessage = '';
     this.formData.customers_picture = this.image;
+    this.formData.vendor_logo = this.vendor_logo;
     this.http.post(this.config.url + 'processRegistration', this.formData).map(res => res.json()).subscribe(data => {
       this.loading.hide();
       if (data.success == 1) {

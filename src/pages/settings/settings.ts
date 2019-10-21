@@ -47,7 +47,7 @@ export class SettingsPage {
     public plt: Platform,
     private appVersion: AppVersion
   ) {
-
+    console.log(shared.customerData);
   }
 
 

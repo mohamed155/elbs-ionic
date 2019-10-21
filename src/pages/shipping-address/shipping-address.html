@@ -15,7 +15,6 @@
             <ion-input type="text" placeholder="{{'First Name'|translate}}" name="delivery_firstname" [(ngModel)]="shared.orderDetails.delivery_firstname"
               required></ion-input>
           </ion-item>
-
           <ion-item>
             <ion-input type="text" placeholder="{{'Last Name'|translate}}" name="delivery_lastname" [(ngModel)]="shared.orderDetails.delivery_lastname"
               required></ion-input>
@@ -25,21 +24,21 @@
               required></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input type="text" placeholder="{{'Country'|translate}}" name="delivery_country" (tap)="selectCountryPage()" [readonly]="true"
+            <ion-input type="text" placeholder="{{'Governorate'|translate}}" name="delivery_country" (tap)="selectCountryPage()" [readonly]="true"
               [(ngModel)]="shared.orderDetails.delivery_country" required></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input type="text" placeholder="{{'Zone'|translate}}" required name="delivery_zone" (tap)="selectZonePage()" [readonly]="true"
+            <ion-input type="text" placeholder="{{'Area'|translate}}" required name="delivery_zone" (tap)="shared.orderDetails.delivery_country && selectZonePage()" [readonly]="true"
               [(ngModel)]="shared.orderDetails.delivery_zone"></ion-input>
           </ion-item>
           <ion-item>
             <ion-input type="text" placeholder="{{'City'|translate}}" name="delivery_city" [(ngModel)]="shared.orderDetails.delivery_city"
               required></ion-input>
           </ion-item>
-          <ion-item>
-            <ion-input type="text" placeholder="{{'Postcode'|translate}}" name="delivery_postcode" [(ngModel)]="shared.orderDetails.delivery_postcode"
-              required></ion-input>
-          </ion-item>
+          <!--<ion-item>-->
+            <!--<ion-input type="text" placeholder="{{'Postcode'|translate}}" name="delivery_postcode" [(ngModel)]="shared.orderDetails.delivery_postcode"-->
+              <!--required></ion-input>-->
+          <!--</ion-item>-->
 
         </ion-list>
       </ion-col>

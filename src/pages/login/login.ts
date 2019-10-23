@@ -3,7 +3,7 @@
 // Author: VectorCoder Team
 // Author URI: http://vectorcoder.com/
 import { Component } from '@angular/core';
-import { ViewController, ModalController } from 'ionic-angular';
+import {ViewController, ModalController, AlertController} from 'ionic-angular';
 import { SignUpPage } from '../sign-up/sign-up';
 import { Http } from '@angular/http';
 import { ConfigProvider } from '../../providers/config/config';
@@ -31,7 +31,8 @@ export class LoginPage {
     public shared: SharedDataProvider,
     private fb: Facebook,
     public alert: AlertProvider,
-    private googlePlus: GooglePlus
+    private googlePlus: GooglePlus,
+    public alertCtrl: AlertController
   ) {
 
   }
@@ -42,6 +43,14 @@ export class LoginPage {
     this.http.post(this.config.url + 'processLogin', this.formData).map(res => res.json()).subscribe(data => {
       this.loading.hide();
       if (data.success == 1) {
+        if (data.message == "in active User!") {
+          this.alertCtrl.create({
+            title: "Login Failed",
+            message: "Please verify your email first and login again",
+            buttons: ['Ok']
+          }).present();
+          this.viewCtrl.dismiss();
+        }
         this.shared.login(data.data[0]);
         this.dismiss();
       }

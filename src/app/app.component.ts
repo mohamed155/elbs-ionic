@@ -46,10 +46,8 @@ import {InAppBrowser} from '@ionic-native/in-app-browser';
 import {SocialSharing} from '@ionic-native/social-sharing';
 import {Http} from '@angular/http';
 import {AddProductPage} from "../pages/add-product/add-product";
-import {Firebase} from "@ionic-native/firebase";
-import {FirebaseAuthentication} from "@ionic-native/firebase-authentication";
-import {el} from "@angular/platform-browser/testing/src/browser_util";
 import {CancelOrderPage} from "../pages/cancel-order/cancel-order";
+import * as Pusher from 'pusher';
 
 
 @Component({
@@ -102,8 +100,6 @@ export class MyApp {
     private appVersion: AppVersion,
     public iab: InAppBrowser,
     private socialSharing: SocialSharing,
-    public firebase: Firebase,
-    public firebaseAuth: FirebaseAuthentication
   ) {
     // if (this.platform.is('cordova')) {
     //   this.firebase.setConfigSettings(config.firebaseConfig);
@@ -123,6 +119,12 @@ export class MyApp {
     //     storage.set('introPage', 'firstTime');
     //   }
     // });
+
+    const channels_client = Pusher.forCluster("CLUSTER", {
+      appId: '885775',
+      key: '9d6e94fc31af66c5da1f',
+      secret: 'dd465d8f4eb3fa40a594',
+    });
 
     let connectedToInternet = true;
     network.onDisconnect().subscribe(() => {

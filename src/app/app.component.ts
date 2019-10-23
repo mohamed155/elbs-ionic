@@ -47,7 +47,8 @@ import {SocialSharing} from '@ionic-native/social-sharing';
 import {Http} from '@angular/http';
 import {AddProductPage} from "../pages/add-product/add-product";
 import {CancelOrderPage} from "../pages/cancel-order/cancel-order";
-import * as Pusher from 'pusher';
+import * as Pusher from 'pusher-js';
+import {ChatListPage} from "../pages/chat-list/chat-list";
 
 
 @Component({
@@ -120,10 +121,9 @@ export class MyApp {
     //   }
     // });
 
-    const channels_client = Pusher.forCluster("CLUSTER", {
-      appId: '885775',
-      key: '9d6e94fc31af66c5da1f',
-      secret: 'dd465d8f4eb3fa40a594',
+    var pusher = new Pusher('a5fe46a30a65351c8795', {
+      cluster: 'eu',
+      forceTLS: true
     });
 
     let connectedToInternet = true;
@@ -266,6 +266,7 @@ export class MyApp {
     else if (page == 'mostLiked') this.nav.push(ProductsPage, {sortOrder: 'most liked'});
     else if (page == 'addNewProduct') this.nav.push(AddProductPage);
     else if (page == 'cancelOrder') this.nav.push(CancelOrderPage);
+    else if (page == 'chat') this.nav.push(ChatListPage);
   }
 
   openHomePage() {

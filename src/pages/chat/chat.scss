@@ -1,0 +1,95 @@
+page-chat {
+  .content {
+    .list {
+
+      .item {
+        padding: 0 8px;
+
+        .item-inner {
+          padding: 0;
+        }
+
+        .label {
+          margin: 0;
+          padding: 13px 3px;
+        }
+
+        ion-avatar {
+          align-self: flex-start;
+          //box-shadow: 0 3px 11px 1px rgba(0, 0, 0, 0.4);
+          border-radius: 50%;
+          float: right;
+          //width: 40px;
+          display: inline-block;
+          margin-top: 0;
+        }
+
+        .message {
+          border-radius: 20px;
+          background: #c7c7c7;
+          padding: 15px;
+          position: relative;
+          z-index: 0;
+          display: inline-block;
+          font-size: 11px;
+          max-width: 70%;
+          min-width: 60px;
+          white-space: normal;
+          //box-shadow: 0 3px 11px 1px rgba(0, 0, 0, 0.4);
+        }
+
+        .received {
+          float: left;
+          margin-left: 12px;
+          border-top-left-radius: 0;
+
+          //&::after {
+          //  content: '';
+          //  position: absolute;
+          //  left: 6px;
+          //  top: 20.4px;
+          //  width: 0;
+          //  height: 0;
+          //  border: 45px solid transparent;
+          //  border-right-color: #EAEAEA;
+          //  border-left: 0;
+          //  border-top: 0;
+          //  margin-top: -10px;
+          //  margin-left: -20px;
+          //  transform: scaleY(1.5);
+          //  clip: rect(0, 45px, 25px, 0);
+          //  z-index: -1;
+          //  box-shadow: 0 3px 11px 1px rgba(0, 0, 0, 0.4);
+          //}
+        }
+
+        .sent {
+          float: right;
+          margin-right: 12px;
+          background-color: color($colors, 'primary');
+          color: white;
+          border-top-right-radius: 0;
+
+          //&::after {
+          //  content: '';
+          //  position: absolute;
+          //  right: 6px;
+          //  top: 21.4px;
+          //  width: 0;
+          //  height: 0;
+          //  border: 45px solid transparent;
+          //  border-left-color: color($colors, 'primary');
+          //  border-right: 0;
+          //  border-top: 0;
+          //  margin-top: -10px;
+          //  margin-right: -20px;
+          //  transform: scaleY(1.5);
+          //  clip: rect(0, 45px, 25px, 0);
+          //  z-index: -1;
+          //  box-shadow: 0 3px 11px 1px rgba(0, 0, 0, 0.4);
+          //}
+        }
+      }
+    }
+  }
+}

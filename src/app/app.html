@@ -42,6 +42,9 @@
       <button menuClose ion-item (click)="openPage('addNewProduct')" *ngIf="shared.customerData.type == '1'">
         {{'Add new product'| translate}} <ion-icon item-left name="add"></ion-icon>
       </button>
+      <button menuClose ion-item *ngIf="shared.customerData.customers_id!=null" (click)="openPage('chat')">{{ 'Chat List' | translate }}
+        <ion-icon item-left name="ios-chatbubbles"></ion-icon>
+      </button>
       <!--<button menuClose ion-item (click)="openPage('categories6')">{{ 'Categories' | translate }}-->
         <!--<ion-icon item-left name="apps"></ion-icon>-->
       <!--</button>-->

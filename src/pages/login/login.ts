@@ -50,6 +50,7 @@ export class LoginPage {
             buttons: ['Ok']
           }).present();
           this.viewCtrl.dismiss();
+          return;
         }
         this.shared.login(data.data[0]);
         this.dismiss();

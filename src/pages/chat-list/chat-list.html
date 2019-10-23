@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'Chat List'| translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list>
+    <button ion-item *ngFor="let chat of shared.chats" (click)="openChat(chat.customers_id)">
+      <ion-avatar item-start>
+        <img [src]="config.url+chat.customers_picture" [alt]="chat.customers_picture">
+      </ion-avatar>
+      <h2>{{chat.customers_firstname}} {{chat.customers_lastname}}</h2>
+    </button>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+
+</ion-footer>

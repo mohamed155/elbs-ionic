@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title *ngIf="!receiver">{{'Chat'| translate}}</ion-title>
+    <ion-title *ngIf="receiver">{{receiver.customers_firstname}} {{receiver.customers_lastname}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-list no-lines>
+    <ion-item *ngFor="let msg of messages.reverse()" no-padding>
+      <div *ngIf="msg.from != shared.customerData.customers_id">
+        <ion-avatar item-end float-left>
+          <img [src]="config.url+receiver.customers_picture" alt="logo">
+        </ion-avatar>
+        <div class="message received">
+          {{ msg.body }}
+          <!--<img [src]="msg.image" *ngIf="msg.image != ''">-->
+        </div>
+      </div>
+      <div *ngIf="msg.from == shared.customerData.customers_id">
+        <ion-avatar item-start [ngClass]="{'ltr-avatar': currentDir == 'ltr'}">
+          <img [src]="config.url+shared.customerData.customers_picture">
+        </ion-avatar>
+        <div class="message sent">
+          {{ msg.body }}
+          <!--<img [src]="msg.image" *ngIf="msg.image != ''">-->
+        </div>
+      </div>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-footer>
+  <form #f="ngForm" (ngSubmit)="send(f)">
+    <ion-item>
+      <ion-input type="text" name="msg" placeholder="{{'type your message here...'| translate}}" ngModel required></ion-input>
+      <button ion-button round item-end>
+        <ion-icon name="md-send"></ion-icon>
+      </button>
+    </ion-item>
+  </form>
+</ion-footer>

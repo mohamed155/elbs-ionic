@@ -3,7 +3,7 @@
 // Author: VectorCoder Team
 // Author URI: http://vectorcoder.com/
 import { Component } from '@angular/core';
-import { ViewController, ModalController } from 'ionic-angular';
+import {ViewController, ModalController, AlertController} from 'ionic-angular';
 import { LoadingProvider } from '../../providers/loading/loading';
 import { ConfigProvider } from '../../providers/config/config';
 import { Http } from '@angular/http';
@@ -43,7 +43,8 @@ export class SignUpPage {
     public loading: LoadingProvider,
     public shared: SharedDataProvider,
     public platform: Platform,
-    private camera: Camera
+    private camera: Camera,
+    private alertCtrl: AlertController
   ) {
   }
   openCamera() {
@@ -100,9 +101,18 @@ export class SignUpPage {
     this.http.post(this.config.url + 'processRegistration', this.formData).map(res => res.json()).subscribe(data => {
       this.loading.hide();
       if (data.success == 1) {
-        this.shared.login(data.data[0]);
-        //this.config.customerData = data.data[0];
-        this.viewCtrl.dismiss();
+        // if (data.data[0].isActive == 0) {
+          this.alertCtrl.create({
+            title: "Email verification",
+            message: "Please verify your email then Login again",
+            buttons: ["Ok"]
+          }).present();
+          this.viewCtrl.dismiss();
+          return;
+        // }
+        // this.shared.login(data.data[0]);
+        // //this.config.customerData = data.data[0];
+        // this.viewCtrl.dismiss();
       }
       if (data.success == 0) {
         this.errorMessage = data.message;

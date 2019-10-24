@@ -40,6 +40,15 @@ export class ChatPage {
           buttons: ['Ok']
         }).present();
       });
+
+    this.shared.channel.bind('my-event', () => {
+      this.http.get(`${config.url}chats/show?sender=${shared.customerData.customers_id}&receiver=${this.customers_id}`)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.messages = data.message;
+          this.receiver = data.receiver;
+        });
+    });
   }
 
   send(form: NgForm) {

@@ -14,6 +14,7 @@ import {SharedDataProvider} from "../../providers/shared-data/shared-data";
 import {LoadingProvider} from "../../providers/loading/loading";
 import {TranslateService} from "@ngx-translate/core";
 import {Http} from "@angular/http";
+import {ChatPage} from "../chat/chat";
 
 @Component({
   selector: 'page-vendor',
@@ -61,6 +62,7 @@ export class VendorPage {
     loader.present();
     this.http.post(config.url + 'vendors/' + this.vendor.id, {language_id: config.langId}).map(res => res.json()).subscribe(data => {
       this.products = data.products.original.product_data;
+      this.vendor = data.vendor;
       loader.dismiss();
     });
   }
@@ -251,6 +253,11 @@ export class VendorPage {
       this.vendor.likes -= 1;
       loader.dismiss();
     });
+  }
+
+  openChat(id) {
+    alert(id);
+    this.navCtrl.push(ChatPage, {customer_id: id});
   }
 
 }

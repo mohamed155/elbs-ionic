@@ -14,7 +14,7 @@ import { OneSignal } from "@ionic-native/onesignal";
 @Injectable()
 
 export class ConfigProvider {
-  public url: string = 'http://localhost/elbs/';
+  public url: string = 'http://elbs.dawyny.com/';
   public langId: string = localStorage.langId;
   public loader = 'dots';
   public newProductDuration = 100;
@@ -62,16 +62,17 @@ export class ConfigProvider {
   public notificationType = "";
   public onesignalAppId = "";
   public onesignalSenderId = "";
-  public firebaseConfig = {
-    apiKey: "AIzaSyAdw2NL4Cr25GhNimsydu2CjGp3UPlV-x0",
-    authDomain: "elbs-ionic.firebaseapp.com",
-    databaseURL: "https://elbs-ionic.firebaseio.com",
-    projectId: "elbs-ionic",
-    storageBucket: "elbs-ionic.appspot.com",
-    messagingSenderId: "528184003714",
-    appId: "1:528184003714:web:7952fc89dcefd82234389b",
-    measurementId: "G-LFX8S0PKYP"
-  };
+  public pusherId = 'a5fe46a30a65351c8795';
+  // public firebaseConfig = {
+  //   apiKey: "AIzaSyAdw2NL4Cr25GhNimsydu2CjGp3UPlV-x0",
+  //   authDomain: "elbs-ionic.firebaseapp.com",
+  //   databaseURL: "https://elbs-ionic.firebaseio.com",
+  //   projectId: "elbs-ionic",
+  //   storageBucket: "elbs-ionic.appspot.com",
+  //   messagingSenderId: "528184003714",
+  //   appId: "1:528184003714:web:7952fc89dcefd82234389b",
+  //   measurementId: "G-LFX8S0PKYP"
+  // };
 
   constructor(
     public http: Http,

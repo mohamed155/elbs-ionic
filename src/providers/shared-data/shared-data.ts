@@ -42,6 +42,7 @@ export class SharedDataProvider {
   public governorates = [];
   public taxClasses = [];
   public chats = [];
+  public channel;
 
   public orderDetails = {
     tax_zone_id: "",
@@ -129,6 +130,14 @@ export class SharedDataProvider {
         .subscribe(data => {
           this.chats = data;
         });
+
+      this.channel.bind('my-event', () => {
+        this.http.get(`${config.url}chats/getReceivers?sender=${this.customerData.customers_id}`)
+          .map(res => res.json())
+          .subscribe(data => {
+            this.chats = data;
+          });
+      });
     });
     //getting recent viewed items from local storage
     storage.get('recentViewedProducts').then((val) => {

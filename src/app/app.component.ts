@@ -121,10 +121,12 @@ export class MyApp {
     //   }
     // });
 
-    var pusher = new Pusher('a5fe46a30a65351c8795', {
+    const pusher = new Pusher('a5fe46a30a65351c8795', {
       cluster: 'eu',
       forceTLS: true
     });
+
+    this.shared.channel = pusher.subscribe('my-channel');
 
     let connectedToInternet = true;
     network.onDisconnect().subscribe(() => {

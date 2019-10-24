@@ -10,6 +10,6 @@ import { ConfigProvider } from '../config/config';
 
 export function createTranslateLoader(http: Http, config: ConfigProvider) {
 
-  return new TranslateHttpLoader(http, 'http://localhost/elbs/'+'appLabels3?lang=',"");
+  return new TranslateHttpLoader(http, 'http://elbs.dawyny.com/'+'appLabels3?lang=',"");
 
 }

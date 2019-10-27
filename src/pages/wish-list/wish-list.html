@@ -21,23 +21,48 @@
       </ion-buttons>
     </ion-navbar>
 
+    <ion-segment [(ngModel)]="view" >
+      <ion-segment-button value="products">
+        {{'Products' |translate}}
+      </ion-segment-button>
+      <ion-segment-button value="vendors">
+        {{'Vendors' | translate}}
+      </ion-segment-button>
+    </ion-segment>
+
   </ion-header>
 
 
 <ion-content class="page-wish-list">
-  <ion-grid>
-    <ion-col col-6 *ngFor="let p of shared.wishList" [@animate]>
+  <div [ngSwitch]="view">
+    <ion-grid *ngSwitchCase="'products'">
+      <ion-col col-6 *ngFor="let p of shared.wishList" [@animate]>
         <product [data]="p" [type]="'wishList'"></product>
-    </ion-col>
+      </ion-col>
 
-    <ion-col col-12 *ngIf="shared.wishList.length == 0">
-      <h6 text-center>No Products Found!</h6>
-    </ion-col>
-  </ion-grid>
+      <ion-col col-12 *ngIf="shared.wishList.length == 0">
+        <h6 text-center>{{'No Products Found!' | translate}}</h6>
+      </ion-col>
+    </ion-grid>
 
-  <ion-infinite-scroll #infinite (ionInfinite)="getProducts($event)">
-    <ion-infinite-scroll-content></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+    <ion-infinite-scroll #infinite (ionInfinite)="getProducts($event)" *ngSwitchCase="'products'">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+
+    <ion-list *ngSwitchCase="'vendors'" padding>
+      <button ion-item *ngFor="let vendor of shared.customerData.liked_vendors_array" (click)="openVendor(vendor)">
+        <ion-avatar item-start>
+          <img src="{{config.url}}{{vendor.logo}}" [alt]="vendor.logo">
+        </ion-avatar>
+        <h2>{{vendor.name}}</h2>
+        <p>{{vendor.products_count}} Products</p>
+      </button>
+
+      <ion-col col-12 *ngIf="shared.customerData.liked_vendors_array == 0">
+        <h6 text-center>{{'No Vendors are followed!'| translate}}</h6>
+      </ion-col>
+    </ion-list>
+  </div>
 </ion-content>
 
 <ion-footer *ngIf="config.footerShowHide==1">

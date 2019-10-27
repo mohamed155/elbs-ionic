@@ -15,6 +15,7 @@ import {LoadingProvider} from "../../providers/loading/loading";
 import {TranslateService} from "@ngx-translate/core";
 import {Http} from "@angular/http";
 import {ChatPage} from "../chat/chat";
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-vendor',
@@ -54,7 +55,8 @@ export class VendorPage {
               public translate: TranslateService,
               public http: Http,
               public actionSheet: ActionSheetController,
-              public loadingCtrl: LoadingController
+              public loadingCtrl: LoadingController,
+              public storage: Storage
   ) {
     this.vendor = this.navParams.get('vendor');
     if (!this.vendor.likes) this.vendor.likes = 0;
@@ -64,6 +66,9 @@ export class VendorPage {
       this.products = data.products.original.product_data;
       this.vendor = data.vendor;
       loader.dismiss();
+    });
+    this.shared.customerData.liked_vendors_array.find((item) => {
+      if (item.id == this.vendor.id) this.liked = true;
     });
   }
 
@@ -237,6 +242,8 @@ export class VendorPage {
       }).map(res => res.json()).subscribe(data => {
         data && (this.liked = true);
         this.vendor.likes += 1;
+        this.shared.customerData.liked_vendors_array.push(this.vendor);
+        this.storage.set('customerData', this.shared.customerData);
         loader.dismiss();
       });
   }
@@ -251,12 +258,19 @@ export class VendorPage {
       }).map(res => res.json()).subscribe(data => {
       data && (this.liked = false);
       this.vendor.likes -= 1;
+      let idx = -1;
+      this.shared.customerData.liked_vendors_array.find((item, index) => {
+        if (item.id == this.vendor.id) idx = index;
+      });
+      if (idx !== -1) {
+        this.shared.customerData.liked_vendors_array.splice(idx, 1);
+        this.storage.set('customerData', this.shared.customerData);
+      }
       loader.dismiss();
     });
   }
 
   openChat(id) {
-    alert(id);
     this.navCtrl.push(ChatPage, {customer_id: id});
   }
 

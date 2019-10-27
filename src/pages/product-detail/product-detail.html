@@ -26,6 +26,7 @@
           <small>{{product.categories_name}}</small>
         </h3>
         <p>{{'Likes'|translate}}&nbsp;({{product.products_liked}})</p>
+        <p *ngIf="vendor && vendor.name">{{'Vendor' | translate}} ({{vendor.name}})</p>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -100,9 +101,9 @@
         </ion-avatar>
         <h2>{{review.customer.customers_firstname}} {{review.customer.customers_lastname}}</h2>
         <h3>{{review.review}}</h3>
-        <p>
+        <p *ngIf="review.rate">
           <ion-icon name="star" style="color: goldenrod"
-                    *ngFor="let star of Arr(review.rate ? review.rate : 0).fill(1)"></ion-icon>
+                    *ngFor="let star of Arr(review.rate ? toInt(review.rate) : 0)"></ion-icon>
         </p>
       </ion-item>
     </div>
@@ -111,19 +112,19 @@
   <form #f="ngForm" text-center (ngSubmit)="writeReview(f)" *ngIf="shared.customerData.customers_id">
     <h6>{{'Write your review'| translate}}</h6>
     <div text-center style="background: #f1f1f1">
-      <button type="button" ion-button icon-only clear (click)="userRate = 1">
+      <button type="button" ion-button icon-only clear (click)="userRate = '1'">
         <ion-icon [name]="userRate >= 1 ? 'ios-star' : 'ios-star-outline'"></ion-icon>
       </button>
-      <button type="button" ion-button icon-only clear (click)="userRate = 2">
+      <button type="button" ion-button icon-only clear (click)="userRate = '2'">
         <ion-icon [name]="userRate >= 2 ? 'ios-star' : 'ios-star-outline'"></ion-icon>
       </button>
-      <button type="button" ion-button icon-only clear (click)="userRate = 3">
+      <button type="button" ion-button icon-only clear (click)="userRate = '3'">
         <ion-icon [name]="userRate >= 3 ? 'ios-star' : 'ios-star-outline'"></ion-icon>
       </button>
-      <button type="button" ion-button icon-only clear (click)="userRate = 4">
+      <button type="button" ion-button icon-only clear (click)="userRate = '4'">
         <ion-icon [name]="userRate >= 4 ? 'ios-star' : 'ios-star-outline'"></ion-icon>
       </button>
-      <button type="button" ion-button icon-only clear (click)="userRate = 5">
+      <button type="button" ion-button icon-only clear (click)="userRate = '5'">
         <ion-icon [name]="userRate >= 5 ? 'ios-star' : 'ios-star-outline'"></ion-icon>
       </button>
     </div>

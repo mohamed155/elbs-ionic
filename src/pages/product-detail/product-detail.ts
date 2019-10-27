@@ -2,16 +2,15 @@
 // Project URI: http://ionicecommerce.com
 // Author: VectorCoder Team
 // Author URI: http://vectorcoder.com/
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NavController, NavParams, ModalController, LoadingController} from 'ionic-angular';
-import { ConfigProvider } from '../../providers/config/config';
-import { SharedDataProvider } from '../../providers/shared-data/shared-data';
-import { SocialSharing } from '@ionic-native/social-sharing';
-import { LoginPage } from '../login/login';
-import { LoadingProvider } from '../../providers/loading/loading';
+import {ConfigProvider} from '../../providers/config/config';
+import {SharedDataProvider} from '../../providers/shared-data/shared-data';
+import {SocialSharing} from '@ionic-native/social-sharing';
+import {LoginPage} from '../login/login';
+import {LoadingProvider} from '../../providers/loading/loading';
 import {Http} from "@angular/http";
 import {NgForm} from "@angular/forms";
-
 
 
 @Component({
@@ -29,7 +28,9 @@ export class ProductDetailPage {
   product_price;
   reviews = [];
 
-  userRate = 0;
+  vendor = null;
+
+  userRate = '0';
 
   constructor(
     public navCtrl: NavController,
@@ -43,7 +44,7 @@ export class ProductDetailPage {
     private socialSharing: SocialSharing) {
 
     this.product = navParams.get('data');
-   console.log(this.product);
+    console.log(this.product);
     this.discount_price = this.product.discount_price;
     this.product_price = this.product.products_price;
 
@@ -69,17 +70,25 @@ export class ProductDetailPage {
 
     const loader = this.loaderCtrl.create();
     loader.present();
-    this.http.get(config.url + `products/getRate?product_id=${this.product.products_id}`)
-      .map(res => res.json())
-      .subscribe(data => {
-        loader.dismiss();
-        this.reviews = data.rates == 'no rates found' ? [] : data.rates;
+    const requests = [];
+    const prodRateReq = this.http.get(config.url + `products/getRate?product_id=${this.product.products_id}`);
+    requests.push(prodRateReq);
+    prodRateReq.map(res => res.json())
+      .subscribe(data => this.reviews = data.rates == 'no rates found' ? [] : data.rates);
+    if (this.product.vendor_id !== '0') {
+      const prodVendorReq = this.http.post(config.url + `vendors/${this.product.vendor_id}`, {
+        language_id: config.langId
       });
-
+      requests.push(prodVendorReq);
+      prodVendorReq.map(res => res.json())
+        .subscribe(data => this.vendor = data.vendor);
+    }
+    Promise.all(requests).then(() => loader.dismiss());
   }
+
   addToCartProduct() {
     this.loading.autoHide(500);
-   // console.log(this.product);
+    // console.log(this.product);
     this.shared.addToCart(this.product, this.attributes);
     this.navCtrl.pop();
   }
@@ -89,7 +98,7 @@ export class ProductDetailPage {
   fillAttributes = function (val, optionID) {
 
     //console.log(val);
-  //  console.log(this.attributes);
+    //  console.log(this.attributes);
     this.attributes.forEach((value, index) => {
       if (optionID == value.products_options_id) {
         value.products_options_values_id = val.id;
@@ -132,13 +141,18 @@ export class ProductDetailPage {
     var rtn = "";
     var p1 = parseInt(this.product.products_price);
     var p2 = parseInt(this.product.discount_price);
-    if (p1 == 0 || p2 == null || p2 == undefined || p2 == 0) { rtn = ""; }
+    if (p1 == 0 || p2 == null || p2 == undefined || p2 == 0) {
+      rtn = "";
+    }
     var result = Math.abs((p1 - p2) / p1 * 100);
     result = parseInt(result.toString());
-    if (result == 0) { rtn = "" }
+    if (result == 0) {
+      rtn = ""
+    }
     rtn = result + '%';
     return rtn;
   }
+
   share() {
     this.loading.autoHide(1000);
     // Share via email
@@ -147,26 +161,29 @@ export class ProductDetailPage {
       this.product.products_name,
       this.config.url + this.product.products_image,
       this.product.products_url).then(() => {
-        // Success!
-      }).catch(() => {
-        // Error!
-      });
+      // Success!
+    }).catch(() => {
+      // Error!
+    });
 
   }
+
   clickWishList() {
 
     if (this.shared.customerData.customers_id == null || this.shared.customerData.customers_id == undefined) {
       let modal = this.modalCtrl.create(LoginPage);
       modal.present();
-    }
-    else {
-      if (this.product.isLiked == '0') { this.addWishList(); }
-      else this.removeWishList();
+    } else {
+      if (this.product.isLiked == '0') {
+        this.addWishList();
+      } else this.removeWishList();
     }
   }
+
   addWishList() {
     this.shared.addWishList(this.product);
   }
+
   removeWishList() {
     this.shared.removeWishList(this.product);
   }

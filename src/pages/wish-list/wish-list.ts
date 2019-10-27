@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { trigger, transition, animate, style } from '@angular/animations';
 import { CartPage } from '../cart/cart';
 import { SearchPage } from '../search/search';
+import {VendorPage} from "../vendor/vendor";
 
 @Component({
   selector: 'page-wish-list',
@@ -32,6 +33,8 @@ import { SearchPage } from '../search/search';
 })
 export class WishListPage {
   @ViewChild(InfiniteScroll) infinite: InfiniteScroll;
+
+  view = 'products';
 
   page = 0;
   constructor(
@@ -78,5 +81,8 @@ export class WishListPage {
   }
   ionViewWillEnter() {
     if (this.config.admob == 1) this.shared.showAd();
+  }
+  openVendor(vendor) {
+    this.navCtrl.push(VendorPage, {vendor});
   }
 }

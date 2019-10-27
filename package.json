@@ -60,7 +60,6 @@
     "cordova-plugin-x-socialsharing": "^5.2.1",
     "cordova-plugin-x-toast": "^2.6.0",
     "cordova-support-android-plugin": "^1.0.1",
-    "cordova-support-google-services": "^1.3.1",
     "css-animator": "^2.1.1",
     "es6-promise-plugin": "^4.1.0",
     "ionic-angular": "3.9.2",
@@ -98,8 +97,8 @@
       "cordova-plugin-app-version": {},
       "cordova-plugin-statusbar": {},
       "cordova-plugin-facebook4": {
-        "APP_ID": "2130834456984861",
-        "APP_NAME": "Elbs",
+        "APP_ID": "401398957086005",
+        "APP_NAME": "elbs_app",
         "FACEBOOK_HYBRID_APP_EVENTS": "false",
         "FACEBOOK_ANDROID_SDK_VERSION": "5.5.2"
       }

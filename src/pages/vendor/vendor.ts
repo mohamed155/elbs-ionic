@@ -3,7 +3,7 @@ import {
   ActionSheetController,
   Content,
   InfiniteScroll,
-  LoadingController,
+  LoadingController, ModalController,
   NavController,
   NavParams,
   Slides
@@ -15,7 +15,9 @@ import {LoadingProvider} from "../../providers/loading/loading";
 import {TranslateService} from "@ngx-translate/core";
 import {Http} from "@angular/http";
 import {ChatPage} from "../chat/chat";
-import { Storage } from '@ionic/storage';
+import {Storage} from '@ionic/storage';
+import {LoginPage} from "../login/login";
+import {InAppBrowser} from "@ionic-native/in-app-browser";
 
 @Component({
   selector: 'page-vendor',
@@ -42,7 +44,7 @@ export class VendorPage {
   applyFilter = false;
   filters = [];
   selectedFilters = [];
-  price = { lower: 0, upper: 500 };
+  price = {lower: 0, upper: 500};
   maxAmount = 500;
   side = "right";
   productView = 'grid';
@@ -56,7 +58,9 @@ export class VendorPage {
               public http: Http,
               public actionSheet: ActionSheetController,
               public loadingCtrl: LoadingController,
-              public storage: Storage
+              public storage: Storage,
+              public modalCtrl: ModalController,
+              public iab: InAppBrowser
   ) {
     this.vendor = this.navParams.get('vendor');
     if (!this.vendor.likes) this.vendor.likes = 0;
@@ -67,9 +71,11 @@ export class VendorPage {
       this.vendor = data.vendor;
       loader.dismiss();
     });
-    this.shared.customerData.liked_vendors_array.find((item) => {
-      if (item.id == this.vendor.id) this.liked = true;
-    });
+    if (this.shared.customerData.liked_vendors_array) {
+      this.shared.customerData.liked_vendors_array.find((item) => {
+        if (item.id == this.vendor.id) this.liked = true;
+      });
+    }
   }
 
   openCart() {
@@ -103,7 +109,11 @@ export class VendorPage {
     this.translate.get(this.sortArray).subscribe((res) => {
 
       for (let key in res) {
-        buttonArray.push({ text: res[key], handler: () => { this.getSortProducts(key) } });
+        buttonArray.push({
+          text: res[key], handler: () => {
+            this.getSortProducts(key)
+          }
+        });
       }
       buttonArray.push(
         {
@@ -123,6 +133,7 @@ export class VendorPage {
 
 
   }
+
   changeLayout() {
     if (this.productView == 'list') this.productView = "grid";
     else this.productView = "list";
@@ -134,6 +145,7 @@ export class VendorPage {
     this.content.scrollToTop(700);
     this.scrollTopButton = false;
   }
+
   onScroll(e) {
     if (e.scrollTop >= 1200) this.scrollTopButton = true;
     if (e.scrollTop < 1200) this.scrollTopButton = false;
@@ -143,13 +155,15 @@ export class VendorPage {
 
   getProducts(infiniteScroll) {
 
-    if (this.page == 0) { this.loading.show(); }
+    if (this.page == 0) {
+      this.loading.show();
+    }
     var data: { [k: string]: any } = {};
     if (this.shared.customerData != null)//in case user is logged in customer id will be send to the server to get user liked products
       data.customers_id = this.shared.customerData.customers_id;
     if (this.applyFilter == true) {
       data.filters = this.selectedFilters;
-      data.price = { minPrice: this.price.lower, maxPrice: this.price.upper };
+      data.price = {minPrice: this.price.lower, maxPrice: this.price.upper};
     }
     data.categories_id = this.selectedTab;
     data.page_number = this.page;
@@ -158,7 +172,11 @@ export class VendorPage {
     this.http.post(this.config.url + 'getAllProducts', data).map(res => res.json()).subscribe(data => {
       // console.log(data.product_data.length + "   " + this.page);
       this.infinite.complete();
-      if (this.page == 0) { this.vendor.products = new Array; this.loading.hide(); this.scrollToTop(); }
+      if (this.page == 0) {
+        this.vendor.products = new Array;
+        this.loading.hide();
+        this.scrollToTop();
+      }
       if (data.success == 1) {
         this.page++;
         var prod = data.product_data;
@@ -166,8 +184,12 @@ export class VendorPage {
           this.vendor.products.push(value);
         }
       }
-      if (data.success == 1 && data.product_data.length == 0) { this.infinite.enable(false); }
-      if (data.success == 0) { this.infinite.enable(false); }
+      if (data.success == 1 && data.product_data.length == 0) {
+        this.infinite.enable(false);
+      }
+      if (data.success == 0) {
+        this.infinite.enable(false);
+      }
 
     });
 
@@ -188,9 +210,8 @@ export class VendorPage {
   // filling filter array for keyword search
   fillFilterArray = function (fValue, fName, keyword) {
     if (fValue._value == true) {
-      this.selectedFilters.push({ 'name': fName, 'value': keyword });
-    }
-    else {
+      this.selectedFilters.push({'name': fName, 'value': keyword});
+    } else {
       this.selectedFilters.forEach((value, index) => {
         if (value.value == keyword) {
           this.selectedFilters.splice(index, 1);
@@ -233,6 +254,28 @@ export class VendorPage {
   }
 
   likeVendor() {
+    if (!this.shared.customerData.liked_vendors_array) {
+      let modal = this.modalCtrl.create(LoginPage);
+      modal.present();
+      modal.onDidDismiss(() => {
+        if (this.shared.customerData.liked_vendors_array) {
+          const loader = this.loadingCtrl.create();
+          loader.present();
+          this.http.post(this.config.url + 'vendors/like_vendor',
+            {
+              liked_vendor_id: this.vendor.id,
+              liked_customers_id: this.shared.customerData.customers_id
+            }).map(res => res.json()).subscribe(data => {
+            data && (this.liked = true);
+            this.vendor.likes += 1;
+            this.shared.customerData.liked_vendors_array.push(this.vendor);
+            this.storage.set('customerData', this.shared.customerData);
+            loader.dismiss();
+          });
+        }
+      });
+      return;
+    }
     const loader = this.loadingCtrl.create();
     loader.present();
     this.http.post(this.config.url + 'vendors/like_vendor',
@@ -240,12 +283,12 @@ export class VendorPage {
         liked_vendor_id: this.vendor.id,
         liked_customers_id: this.shared.customerData.customers_id
       }).map(res => res.json()).subscribe(data => {
-        data && (this.liked = true);
-        this.vendor.likes += 1;
-        this.shared.customerData.liked_vendors_array.push(this.vendor);
-        this.storage.set('customerData', this.shared.customerData);
-        loader.dismiss();
-      });
+      data && (this.liked = true);
+      this.vendor.likes += 1;
+      this.shared.customerData.liked_vendors_array.push(this.vendor);
+      this.storage.set('customerData', this.shared.customerData);
+      loader.dismiss();
+    });
   }
 
   unlikeVendor() {
@@ -272,6 +315,10 @@ export class VendorPage {
 
   openChat(id) {
     this.navCtrl.push(ChatPage, {customer_id: id});
+  }
+
+  openURL(url) {
+    const browser = this.iab.create(url);
   }
 
 }

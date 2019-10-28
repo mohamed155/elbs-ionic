@@ -4,7 +4,7 @@
 // Author URI: http://vectorcoder.com/
 
 import {Component, ViewChild} from '@angular/core';
-import {Nav, Platform, ModalController, Events} from 'ionic-angular';
+import {Nav, Platform, ModalController, Events, AlertController} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {Storage} from '@ionic/storage';
@@ -101,6 +101,7 @@ export class MyApp {
     private appVersion: AppVersion,
     public iab: InAppBrowser,
     private socialSharing: SocialSharing,
+    private alertCtrl: AlertController
   ) {
     // if (this.platform.is('cordova')) {
     //   this.firebase.setConfigSettings(config.firebaseConfig);
@@ -202,7 +203,14 @@ export class MyApp {
             this.storage.set('pushNotification', "loaded");
           }
         });
-      });
+      })
+        .catch(err => {
+          this.alertCtrl.create({
+            title: "Disconnected",
+            message: "Please Connect to the Internet!"
+          });
+          setTimeout(() => this.platform.exitApp(), 3000);
+        });
 
       this.statusBar.styleLightContent();
 

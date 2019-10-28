@@ -58,7 +58,7 @@
         <p>{{vendor.products_count}} Products</p>
       </button>
 
-      <ion-col col-12 *ngIf="shared.customerData.liked_vendors_array == 0">
+      <ion-col col-12 *ngIf="!shared.customerData.liked_vendors_array || shared.customerData.liked_vendors_array == 0">
         <h6 text-center>{{'No Vendors are followed!'| translate}}</h6>
       </ion-col>
     </ion-list>

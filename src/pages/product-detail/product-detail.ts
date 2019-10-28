@@ -157,7 +157,7 @@ export class ProductDetailPage {
     this.loading.autoHide(1000);
     // Share via email
     this.socialSharing.share(
-      this.product.products_name,
+      this.product.products_description,
       this.product.products_name,
       this.config.url + this.product.products_image,
       this.product.products_url).then(() => {

@@ -47,6 +47,18 @@
         </button>
       </ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col col-2 *ngIf="vendor.facebook">
+        <button ion-button clear icon-only (click)="openURL(vendor.facebook)">
+          <ion-icon color="facebook" name="logo-facebook"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-2 *ngIf="vendor.instagram">
+        <button ion-button clear icon-only (click)="openURL(vendor.instagram)">
+          <img src="assets/instagram.svg" style="width: 100%; height: 100%; margin-top: 1px" alt="instagram">
+        </button>
+      </ion-col>
+    </ion-row>
   </ion-item>
   <ion-grid *ngIf="productView=='grid'">
     <ion-col *ngFor="let p of products" col-6>

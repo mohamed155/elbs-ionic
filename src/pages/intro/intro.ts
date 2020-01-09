@@ -1,7 +1,3 @@
-// Project Name: IonicEcommerce
-// Project URI: http://ionicecommerce.com
-// Author: VectorCoder Team
-// Author URI: http://vectorcoder.com/
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { HomePage } from '../home/home';

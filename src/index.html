@@ -3,13 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <title>Ionic App</title>
-  
+
   <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="format-detection" content="telephone=no">
   <meta name="msapplication-tap-highlight" content="no">
 
   <link rel="icon" type="image/x-icon" href="assets/icon/favicon.ico">
   <link rel="manifest" href="manifest.json">
+
+  <style>
+
+    html, body {
+      height: 100vh;
+    }
+
+    .preloader {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+
   <meta name="theme-color" content="#4e8ef7">
 
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBCMLN-ZbmFDw7Rf_OLsCDrYzI4n-jcaX0"></script>
@@ -31,12 +47,16 @@
   <script src="assets/others/braintreePaypal.js"></script>
   <script src="assets/others/braintreeHostedFields.js"></script>
   <link href="build/main.css" rel="stylesheet">
-  
+
 </head>
 <body>
 
   <!-- Ionic's root component and where the app will load -->
-  <ion-app></ion-app>
+  <ion-app>
+    <div class="preloader">
+      <img src="assets/Logo.png" alt="Loading...">
+    </div>
+  </ion-app>
 
   <!-- The polyfills js is generated during the build process -->
   <script src="build/polyfills.js"></script>

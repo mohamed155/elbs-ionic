@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'Edit vendor' | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-row>
+    <ion-col col-12>
+      <ion-label>{{'Vendor logo'| translate}}</ion-label>
+      <div class="photo">
+        <div class="image">
+          <img class="avatar" src="assets/avatar.png" *ngIf="vendor_logo==null">
+          <img class="avatar" src="{{vendor_logo}}" *ngIf="vendor_logo!=null">
+        </div>
+        <div class="upload">
+          <ion-icon name="camera" (click)='handleVendorPicClick()'></ion-icon>
+        </div>
+      </div>
+    </ion-col>
+
+    <ion-item>
+      <ion-input type="text" placeholder="{{'Vendor name'|translate}}" name="name" [(ngModel)]="formData.name"
+                 required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="{{'Vendor address'|translate}}" name="address" [(ngModel)]="formData.address"
+                 required></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="number" placeholder="{{'Vendor phone'|translate}}" name="phone" [(ngModel)]="formData.phone"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="{{'Vendor facebook'|translate}}" name="facebook"
+                 [(ngModel)]="formData.facebook"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="text" placeholder="{{'Vendor instagram'|translate}}" name="instagram"
+                 [(ngModel)]="formData.instagram"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>{{'Online shop' | translate}}</ion-label>
+      <ion-checkbox name="vandor_online" [(ngModel)]="formData.online"></ion-checkbox>
+    </ion-item>
+  </ion-row>
+  <button ion-button block (click)="onSumbit()">{{'Submit Edit'| translate}}</button>
+</ion-content>

@@ -64,9 +64,7 @@ import { ShippingMethodPage } from '../pages/shipping-method/shipping-method';
 import { OrderPage } from '../pages/order/order';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { ThankYouPage } from '../pages/thank-you/thank-you';
-import { Stripe } from '@ionic-native/stripe';
 import { CouponProvider } from '../providers/coupon/coupon';
-import { PayPal } from '@ionic-native/paypal';
 import { MyAccountPage } from '../pages/my-account/my-account';
 import { MyShippingAddressesPage } from '../pages/my-shipping-addresses/my-shipping-addresses';
 import { EditShippingAddressPage } from '../pages/edit-shipping-address/edit-shipping-address';
@@ -77,10 +75,8 @@ import { SettingsPage } from '../pages/settings/settings';
 import { NewsDetailPage } from '../pages/news-detail/news-detail';
 import { NewsListPage } from '../pages/news-list/news-list';
 import { LocalNotifications } from '@ionic-native/local-notifications';
-import { Push } from '@ionic-native/push';
 import { Device } from '@ionic-native/device';
 import { Facebook } from '@ionic-native/facebook';
-import { GooglePlus } from '@ionic-native/google-plus';
 import { Categories2Page } from '../pages/categories2/categories2';
 import { SubCategoriesPage } from '../pages/sub-categories/sub-categories';
 import { Home5Page } from '../pages/home5/home5';
@@ -102,16 +98,18 @@ import { SubCategories5Page } from '../pages/sub-categories5/sub-categories5';
 import { Categories6Page } from '../pages/categories6/categories6';
 import { SubCategories6Page } from '../pages/sub-categories6/sub-categories6';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
-import { AdMobFree} from '@ionic-native/admob-free';
-import { FCM } from '@ionic-native/fcm';
 import { AppVersion } from '@ionic-native/app-version';
-import { OneSignal } from '@ionic-native/onesignal';
 import {AddProductPage} from "../pages/add-product/add-product";
 import {VendorPage} from "../pages/vendor/vendor";
 import {IonTagsInputModule} from "ionic-tags-input";
 import {CancelOrderPage} from "../pages/cancel-order/cancel-order";
 import {ChatListPage} from "../pages/chat-list/chat-list";
 import {ChatPage} from "../pages/chat/chat";
+import {InviteFriendPage} from "../pages/invite-friend/invite-friend";
+import {InvitationPage} from "../pages/invitation/invitation";
+import { ImagePicker } from '@ionic-native/image-picker';
+import {EditVendorPage} from "../pages/edit-vendor/edit-vendor";
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -178,7 +176,10 @@ import {ChatPage} from "../pages/chat/chat";
     VendorPage,
     CancelOrderPage,
     ChatListPage,
-    ChatPage
+    ChatPage,
+    InviteFriendPage,
+    InvitationPage,
+    EditVendorPage
   ],
   imports: [
     IonicModule.forRoot(MyApp,{
@@ -186,6 +187,7 @@ import {ChatPage} from "../pages/chat/chat";
       iconMode: 'md',
     }),
     HttpModule,
+    HttpClientModule,
     BrowserModule,
     BrowserAnimationsModule,
     IonicStorageModule.forRoot(),
@@ -261,7 +263,10 @@ import {ChatPage} from "../pages/chat/chat";
     VendorPage,
     CancelOrderPage,
     ChatListPage,
-    ChatPage
+    ChatPage,
+    InviteFriendPage,
+    InvitationPage,
+    EditVendorPage
   ],
   providers: [
     ConfigProvider,
@@ -276,21 +281,15 @@ import {ChatPage} from "../pages/chat/chat";
     LoadingProvider,
     SharedDataProvider,
     Camera,
-    Stripe,
     AlertProvider,
     CouponProvider,
-    PayPal,
-    Push,
     Device,
     Facebook,
-    GooglePlus,
     LocalNotifications,
     InAppBrowser,
     Network,
-    AdMobFree,
-    FCM,
     AppVersion,
-    OneSignal
+    ImagePicker,
   ]
 })
 export class AppModule { }

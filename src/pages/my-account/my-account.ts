@@ -7,12 +7,21 @@ import { TranslateService } from '@ngx-translate/core';
 import { SharedDataProvider } from '../../providers/shared-data/shared-data';
 import { ConfigProvider } from '../../providers/config/config';
 import { Http } from '@angular/http';
-import { Platform, NavController } from 'ionic-angular';
+import {
+  Platform,
+  NavController,
+  ViewController,
+  ModalController,
+  AlertController,
+  LoadingController, ActionSheetController
+} from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { AlertProvider } from '../../providers/alert/alert';
 import { LoadingProvider } from '../../providers/loading/loading';
 import { CartPage } from '../cart/cart';
 import { SearchPage } from '../search/search';
+import {ImagePicker, ImagePickerOptions} from "@ionic-native/image-picker";
+import {Storage} from "@ionic/storage";
 
 
 
@@ -41,10 +50,18 @@ export class MyAccountPage {
     private camera: Camera,
     public navCtrl: NavController,
     public alert: AlertProvider,
-    public loading: LoadingProvider) {
+    public loading: LoadingProvider,
+    public viewCtrl: ViewController,
+    public modalCtrl: ModalController,
+    private alertCtrl: AlertController,
+    public storage: Storage,
+    public loadingCtrl: LoadingController,
+    public actionSheetCtrl: ActionSheetController,
+    public imagePicker: ImagePicker,
+    ) {
   }
 
-  //============================================================================================  
+  //============================================================================================
   //function updating user information
   updateInfo = function () {
     //this.shared.customerData.customers_password="1234"
@@ -127,14 +144,77 @@ export class MyAccountPage {
       targetHeight: 100,
       saveToPhotoAlbum: false,
       correctOrientation: true
-    }
+    };
     this.platform.ready().then(() => {
       this.camera.getPicture(options).then((imageData) => {
         this.profilePicture = 'data:image/jpeg;base64,' + imageData;
       }, (err) => { });
     });
   }
-  //============================================================================================  
+
+  handleProfilePicClick() {
+    this.actionSheetCtrl.create({
+      title: 'Upload your profile picture',
+      buttons: [
+        {
+          text: 'Take a photo with camera',
+          handler: () => {
+            const loader = this.loadingCtrl.create();
+            loader.present();
+            const options: CameraOptions = {
+              quality: 100,
+              destinationType: this.camera.DestinationType.DATA_URL,
+              encodingType: this.camera.EncodingType.JPEG,
+              mediaType: this.camera.MediaType.PICTURE,
+              allowEdit: true,
+              targetWidth: 100,
+              targetHeight: 100,
+              saveToPhotoAlbum: false,
+              correctOrientation: true
+            };
+            this.camera.getPicture(options).then((imageData) => {
+              this.profilePicture = 'data:image/jpeg;base64,' + imageData;
+              loader.dismiss();
+            }, (err) => {
+              this.alertCtrl.create({
+                title: 'Error',
+                message: 'Could not take photo from camera'
+              }).present();
+              loader.dismiss();
+            });
+          }
+        },
+        {
+          text: 'Choose an image from gallery',
+          handler: () => {
+            const loader = this.loadingCtrl.create();
+            loader.present();
+            const options: ImagePickerOptions = {
+              maximumImagesCount: 1,
+              quality: 100,
+              outputType: 1
+            };
+            this.imagePicker.getPictures(options).then((results) => {
+              this.profilePicture = results[0];
+              loader.dismiss();
+            }, (err) => {
+              this.alertCtrl.create({
+                title: 'Error',
+                message: 'Could not take photo from gallery'
+              }).present();
+              loader.dismiss();
+            });
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {}
+        }
+      ]
+    }).present();
+  }
+  //============================================================================================
   //function updating user password
   // updatePassword = function (form) {
   //   if (this.passwordData.currentPassword != this.shared.customerData.customers_password) {

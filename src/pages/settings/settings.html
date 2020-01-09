@@ -11,7 +11,7 @@
 
     <ion-buttons end>
       <!--<button ion-button icon-only (click)="openSearch()">-->
-        <!--<ion-icon name="search"></ion-icon>-->
+      <!--<ion-icon name="search"></ion-icon>-->
       <!--</button>-->
       <button ion-button icon-only class="cart-button" (click)="openCart()">
         <ion-icon name="cart">
@@ -44,6 +44,9 @@
       <p *ngIf="shared.customerData.walletsCount !== null">{{'Wallet'| translate}}: {{shared.customerData.walletsCount.amount | curency}}</p>
       <button ion-button color="light" (click)="openPage('myAccount')">
         {{'Edit Profile' | translate }}
+      </button>
+      <button ion-button color="light" (click)="openPage('editVendor')" *ngIf="shared.currentVendor">
+        {{'Edit vendor' | translate }}
       </button>
     </ion-item>
   </ion-list>

@@ -11,6 +11,7 @@ import {LoginPage} from '../login/login';
 import {LoadingProvider} from '../../providers/loading/loading';
 import {Http} from "@angular/http";
 import {NgForm} from "@angular/forms";
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -41,7 +42,8 @@ export class ProductDetailPage {
     public loading: LoadingProvider,
     public http: Http,
     public loaderCtrl: LoadingController,
-    private socialSharing: SocialSharing) {
+    private socialSharing: SocialSharing,
+    private storage: Storage) {
 
     this.product = navParams.get('data');
     console.log(this.product);
@@ -83,7 +85,7 @@ export class ProductDetailPage {
       prodVendorReq.map(res => res.json())
         .subscribe(data => this.vendor = data.vendor);
     }
-    Promise.all(requests).then(() => loader.dismiss());
+    Promise.all(requests).then(() => {loader.dismiss();console.log(this.reviews, 'length ', this.reviews.length)});
   }
 
   addToCartProduct() {
@@ -105,12 +107,13 @@ export class ProductDetailPage {
         value.options_values_price = val.price;
         value.price_prefix = val.price_prefix;
         value.products_options_values = val.value;
-        value.name = val.value + ' ' + val.price_prefix + val.price + " " + this.config.currency
+        value.name = val.value
       }
     });
+
     // console.log($scope.attributes);
     //calculating total price
-    this.calculatingTotalPrice();
+    // this.calculatingTotalPrice();
   };
   //============================================================================================
   //calculating total price
@@ -202,8 +205,17 @@ export class ProductDetailPage {
         this.http.get(this.config.url + `products/getRate?product_id=${this.product.products_id}`)
           .map(res => res.json())
           .subscribe(data => {
-            loader.dismiss();
             this.reviews = data.rates;
+            this.http.post(this.config.url + 'points/increase', {
+              point_id: this.shared.customerData.points.id,
+              count: this.shared.reviewPoints
+            })
+              .map(res => res.json())
+              .subscribe(data => {
+                this.shared.customerData.points = data;
+                this.storage.set('customerData', this.shared.customerData);
+                loader.dismiss();
+              });
           })
       });
   }

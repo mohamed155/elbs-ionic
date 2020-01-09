@@ -39,7 +39,7 @@
       <button menuClose ion-item (click)="openPage('home3')">{{ 'Home' | translate }}
         <ion-icon item-left name="home"></ion-icon>
       </button>
-      <button menuClose ion-item (click)="openPage('addNewProduct')" *ngIf="shared.customerData.type == '1'">
+      <button menuClose ion-item (click)="openPage('addNewProduct')" *ngIf="shared.customerData.type == '1' && shared.currentVendor && shared.currentVendor.add_products == '1'">
         {{'Add new product'| translate}} <ion-icon item-left name="add"></ion-icon>
       </button>
       <button menuClose ion-item *ngIf="shared.customerData.customers_id!=null" (click)="openPage('chat')">{{ 'Chat List' | translate }}
@@ -116,6 +116,12 @@
       </button>
       <button menuClose ion-item *ngIf="shared.customerData.customers_id!=null" (click)="openPage('cancelOrder')"> {{'Request order cancelation'| translate}}
         <ion-icon name="close" item-left></ion-icon>
+      </button>
+      <button menuClose ion-item *ngIf="shared.customerData.customers_id!=null" (click)="openPage('invite')">{{ 'Invite Friend' | translate }}
+        <ion-icon item-left name="md-mail"></ion-icon>
+      </button>
+      <button menuClose ion-item *ngIf="shared.customerData.customers_id!=null" (click)="openPage('invitation')">{{ 'Enter Invitation code' | translate }}
+        <ion-icon item-left name="md-mail-open"></ion-icon>
       </button>
       <button menuClose ion-item *ngIf="config.contactUsPage==1" (click)="openPage('contactUs')">{{ 'Contact Us' | translate }}
         <ion-icon item-left name="call"></ion-icon>

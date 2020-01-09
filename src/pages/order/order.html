@@ -19,24 +19,24 @@
       {{'Shipping Address'|translate}}
     </ion-card-header>
     <ion-card-content>
-      {{orderDetail.delivery_street_address+', '+orderDetail.delivery_city+', '+orderDetail.delivery_state+' '+orderDetail.delivery_postcode+','+orderDetail.delivery_country}}
+      {{orderDetail.delivery_street_address + ', ' + orderDetail.delivery_city + ', ' + orderDetail.delivery_state + ' '  + orderDetail.delivery_country}}
     </ion-card-content>
   </ion-card>
   <!--<ion-card>-->
-    <!--<ion-card-header>-->
-      <!--{{'Billing Address'|translate}}-->
-    <!--</ion-card-header>-->
-    <!--<ion-card-content>-->
-      <!--{{orderDetail.billing_street_address+', '+orderDetail.billing_city+', '+orderDetail.billing_state+' '+orderDetail.billing_postcode+',' +orderDetail.billing_country}}-->
-    <!--</ion-card-content>-->
+  <!--<ion-card-header>-->
+  <!--{{'Billing Address'|translate}}-->
+  <!--</ion-card-header>-->
+  <!--<ion-card-content>-->
+  <!--{{orderDetail.billing_street_address+', '+orderDetail.billing_city+', '+orderDetail.billing_state+' '+orderDetail.billing_postcode+',' +orderDetail.billing_country}}-->
+  <!--</ion-card-content>-->
   <!--</ion-card>-->
   <!--<ion-card>-->
-    <!--<ion-card-header>-->
-      <!--{{'Shipping Method'|translate}}-->
-    <!--</ion-card-header>-->
-    <!--<ion-card-content>-->
-      <!--{{orderDetail.shipping_method}}-->
-    <!--</ion-card-content>-->
+  <!--<ion-card-header>-->
+  <!--{{'Shipping Method'|translate}}-->
+  <!--</ion-card-header>-->
+  <!--<ion-card-content>-->
+  <!--{{orderDetail.shipping_method}}-->
+  <!--</ion-card-content>-->
   <!--</ion-card>-->
 
   <ion-card class="order-product">
@@ -61,15 +61,25 @@
         </ion-row>
 
         <ion-row *ngFor="let att of product.attributes">
-          <ion-col col-6>{{att.products_options_values+'&nbsp;'+att.products_options}}&nbsp;:</ion-col>
-          <ion-col col-6>{{att.price_prefix +'&nbsp;'+ att.options_values_price+'&nbsp;'+config.curency}}</ion-col>
+          <ion-col col-6>{{att.products_options}}&nbsp;:</ion-col>
+          <ion-col col-6>{{att.products_options_values}}</ion-col>
         </ion-row>
 
         <ion-row>
           <ion-col col-6>
-            <strong>{{'Sub Total' |translate}}</strong>&nbsp;:&nbsp;</ion-col>
+            <strong>{{'Quantity' |translate}}</strong>
+          </ion-col>
           <ion-col col-6>
-            <strong>{{product.total | curency}}</strong>
+            <strong>{{product.customers_basket_quantity}}</strong>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col col-6>
+            <strong>{{'Sub Total' |translate}}</strong>&nbsp;:&nbsp;
+          </ion-col>
+          <ion-col col-6>
+            <strong>{{product.customers_basket_quantity * product.price | curency}}</strong>
           </ion-col>
         </ion-row>
       </ion-item>
@@ -91,12 +101,12 @@
         </ion-col>
       </ion-row>
       <!--<ion-row>-->
-        <!--<ion-col col-6>-->
-          <!--{{'Tax'|translate}}-->
-        <!--</ion-col>-->
-        <!--<ion-col col-6 text-right>-->
-          <!--{{orderDetail.total_tax| curency}}-->
-        <!--</ion-col>-->
+      <!--<ion-col col-6>-->
+      <!--{{'Tax'|translate}}-->
+      <!--</ion-col>-->
+      <!--<ion-col col-6 text-right>-->
+      <!--{{orderDetail.total_tax| curency}}-->
+      <!--</ion-col>-->
       <!--</ion-row>-->
       <ion-row>
         <ion-col col-6>
@@ -114,12 +124,28 @@
           {{discount| curency}}
         </ion-col>
       </ion-row>
+      <ion-row *ngIf="shared.customerData.walletsCount && shared.customerData.walletsCount.amount">
+        <ion-col col-6>
+          {{'Wallet'| translate}}
+        </ion-col>
+        <ion-col col-6 text-right>
+          - {{shared.customerData.walletsCount && shared.customerData.walletsCount.amount}}
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="pointsUsed">
+        <ion-col col-6>
+          {{'Points credit'| translate}}
+        </ion-col>
+        <ion-col col-6 text-right>
+          - {{shared.customerData.points.amount * shared.pointToEgp}}
+        </ion-col>
+      </ion-row>
       <ion-row>
         <ion-col col-6>
           <strong>{{'Total'|translate}}</strong>
         </ion-col>
         <ion-col col-6 text-right>
-          <strong>{{totalAmountWithDisocunt| curency}}</strong>
+          <strong>{{orderDetail.totalPrice| curency}}</strong>
         </ion-col>
       </ion-row>
     </ion-card-content>
@@ -176,13 +202,25 @@
   </ion-card>
   <!-- <button ion-button small clear (click)="couponslist()">{{'Sample coupon codes for testing app'|translate}}</button> -->
 
+  <ion-card *ngIf="shared.customerData.points && shared.customerData.points.amount != '0'">
+    <ion-card-content>
+      <ion-item>
+        <label> {{shared.customerData.points.amount}} {{'Points'|translate}}</label>
+        <button ion-button item-end (click)="usePoints()" *ngIf="!pointsUsed">{{'Apply'|translate}}</button>
+        <button ion-button item-end outline (click)="unusePoints()"
+                *ngIf="pointsUsed">{{'Cancel'|translate}}</button>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
   <ion-card>
     <ion-card-header>
       {{'Order Notes'|translate}}
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <ion-input type="text" placeholder="{{'Note to the buyer'|translate}}" name="note" [(ngModel)]="orderDetail.comments"></ion-input>
+        <ion-input type="text" placeholder="{{'Note to the buyer'|translate}}" name="note"
+                   [(ngModel)]="orderDetail.comments"></ion-input>
       </ion-item>
     </ion-card-content>
   </ion-card>
@@ -192,7 +230,8 @@
       <ion-list>
         <ion-item>
           <ion-label color="dark">{{'Payment'|translate}}</ion-label>
-          <ion-select [(ngModel)]="orderDetail.payment_method" (ionChange)=" scrollToBottom()" okText="{{'ok'|translate}}" cancelText="{{'Cancel'|translate}}">
+          <ion-select [(ngModel)]="orderDetail.payment_method" (ionChange)=" scrollToBottom()"
+                      okText="{{'ok'|translate}}" cancelText="{{'Cancel'|translate}}">
             <div *ngFor="let p of paymentMethods">
               <ion-option *ngIf="p.active==1" [value]="p.method">{{p.name}}</ion-option>
             </div>
@@ -225,7 +264,8 @@
       <div class="hosted-field form-control" id="expiration-date" value="10/2019"></div>
 
       <input type="hidden" name="payment-method-nonce">
-      <button ion-button block color="secondary" type="submit" id="braintreesubmit" disabled> {{'Continue'|translate}}</button>
+      <button ion-button block color="secondary" type="submit" id="braintreesubmit"
+              disabled> {{'Continue'|translate}}</button>
     </form>
   </div>
 
@@ -236,7 +276,8 @@
           <ion-list>
 
             <ion-item>
-              <ion-input type="number" max=16 name="number" placeholder="{{'Number'|translate}}" [(ngModel)]="stripeCard.number" required></ion-input>
+              <ion-input type="number" max=16 name="number" placeholder="{{'Number'|translate}}"
+                         [(ngModel)]="stripeCard.number" required></ion-input>
             </ion-item>
             <ion-item>
               <ion-label>{{'Expire Month'|translate}}</ion-label>
@@ -248,12 +289,15 @@
             <ion-item>
               <ion-label>{{'Expire Year'|translate}}</ion-label>
               <ion-select name="expYear" [(ngModel)]="stripeCard.expYear" required>
-                <ion-option *ngFor="let n of [2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033]" value="{{n}}">{{n}}</ion-option>
+                <ion-option
+                  *ngFor="let n of [2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033]"
+                  value="{{n}}">{{n}}</ion-option>
               </ion-select>
             </ion-item>
 
             <ion-item>
-              <ion-input type="number" max=3 name="cvc" placeholder="{{'CVC'|translate}}" [(ngModel)]="stripeCard.cvc" required></ion-input>
+              <ion-input type="number" max=3 name="cvc" placeholder="{{'CVC'|translate}}" [(ngModel)]="stripeCard.cvc"
+                         required></ion-input>
             </ion-item>
 
           </ion-list>
@@ -262,11 +306,14 @@
 
       <ion-row>
         <ion-col>
-          <button ion-button block color="secondary" type="submit" [disabled]="!stripeForm.form.valid">{{'Continue'|translate}}</button>
+          <button ion-button block color="secondary" type="submit"
+                  [disabled]="!stripeForm.form.valid">{{'Continue'|translate}}</button>
         </ion-col>
       </ion-row>
     </form>
   </div>
-  <button ion-button block class="button-footer" color="secondary" (click)="paypalPayment()" *ngIf="orderDetail.payment_method=='paypal'">{{'Continue'|translate}}</button>
-  <button ion-button block class="button-footer" color="secondary" (click)="addOrder()" *ngIf="orderDetail.payment_method=='cod'">{{'Continue'|translate}}</button>
+  <button ion-button block class="button-footer" color="secondary" (click)="paypalPayment()"
+          *ngIf="orderDetail.payment_method=='paypal'">{{'Continue'|translate}}</button>
+  <button ion-button block class="button-footer" color="secondary" (click)="addOrder()"
+          *ngIf="orderDetail.payment_method=='cod'">{{'Continue'|translate}}</button>
 </ion-content>

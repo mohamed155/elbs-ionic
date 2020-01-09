@@ -1,14 +1,9 @@
-// Project Name: IonicEcommerce
-// Project URI: http://ionicecommerce.com
-// Author: VectorCoder Team
-// Author URI: http://vectorcoder.com/
-
 import { Injectable } from "@angular/core";
 import { Http } from "@angular/http";
 import { LocalNotifications } from "@ionic-native/local-notifications";
 import { Storage } from '@ionic/storage';
 import { Platform } from "ionic-angular";
-import { OneSignal } from "@ionic-native/onesignal";
+// import { OneSignal } from "@ionic-native/onesignal";
 
 
 @Injectable()
@@ -78,7 +73,7 @@ export class ConfigProvider {
     public http: Http,
     private storage: Storage,
     public platform: Platform,
-    private oneSignal: OneSignal,
+    // private oneSignal: OneSignal,
     private localNotifications: LocalNotifications,
   ) {
   }

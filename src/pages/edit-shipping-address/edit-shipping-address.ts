@@ -49,6 +49,10 @@ export class EditShippingAddressPage {
       this.shippingData.entry_state = this.data.state;
       this.shippingData.suburb = this.data.suburb;
       this.shippingData.address_id = this.data.address_id;
+      this.shared.tempdata.entry_zone = this.data.zone || 'other';
+      this.shared.tempdata.entry_zone_id = this.data.zone_id;
+      this.shared.tempdata.entry_country_name = this.data.country_name;
+      this.shared.tempdata.entry_country_id = this.data.countries_id;
     }
     // console.log(this.data);
     // console.log(this.shippingData);
@@ -67,7 +71,7 @@ export class EditShippingAddressPage {
     this.viewCtrl.dismiss();
   }
 
-  //============================================================================================  
+  //============================================================================================
   //adding shipping address of the user
   addShippingAddress = function (form) {
     this.loading.show();
@@ -75,16 +79,22 @@ export class EditShippingAddressPage {
     var data = this.shippingData;
     data.entry_state = data.delivery_zone;
     data.entry_zone = data.delivery_zone;
+    data.governorate_id = this.shared.tempdata.entry_country_name && this.shared.tempdata.entry_country_id;
+    data.area_id = this.shared.tempdata.entry_zone && this.shared.tempdata.entry_zone_id;
     this.http.post(this.config.url + 'addShippingAddress', data).map(res => res.json()).subscribe(data => {
       this.loading.hide();
       this.dismiss();
       this.alert.show(data.message);
+      this.shared.tempdata.entry_zone = '';
+      this.shared.tempdata.entry_zone_id = '';
+      this.shared.tempdata.entry_country_name = '';
+      this.shared.tempdata.entry_country_id = '';
     }, function (response) {
       this.loading.hide();
       console.log(response);
     });
   };
-  //============================================================================================  
+  //============================================================================================
   //updating shipping address of the user
   updateShippingAddress = function (form, id) {
     this.loading.show();

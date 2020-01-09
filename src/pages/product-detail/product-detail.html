@@ -87,19 +87,19 @@
   <ion-list radio-group *ngFor=" let att of product.attributes">
     <h4>{{att.option.name}}</h4>
     <ion-item *ngFor=" let val of att.values; let i = index">
-      <ion-label>{{val.value + ' ' + val.price_prefix + val.price + ' ' + config.currency}}</ion-label>
+      <ion-label>{{val.value}}</ion-label>
       <ion-radio [value]="val" [checked]="i==0" (ionSelect)="fillAttributes(val,att.option.id)"></ion-radio>
     </ion-item>
   </ion-list>
 
   <ion-list>
     <h4>{{'Reviews'| translate}}</h4>
-    <div *ngIf="reviews.length != 0">
+    <div *ngIf="reviews.length !== 0">
       <ion-item *ngFor="let review of reviews">
-        <ion-avatar item-start>
+        <ion-avatar item-start *ngIf="review.customer">
           <img [src]="config.url+review.customer.customers_picture" [alt]="review.customers_picture">
         </ion-avatar>
-        <h2>{{review.customer.customers_firstname}} {{review.customer.customers_lastname}}</h2>
+        <h2>{{review.customer ? review.customer.customers_firstname : 'Elbs user'}} {{review.customer ? review.customer.customers_lastname : ''}}</h2>
         <h3>{{review.review}}</h3>
         <p *ngIf="review.rate">
           <ion-icon name="star" style="color: goldenrod"

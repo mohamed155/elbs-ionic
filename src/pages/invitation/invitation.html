@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'Enter Invitation code'}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-list padding-vertical>
+      <ion-item>
+        <ion-input type="text" placeholder="{{'Code'| translate}}" name="code" ngModel required></ion-input>
+      </ion-item>
+    </ion-list>
+    <button type="submit" ion-button block [disabled]="!f.valid" >{{'Get reward'| translate}}</button>
+  </form>
+</ion-content>

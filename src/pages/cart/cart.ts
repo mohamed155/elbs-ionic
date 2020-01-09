@@ -3,7 +3,7 @@
 // Author: VectorCoder Team
 // Author URI: http://vectorcoder.com/
 import { Component } from '@angular/core';
-import { NavController, Events, ModalController } from 'ionic-angular';
+import {NavController, Events, ModalController, LoadingController} from 'ionic-angular';
 import { SharedDataProvider } from '../../providers/shared-data/shared-data';
 import { ConfigProvider } from '../../providers/config/config';
 import { Http } from '@angular/http';
@@ -48,6 +48,7 @@ export class CartPage {
     private storage: Storage,
     public events: Events,
     public modalCtrl: ModalController,
+    public loadingCtrl: LoadingController
   ) {
   }
   totalPrice() {
@@ -78,6 +79,25 @@ export class CartPage {
   removeCart(id) {
     this.shared.removeCart(id);
     this.totalPrice();
+    const loader = this.loadingCtrl.create();
+    loader.present();
+    this.http.post(this.config.url + 'deleteFromCart', {
+      customers_id: this.shared.customerData.customers_id,
+      products_id: id
+    }).map(res => res.json())
+      .subscribe(data => {
+        this.http.post(this.config.url + 'getCart', {
+          customers_id: this.shared.customerData.customers_id,
+          lang_id: this.config.langId
+        })
+          .map(res => res.json())
+          .subscribe(data => {
+            loader.dismiss();
+            this.shared.cartProducts = data.data;
+            this.shared.cartProducts.map(item => item.final_price = parseFloat(item.final_price));
+            this.shared.cartTotalItems();
+          })
+      });
   }
   qunatityPlus = function (q) {
     this.toast.show(`Product Quantity is Limited!`, 'short', 'center');
@@ -91,7 +111,14 @@ export class CartPage {
     this.totalPrice();
     this.shared.cartTotalItems();
     this.storage.set('cartProducts', this.shared.cartProducts);
-  }
+    this.http.post(this.config.url + 'updateCart', {
+      customers_id: this.shared.customerData.customers_id,
+      products_id: q.products_id,
+      customers_basket_quantity: q.customers_basket_quantity,
+      final_price: q.final_price
+    }).map(res => res.json())
+      .subscribe(data => console.log(data))
+  };
   //function decreasing the quantity
   qunatityMinus = function (q) {
     if (q.customers_basket_quantity == 1) {
@@ -104,7 +131,14 @@ export class CartPage {
 
     this.shared.cartTotalItems();
     this.storage.set('cartProducts', this.shared.cartProducts);
-  }
+    this.http.post(this.config.url + 'updateCart', {
+      customers_id: this.shared.customerData.customers_id,
+      products_id: q.products_id,
+      customers_basket_quantity: q.customers_basket_quantity,
+      final_price: q.final_price
+    }).map(res => res.json())
+      .subscribe(data => console.log(data))
+  };
   ionViewDidLoad() {
     this.totalPrice()
   }

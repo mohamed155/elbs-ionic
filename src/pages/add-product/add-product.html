@@ -13,8 +13,8 @@
     <ion-col col-12>
       <div class="photo">
         <div class="image">
-          <img class="avatar" src="assets/avatar.png" *ngIf="image==null" (click)='openCamera()'>
-          <img class="avatar" src="{{products_image}}" *ngIf="image!=null" (click)='openCamera()'>
+          <img class="avatar" src="assets/avatar.png" *ngIf="products_image==null" (click)='handleProductPicClick()'>
+          <img class="avatar" src="{{products_image}}" *ngIf="products_image!=null" (click)='handleProductPicClick()'>
         </div>
       </div>
     </ion-col>
@@ -58,13 +58,20 @@
                      required></ion-input>
         </ion-item>
         <ion-item>
+          <ion-label>{{'Special price' | translate}}</ion-label>
+          <ion-select #discount_status name="status" ngModel>
+            <ion-option value="0" selected>{{'Inactive' | translate}}</ion-option>
+            <ion-option value="1">{{'Active' | translate}}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
           <ion-input type="number" name="specials_new_products_price" placeholder="{{'Discount price'| translate}}"
-                     ngModel></ion-input>
+                     ngModel [disabled]="discount_status.value == '0'"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>{{'Tax Class'| translate}}</ion-label>
           <ion-select name="tax_class_id">
-            <ion-option *ngFor="let taxClass of shared.taxClasses" [value]="taxClass.tax_class_id" >
+            <ion-option *ngFor="let taxClass of shared.taxClasses" [value]="taxClass.tax_class_id">
               {{taxClass.tax_class_title}}
             </ion-option>
           </ion-select>
@@ -95,7 +102,7 @@
         </ion-item>
         <ion-item>
           <ion-label>{{'Status'| translate}}</ion-label>
-          <ion-select name="products_status" ngModel required>
+          <ion-select name="products_status" ngModel required >
             <ion-option value="1">{{'Active'| translate}}</ion-option>
             <ion-option value="0">{{'Inactive'| translate}}</ion-option>
           </ion-select>
@@ -103,6 +110,22 @@
         <ion-item>
           <ion-input name="products_url" placeholder="{{'URL'| translate}}" ngModel></ion-input>
         </ion-item>
+        <ion-row>
+          <ion-col margin-top col-12>
+            <h4>{{shared.productColorOptions[0].products_options_name}}</h4>
+            <ion-item *ngFor="let item of shared.productColorOptions[0].values">
+              <ion-label>{{item.products_options_values_name}}</ion-label>
+              <ion-checkbox (ionChange)="updateColors(item.products_options_values_id, $event)"></ion-checkbox>
+            </ion-item>
+          </ion-col>
+          <ion-col margin-top col-12>
+            <h4>{{shared.productSizeOptions[0].products_options_name}}</h4>
+            <ion-item *ngFor="let item of shared.productSizeOptions[0].values">
+              <ion-label>{{item.products_options_values_name}}</ion-label>
+              <ion-checkbox (ionChange)="updateSizes(item.products_options_values_id, $event)"></ion-checkbox>
+            </ion-item>
+          </ion-col>
+        </ion-row>
         <button ion-button type="submit" [disabled]="!f.valid" block>{{'Submit'| translate}}</button>
       </ion-col>
     </ion-row>

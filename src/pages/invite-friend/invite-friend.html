@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{'Invite Friend'}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <ion-list padding-vertical>
+      <ion-item>
+        <ion-input type="email" placeholder="{{'Email'| translate}}" name="to_email" ngModel required></ion-input>
+      </ion-item>
+    </ion-list>
+    <button type="submit" ion-button block [disabled]="!f.valid" >{{'Invite'| translate}}</button>
+  </form>
+</ion-content>

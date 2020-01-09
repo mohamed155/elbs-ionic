@@ -12,7 +12,7 @@ import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 import { SharedDataProvider } from '../../providers/shared-data/shared-data';
 import { Facebook, FacebookLoginResponse } from '@ionic-native/facebook';
 import { AlertProvider } from '../../providers/alert/alert';
-import { GooglePlus } from '@ionic-native/google-plus';
+// import { GooglePlus } from '@ionic-native/google-plus';
 
 @Component({
   selector: 'page-login',
@@ -31,7 +31,7 @@ export class LoginPage {
     public shared: SharedDataProvider,
     private fb: Facebook,
     public alert: AlertProvider,
-    private googlePlus: GooglePlus,
+    // private googlePlus: GooglePlus,
     public alertCtrl: AlertController
   ) {
 
@@ -92,15 +92,15 @@ export class LoginPage {
 
   googleLogin() {
     this.loading.autoHide(500);
-    this.googlePlus.login({})
-      .then(res => {
-      //  alert(JSON.stringify(res))
-        this.createAccount(res, 'google');
-      })
-      .catch(err => {
-        this.alert.show(JSON.stringify(err));
-        console.log("google error");
-      });
+    // this.googlePlus.login({})
+    //   .then(res => {
+    //   //  alert(JSON.stringify(res))
+    //     this.createAccount(res, 'google');
+    //   })
+    //   .catch(err => {
+    //     this.alert.show(JSON.stringify(err));
+    //     console.log("google error");
+    //   });
   }
   //============================================================================================
   //creating new account using function facebook or google details

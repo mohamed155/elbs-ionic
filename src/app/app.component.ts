@@ -4,7 +4,7 @@
 // Author URI: http://vectorcoder.com/
 
 import {Component, ViewChild} from '@angular/core';
-import {Nav, Platform, ModalController, Events, AlertController} from 'ionic-angular';
+import {Nav, Platform, ModalController, Events, AlertController, LoadingController} from 'ionic-angular';
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {Storage} from '@ionic/storage';
@@ -40,7 +40,7 @@ import {Categories5Page} from '../pages/categories5/categories5';
 import {Categories3Page} from '../pages/categories3/categories3';
 import {Categories6Page} from '../pages/categories6/categories6';
 import {trigger, transition, animate, style} from '@angular/animations';
-import {AdMobFree, AdMobFreeBannerConfig, AdMobFreeInterstitialConfig} from '@ionic-native/admob-free';
+// import {AdMobFree, AdMobFreeBannerConfig, AdMobFreeInterstitialConfig} from '@ionic-native/admob-free';
 import {AppVersion} from '@ionic-native/app-version';
 import {InAppBrowser} from '@ionic-native/in-app-browser';
 import {SocialSharing} from '@ionic-native/social-sharing';
@@ -49,6 +49,11 @@ import {AddProductPage} from "../pages/add-product/add-product";
 import {CancelOrderPage} from "../pages/cancel-order/cancel-order";
 import * as Pusher from 'pusher-js';
 import {ChatListPage} from "../pages/chat-list/chat-list";
+import {InviteFriendPage} from "../pages/invite-friend/invite-friend";
+import {InvitationPage} from "../pages/invitation/invitation";
+import {LocalNotifications} from "@ionic-native/local-notifications";
+import {ProductDetailPage} from "../pages/product-detail/product-detail";
+import {VendorPage} from "../pages/vendor/vendor";
 
 
 @Component({
@@ -81,7 +86,6 @@ export class MyApp {
   shopList = false;
   shopListIcon = 'add';
 
-
   constructor(
     public platform: Platform,
     public modalCtrl: ModalController,
@@ -95,13 +99,15 @@ export class MyApp {
     public network: Network,
     public alert: AlertProvider,
     public loading: LoadingProvider,
-    private admobFree: AdMobFree,
+    // private admobFree: AdMobFree,
     public events: Events,
     public plt: Platform,
     private appVersion: AppVersion,
     public iab: InAppBrowser,
     private socialSharing: SocialSharing,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private localNotifications: LocalNotifications,
+    private loadingCtrl: LoadingController
   ) {
     // if (this.platform.is('cordova')) {
     //   this.firebase.setConfigSettings(config.firebaseConfig);
@@ -122,45 +128,65 @@ export class MyApp {
     //   }
     // });
 
-    const pusher = new Pusher('a5fe46a30a65351c8795', {
-      cluster: 'eu',
-      forceTLS: true
-    });
+    try {
 
-    this.shared.channel = pusher.subscribe('my-channel');
-
-    let connectedToInternet = true;
-    network.onDisconnect().subscribe(() => {
-      connectedToInternet = false;
-      translate.get(["Please Connect to the Internet!", "Disconnected"]).subscribe((res) => {
-        this.alert.showWithTitle(res["Please Connect to the Internet!"], res["Disconnected"]);
+      const pusher = new Pusher('90a11cf2dc3cb70a8f61', {
+        cluster: 'eu',
+        forceTLS: true
       });
-      //  console.log('network was disconnected :-(');
 
-    });
+      this.shared.channel = pusher.subscribe('my-channel');
 
-    network.onConnect().subscribe(() => {
-      if (!connectedToInternet) {
-        window.location.reload();
-        //this.loading.show();
-        //console.log('network connected!');
-        translate.get(["Network connected Reloading Data", "Connected"]).subscribe((res) => {
-          this.alert.showWithTitle(res["Network connected Reloading Data"] + '...', res["Connected"]);
+      this.shared.channel.bind('my-event', (data) => {
+        console.log(data);
+        this.localNotifications.schedule({
+          id: data.message.product_id,
+          title: data.message.title,
+          text: data.message.message,
+          data: {
+            product: data.message.product ? data.message.product : undefined,
+            vendor_id: data.message.vendor_id ? data.message.vendor_id : undefined
+          },
+          icon: this.config.url + 'resources/assets/images/logo/Logo-white.png',
+          launch: true
         });
+      });
 
-      }
-      //connectSubscription.unsubscribe();
-    });
-    this.platform.setDir(localStorage.direction, true);
-    shared.dir = localStorage.direction;
-    //setting default languge on start up
-    translate.setDefaultLang(this.config.langId);
-    //if(this.config.siteSetting()){
-    this.initializeApp();
-    //}
-    events.subscribe('showAd', () => {
-      this.showInterstitial();
-    });
+      let connectedToInternet = true;
+      network.onDisconnect().subscribe(() => {
+        connectedToInternet = false;
+        translate.get(["Please Connect to the Internet!", "Disconnected"]).subscribe((res) => {
+          this.alert.showWithTitle(res["Please Connect to the Internet!"], res["Disconnected"]);
+        });
+        //  console.log('network was disconnected :-(');
+
+      });
+
+      network.onConnect().subscribe(() => {
+        if (!connectedToInternet) {
+          window.location.reload();
+          //this.loading.show();
+          //console.log('network connected!');
+          translate.get(["Network connected Reloading Data", "Connected"]).subscribe((res) => {
+            this.alert.showWithTitle(res["Network connected Reloading Data"] + '...', res["Connected"]);
+          });
+
+        }
+        //connectSubscription.unsubscribe();
+      });
+      this.platform.setDir(localStorage.direction, true);
+      shared.dir = localStorage.direction;
+      //setting default languge on start up
+      translate.setDefaultLang(this.config.langId);
+      //if(this.config.siteSetting()){
+      this.initializeApp();
+      //}
+      events.subscribe('showAd', () => {
+        this.showInterstitial();
+      });
+    } catch (err) {
+      location.reload();
+    }
   }
 
   initializeApp() {
@@ -191,11 +217,39 @@ export class MyApp {
         //   this.storage.set('firsttimeApp', 'firstTime');
         // });
         if (this.plt.is('ios')) {
-          if (this.config.admobIos == 1) this.initializeAdmob(this.config.admobBanneridIos, this.config.admobIntidIos);
+          // if (this.config.admobIos == 1) this.initializeAdmob(this.config.admobBanneridIos, this.config.admobIntidIos);
           this.config.admob = this.config.admobIos;
         } else if (this.plt.is('android')) {
-          if (this.config.admob == 1) this.initializeAdmob(this.config.admobBannerid, this.config.admobIntid);
+          // if (this.config.admob == 1) this.initializeAdmob(this.config.admobBannerid, this.config.admobIntid);
         }
+
+        if (this.platform.is('cordova')) {
+          this.localNotifications.on('click').subscribe(notification => {
+            console.log(notification);
+            const loader = this.loadingCtrl.create();
+            loader.present();
+            if(notification.data.product) {
+              this.http.post(this.config.url + 'getAllProducts', {
+                products_id: notification.data.product.products_id,
+                language_id: this.config.langId
+              }).map(res => res.json())
+                .subscribe(data => {
+                  loader.dismiss();
+                  const product = data.product_data[0];
+                  this.nav.push(ProductDetailPage, {data: product});
+                });
+            } else if (notification.data.vendor_id) {
+              this.http.post(this.config.url + 'vendors/' + notification.data.vendor_id, {})
+                .map(res => res.json())
+                .subscribe(data => {
+                  loader.dismiss();
+                  const vendor = data.vendor;
+                  this.nav.push(VendorPage, {vendor});
+                })
+            }
+          });
+        }
+
         //subscribe for push notifiation
         this.storage.get('pushNotification').then((val) => {
           if (val == undefined) {
@@ -217,33 +271,33 @@ export class MyApp {
     });
   }
 
-  initializeAdmob(bannerId, intId) {
-    const bannerConfig: AdMobFreeBannerConfig = {
-      id: bannerId,
-      isTesting: false,
-      autoShow: true
-    };
-    this.admobFree.banner.config(bannerConfig);
-
-    this.admobFree.banner.prepare()
-      .then(() => {
-      })
-      .catch(e => console.log(e));
-
-    const interstitialConfig: AdMobFreeInterstitialConfig = {
-      id: intId,
-      isTesting: false,
-      autoShow: true
-    };
-    this.admobFree.interstitial.config(interstitialConfig);
-  }
+  // initializeAdmob(bannerId, intId) {
+  //   const bannerConfig: AdMobFreeBannerConfig = {
+  //     id: bannerId,
+  //     isTesting: false,
+  //     autoShow: true
+  //   };
+  //   this.admobFree.banner.config(bannerConfig);
+  //
+  //   this.admobFree.banner.prepare()
+  //     .then(() => {
+  //     })
+  //     .catch(e => console.log(e));
+  //
+  //   const interstitialConfig: AdMobFreeInterstitialConfig = {
+  //     id: intId,
+  //     isTesting: false,
+  //     autoShow: true
+  //   };
+  //   this.admobFree.interstitial.config(interstitialConfig);
+  // }
 
   showInterstitial() {
     // this.admobFree.interstitial.isReady().then(() => {
     //   alert("ready");
     //   this.admobFree.interstitial.show();
     // }) .catch(e => alert(e));
-    this.admobFree.interstitial.prepare();
+    // this.admobFree.interstitial.prepare();
   }
 
   openPage(page) {
@@ -277,6 +331,8 @@ export class MyApp {
     else if (page == 'addNewProduct') this.nav.push(AddProductPage);
     else if (page == 'cancelOrder') this.nav.push(CancelOrderPage);
     else if (page == 'chat') this.nav.push(ChatListPage);
+    else if (page == 'invite') this.nav.push(InviteFriendPage);
+    else if (page == 'invitation') this.nav.push(InvitationPage);
   }
 
   openHomePage() {

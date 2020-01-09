@@ -20,7 +20,7 @@
           <img class="avatar" src="{{image}}" *ngIf="image!=null">
         </div>
         <div class="upload">
-          <ion-icon name="camera" (click)='openCamera()'></ion-icon>
+          <ion-icon name="camera" (click)='handleProfilePicClick()'></ion-icon>
         </div>
       </div>
     </ion-col>
@@ -68,7 +68,7 @@
                   <img class="avatar" src="{{vendor_logo}}" *ngIf="vendor_logo!=null">
                 </div>
                 <div class="upload">
-                  <ion-icon name="camera" (click)='openCameraVendor()'></ion-icon>
+                  <ion-icon name="camera" (click)='handleVendorPicClick()'></ion-icon>
                 </div>
               </div>
             </ion-col>
@@ -98,11 +98,15 @@
             <ion-label>{{'Online shop' | translate}}</ion-label>
             <ion-checkbox name="vandor_online" [(ngModel)]="formData.vendor_online"></ion-checkbox>
           </ion-item>
+          <ion-item *ngIf="formData.type">
+            <ion-input type="text" placeholder="{{'Governorate'|translate}}" name="country_name" (tap)="selectCountryPage()" [readonly]="true"
+                       [(ngModel)]="shared.tempdata.entry_country_name" [ngModelOptions]="{standalone: true}" required></ion-input>
+          </ion-item>
         </ion-list>
       </ion-col>
       <ion-col col-12>
         <label *ngIf="errorMessage!=''">
-          <span>{{errorMessage}}</span>
+          <span style="color:red;">{{errorMessage}}</span>
         </label>
       </ion-col>
     </ion-row>

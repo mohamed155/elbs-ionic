@@ -5,7 +5,7 @@
 import { Injectable } from '@angular/core';
 import { LoadingController } from 'ionic-angular';
 import { ConfigProvider } from '../config/config';
-import { OneSignal } from '@ionic-native/onesignal';
+// import { OneSignal } from '@ionic-native/onesignal';
 
 @Injectable()
 export class LoadingProvider {
@@ -13,9 +13,9 @@ export class LoadingProvider {
   constructor(
     public loadingCtrl: LoadingController,
     public config: ConfigProvider,
-    private oneSignal: OneSignal
+    // private oneSignal: OneSignal
   ) {
-      
+
   }
 
   show() {

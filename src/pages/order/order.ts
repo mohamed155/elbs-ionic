@@ -2,18 +2,19 @@
 // Project URI: http://ionicecommerce.com
 // Author: VectorCoder Team
 // Author URI: http://vectorcoder.com/
-import { Component, ViewChild } from '@angular/core';
-import { NavController, NavParams, ActionSheetController, Content } from 'ionic-angular';
-import { Http } from '@angular/http';
-import { ConfigProvider } from '../../providers/config/config';
-import { SharedDataProvider } from '../../providers/shared-data/shared-data';
-import { TranslateService } from '@ngx-translate/core';
-import { LoadingProvider } from '../../providers/loading/loading';
-import { AlertProvider } from '../../providers/alert/alert';
-import { ThankYouPage } from '../thank-you/thank-you';
-import { Stripe } from '@ionic-native/stripe';
-import { CouponProvider } from '../../providers/coupon/coupon';
-import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal';
+import {Component, ViewChild} from '@angular/core';
+import {NavController, NavParams, ActionSheetController, Content} from 'ionic-angular';
+import {Http} from '@angular/http';
+import {ConfigProvider} from '../../providers/config/config';
+import {SharedDataProvider} from '../../providers/shared-data/shared-data';
+import {TranslateService} from '@ngx-translate/core';
+import {LoadingProvider} from '../../providers/loading/loading';
+import {AlertProvider} from '../../providers/alert/alert';
+import {ThankYouPage} from '../thank-you/thank-you';
+// import { Stripe } from '@ionic-native/stripe';
+import {CouponProvider} from '../../providers/coupon/coupon';
+import {Storage} from "@ionic/storage";
+// import { PayPal, PayPalPayment, PayPalConfiguration } from '@ionic-native/paypal';
 
 
 declare var braintree;
@@ -47,6 +48,9 @@ export class OrderPage {
   paypalClientId = "";
   paypalEnviroment = "";
 
+  pointsUsed = false;
+  pointsUsedAmount = '';
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -56,11 +60,15 @@ export class OrderPage {
     public loading: LoadingProvider,
     public alert: AlertProvider,
     public couponProvider: CouponProvider,
-    private payPal: PayPal,
+    // private payPal: PayPal,
     public translate: TranslateService,
     public actionSheetCtrl: ActionSheetController,
-    private stripe: Stripe) {
+    public storage: Storage,
+    // private stripe: Stripe
+  ) {
     // shared.orderDetails.payment_method = 'cash_on_delivery';
+    console.log(this.products);
+    this.calculateTotal();
   }
 
   //============================================================================================
@@ -80,7 +88,7 @@ export class OrderPage {
     this.orderDetail.is_coupon_applied = this.couponApplied;
     this.orderDetail.coupons = this.couponArray;
     this.orderDetail.coupon_amount = this.discount;
-    this.orderDetail.totalPrice = this.totalAmountWithDisocunt;
+    this.orderDetail.totalPrice = this.orderDetail.totalPrice;
     this.orderDetail.nonce = nonce;
     this.orderDetail.language_id = this.config.langId;
     var data = this.orderDetail;
@@ -92,8 +100,39 @@ export class OrderPage {
         this.orderDetail = {};
         this.shared.orderDetails = {};
         this.navCtrl.setRoot(ThankYouPage);
+        this.http.post(this.config.url + 'points/increase', {
+          point_id: this.shared.customerData.points.id,
+          count: this.shared.orderPoints
+        })
+          .map(res => res.json())
+          .subscribe(data => {
+            this.shared.customerData.points = data;
+            this.storage.set('customerData', this.shared.customerData);
+          });
+        if (this.shared.customerData.walletsCount && this.shared.customerData.walletsCount.amount) {
+          this.orderDetail.totalPrice -= this.shared.customerData.walletsCount.amount;
+          this.http.post(this.config.url + 'wallets/decrease', {
+            amount: this.shared.customerData.walletsCount.amount,
+            wallet_id: this.shared.customerData.walletsCount.id
+          }).map(res => res.json())
+            .subscribe(data => console.log(data));
+        }
+        if (this.pointsUsed) {
+          this.http.post(this.config.url + 'points/decrease', {
+            count: this.shared.customerData.points.amount,
+            point_id: this.shared.customerData.points.id
+          }).map(res => res.json())
+            .subscribe(data => console.log(data));
+        }
+        this.http.post(this.config.url + 'points/increase', {
+          count: this.orderDetail.totalPrice * this.shared.egpToPoints,
+          point_id: this.shared.customerData.points.id
+        }).map(res => res.json())
+          .subscribe(data => console.log(data));
       }
-      if (data.success == 0) { this.alert.show(data.message); }
+      if (data.success == 0) {
+        this.alert.show(data.message);
+      }
     }, err => {
 
       this.translate.get("Server Error").subscribe((res) => {
@@ -101,29 +140,36 @@ export class OrderPage {
       });
 
     });
+
+    if (this.pointsUsedAmount > 0 && this.pointsUsed) {
+      this.http.post(this.config.url + 'points/decrease', this.pointsUsedAmount);
+    }
   };
+
   initializePaymentMethods() {
     // this.loading.show();
     var data: { [k: string]: any } = {};
     data.language_id = this.config.langId;
     this.http.post(this.config.url + 'getPaymentMethods', data).map(res => res.json()).subscribe(data => {
-      //  this.loading.hide();
-      if (data.success == 1) {
-        this.paymentMethods = data.data;
-        for (let a of data.data) {
-          if (a.method == "braintree_card" && a.active == '1') { this.getToken(); }
-          if (a.method == "braintree_paypal" && a.active == '1') { this.getToken(); }
-
-          if (a.method == "paypal" && a.active == '1') {
-            this.paypalClientId = a.public_key;
-            if (a.environment == "Test") this.paypalEnviroment = "PayPalEnvironmentSandbox";
-            else this.paypalEnviroment = "PayPalEnvironmentProduction"
-
+        //  this.loading.hide();
+        if (data.success == 1) {
+          this.paymentMethods = data.data;
+          for (let a of data.data) {
+            if (a.method == "braintree_card" && a.active == '1') {
+              this.getToken();
+            }
+            if (a.method == "braintree_paypal" && a.active == '1') {
+              this.getToken();
+            }
+            if (a.method == "paypal" && a.active == '1') {
+              this.paypalClientId = a.public_key;
+              if (a.environment == "Test") this.paypalEnviroment = "PayPalEnvironmentSandbox";
+              else this.paypalEnviroment = "PayPalEnvironmentProduction"
+            }
+            // if (a.method == "stripe" && a.active == '1') { this.stripe.setPublishableKey(a.public_key); }
           }
-          if (a.method == "stripe" && a.active == '1') { this.stripe.setPublishableKey(a.public_key); }
         }
-      }
-    },
+      },
       err => {
         this.translate.get("getPaymentMethods Server Error").subscribe((res) => {
           this.alert.show(res + " " + err.status);
@@ -133,16 +179,16 @@ export class OrderPage {
 
   stripePayment() {
     // this.loading.show();
-    this.stripe.createCardToken(this.stripeCard)
-      .then(token => {
-        // this.loading.hide();
-        //this.nonce = token.id
-        this.addOrder(token.id);
-      })
-      .catch(error => {
-        //this.loading.hide();
-        this.alert.show(error)
-      });
+    // this.stripe.createCardToken(this.stripeCard)
+    //   .then(token => {
+    //     // this.loading.hide();
+    //     //this.nonce = token.id
+    //     this.addOrder(token.id);
+    //   })
+    //   .catch(error => {
+    //     //this.loading.hide();
+    //     this.alert.show(error)
+    //   });
   }
 
   //============================================================================================
@@ -151,8 +197,8 @@ export class OrderPage {
     var subTotal = 0;
     var total = 0;
     for (let value of this.products) {
-      subTotal += parseFloat(value.subtotal);
-      total += value.total;
+      subTotal += parseInt(value.customers_basket_quantity) * parseFloat(value.price);
+      total += parseInt(value.customers_basket_quantity) * parseFloat(value.price);
     }
     this.productsTotal = subTotal;
     this.discount = (subTotal - total);
@@ -168,9 +214,21 @@ export class OrderPage {
       a = a + subtotal;
     }
 
+    this.calculateDiscount();
+
+    this.orderDetail.totalPrice = this.productsTotal;
+    console.log('total ', this.orderDetail.totalPrice);
+
     // let b = parseFloat(this.orderDetail.total_tax.toString());
-    let c = parseFloat(this.orderDetail.shipping_cost.toString());
+    let c = parseFloat(this.orderDetail.shipping_cost && this.orderDetail.shipping_cost.toString());
     this.totalAmountWithDisocunt = parseFloat((parseFloat(a.toString()) + c).toString());
+    if (this.shared.customerData.walletsCount && this.shared.customerData.walletsCount.amount) {
+      this.orderDetail.totalPrice -= this.shared.customerData.walletsCount && this.shared.customerData.walletsCount.amount;
+    }
+    if (this.pointsUsed) {
+      this.orderDetail.totalPrice -= this.shared.customerData.points.amount * this.shared.pointToEgp;
+    }
+    if (this.orderDetail.totalPrice < 0) this.orderDetail.totalPrice = 0;
     // console.log(" all total " + $scope.totalAmountWithDisocunt);
     // console.log("shipping_tax " + $scope.orderDetail.shipping_tax);
     // console.log(" shipping_cost " + $scope.orderDetail.shipping_cost);
@@ -182,7 +240,10 @@ export class OrderPage {
   deleteCoupon = function (code) {
 
     this.couponArray.forEach((value, index) => {
-      if (value.code == code) { this.couponArray.splice(index, 1); return true; }
+      if (value.code == code) {
+        this.couponArray.splice(index, 1);
+        return true;
+      }
     });
 
 
@@ -212,7 +273,7 @@ export class OrderPage {
       return 0;
     }
     this.loading.show();
-    var data = { 'code': code };
+    var data = {'code': code};
     this.http.post(this.config.url + 'getCoupon', data).map(res => res.json()).subscribe(data => {
       this.loading.hide();
       if (data.success == 1) {
@@ -278,54 +339,70 @@ export class OrderPage {
     this.calculateTotal();
   };
 
+  usePoints() {
+    if (!this.shared.customerData.points || this.shared.customerData.points.amount < this.pointsUsedAmount) {
+      this.alert.alertCtrl.create({
+        message: "You have not enough points"
+      }).present();
+    } else {
+      this.pointsUsed = true;
+    }
+    this.calculateTotal();
+  }
+
+  unusePoints() {
+    this.pointsUsed = false;
+    this.calculateTotal();
+  }
+
   paypalPayment() {
     this.loading.autoHide(2000);
-    this.payPal.init({
-      PayPalEnvironmentProduction: this.paypalClientId,
-      PayPalEnvironmentSandbox: this.paypalClientId
-    }).then(() => {
-      // this.loading.hide();
-      // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
-      this.payPal.prepareToRender(this.paypalEnviroment, new PayPalConfiguration({
-        // Only needed if you get an "Internal Service Error" after PayPal login!
-        //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
-      })).then(() => {
-        //this.loading.show();
-        let payment = new PayPalPayment(this.totalAmountWithDisocunt.toString(), this.config.paypalCurrencySymbol, 'cart Payment', 'sale');
-        this.payPal.renderSinglePaymentUI(payment).then((res) => {
-          // Successfully paid
-          //  alert(JSON.stringify(res));
-          //this.nonce = res.response.id;
-          this.addOrder(res);
-          // Example sandbox response
-          //
-          // {
-          //   "client": {
-          //     "environment": "sandbox",
-          //     "product_name": "PayPal iOS SDK",
-          //     "paypal_sdk_version": "2.16.0",
-          //     "platform": "iOS"
-          //   },
-          //   "response_type": "payment",
-          //   "response": {
-          //     "id": "PAY-1AB23456CD789012EF34GHIJ",
-          //     "state": "approved",
-          //     "create_time": "2016-10-03T13:33:33Z",
-          //     "intent": "sale"
-          //   }
-          // }
-        }, () => {
-          console.log('Error or render dialog closed without being successful');
-          this.alert.show('Error or render dialog closed without being successful');
-        });
-      }, () => {
-        console.log('Error in configuration');
-        this.alert.show('Error in configuration');
-      });
-    }, () => {
-      console.log('Error in configuration');
-      this.alert.show('Error in initialization, maybe PayPal isnt supported or something else');
-    });
+    // this.payPal.init({
+    //   PayPalEnvironmentProduction: this.paypalClientId,
+    //   PayPalEnvironmentSandbox: this.paypalClientId
+    // }).then(() => {
+    //   // this.loading.hide();
+    //   // Environments: PayPalEnvironmentNoNetwork, PayPalEnvironmentSandbox, PayPalEnvironmentProduction
+    //   this.payPal.prepareToRender(this.paypalEnviroment, new PayPalConfiguration({
+    //     // Only needed if you get an "Internal Service Error" after PayPal login!
+    //     //payPalShippingAddressOption: 2 // PayPalShippingAddressOptionPayPal
+    //   })).then(() => {
+    //     //this.loading.show();
+    //     let payment = new PayPalPayment(this.totalAmountWithDisocunt.toString(), this.config.paypalCurrencySymbol, 'cart Payment', 'sale');
+    //     this.payPal.renderSinglePaymentUI(payment).then((res) => {
+    //       // Successfully paid
+    //       //  alert(JSON.stringify(res));
+    //       //this.nonce = res.response.id;
+    //       this.addOrder(res);
+    //       // Example sandbox response
+    //       //
+    //       // {
+    //       //   "client": {
+    //       //     "environment": "sandbox",
+    //       //     "product_name": "PayPal iOS SDK",
+    //       //     "paypal_sdk_version": "2.16.0",
+    //       //     "platform": "iOS"
+    //       //   },
+    //       //   "response_type": "payment",
+    //       //   "response": {
+    //       //     "id": "PAY-1AB23456CD789012EF34GHIJ",
+    //       //     "state": "approved",
+    //       //     "create_time": "2016-10-03T13:33:33Z",
+    //       //     "intent": "sale"
+    //       //   }
+    //       // }
+    //     }, () => {
+    //       console.log('Error or render dialog closed without being successful');
+    //       this.alert.show('Error or render dialog closed without being successful');
+    //     });
+    //   }, () => {
+    //     console.log('Error in configuration');
+    //     this.alert.show('Error in configuration');
+    //   });
+    // }, () => {
+    //   console.log('Error in configuration');
+    //   this.alert.show('Error in initialization, maybe PayPal isnt supported or something else');
+    // });
   }
 
   couponslist() {
@@ -376,6 +453,7 @@ export class OrderPage {
     });
     actionSheet.present();
   }
+
   //============================================================================================
   //getting token from server
   getToken = function () {
@@ -433,7 +511,9 @@ export class OrderPage {
         // console.log(nonce);
         this.addOrder(nonce);
       },
-      (err) => { console.log(err); }
+      (err) => {
+        console.log(err);
+      }
     );
 
   };
@@ -449,13 +529,12 @@ export class OrderPage {
       braintree.client.create({
         authorization: clientToken
       }, function (clientErr, clientInstance) {
-        if (clientErr) { }
+        if (clientErr) {
+        }
 
         braintree.hostedFields.create({
           client: clientInstance,
-          styles: {
-
-          },
+          styles: {},
           fields: {
             number: {
               selector: '#card-number',
@@ -511,9 +590,12 @@ export class OrderPage {
       (data) => { //console.log(nonce);
         this.addOrder(nonce);
       },
-      (err) => { console.log(err); }
+      (err) => {
+        console.log(err);
+      }
     );
   }
+
   scrollToBottom() {
 
     setTimeout(() => {
@@ -522,6 +604,7 @@ export class OrderPage {
     }, 300);
 
   }
+
   ngOnInit() {
     this.orderDetail = (JSON.parse(JSON.stringify(this.shared.orderDetails)));
     this.products = (JSON.parse(JSON.stringify(this.shared.cartProducts)));
@@ -530,6 +613,7 @@ export class OrderPage {
     this.initializePaymentMethods();
 
   }
+
   openHomePage() {
     this.navCtrl.popToRoot();
   }

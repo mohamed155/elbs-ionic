@@ -22,6 +22,7 @@ import { CartPage } from '../cart/cart';
 import { SearchPage } from '../search/search';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { AppVersion } from '@ionic-native/app-version';
+import {EditVendorPage} from "../edit-vendor/edit-vendor";
 
 
 
@@ -81,6 +82,7 @@ export class SettingsPage {
   }
   openPage(page) {
     if (page == 'myAccount') this.navCtrl.push(MyAccountPage);
+    if (page == 'editVendor') this.navCtrl.push(EditVendorPage);
   }
   openSite() {
     this.loading.autoHide(2000);

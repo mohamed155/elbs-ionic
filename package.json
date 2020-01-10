@@ -80,7 +80,9 @@
       "cordova-plugin-whitelist": {},
       "cordova-plugin-device": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-ionic-webview": {},
+      "cordova-plugin-ionic-webview": {
+        "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
+      },
       "cordova-plugin-camera": {},
       "cordova-plugin-inappbrowser": {},
       "cordova-plugin-network-information": {},
@@ -90,7 +92,9 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-facebook4": {
         "APP_ID": "401398957086005",
-        "APP_NAME": "elbs_app"
+        "APP_NAME": "elbs_app",
+        "FACEBOOK_HYBRID_APP_EVENTS": "false",
+        "FACEBOOK_ANDROID_SDK_VERSION": "5.5.2"
       },
       "cordova-plugin-telerik-imagepicker": {
         "PHOTO_LIBRARY_USAGE_DESCRIPTION": "choose images for profile image and products images"

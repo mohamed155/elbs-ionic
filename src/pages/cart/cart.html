@@ -53,8 +53,8 @@
         </ion-row>
 
         <ion-row *ngFor="let att of product.attributes">
-          <ion-col col-6>{{att.products_options}}&nbsp;:</ion-col>
-          <ion-col col-6>{{att.products_options_values}}</ion-col>
+          <ion-col col-6>{{att.products_options ? att.products_options : att.attribute_name}}&nbsp;:</ion-col>
+          <ion-col col-6>{{att.products_options_values ? att.products_options_values : att.attribute_value}}</ion-col>
         </ion-row>
 
         <ion-row align-items-center>
